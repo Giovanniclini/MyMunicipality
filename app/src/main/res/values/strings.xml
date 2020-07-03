@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyMunicipality</string>
+    <string name="app_access"><b>Accedi a MyMunicipality</b></string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="reminder_registrazione">Crea un account</string>
+</resources>
