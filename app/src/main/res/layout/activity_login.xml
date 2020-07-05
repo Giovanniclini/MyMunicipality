@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:id="@+id/text_view_id"
-        android:text="@string/app_access" />
+        android:text="@string/app_access"
+        android:textStyle="bold|italic"
+        android:id="@+id/textView"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_gravity="center"

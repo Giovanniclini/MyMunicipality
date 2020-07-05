@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">MyMunicipality</string>
-    <string name="app_access"><b>Accedi a MyMunicipality</b></string>
+    <string name="app_access">Accedi a MyMunicipality</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="reminder_registrazione">Crea un account</string>
+    <string name="Logout">Logout</string>
+    <string name="Welcome">Benvenuto su MyMunicipality</string>
+    <string name="Welcome2">Utilizza i riquadri qui sotto per prenotare un appuntamento, inoltrare una segnalazione o accedere all\'area personale</string>
+    <string name="Segnalazioni">Segnalazioni</string>
+    <string name="Appuntamenti">Appuntamenti</string>
+    <string name="Areapersonale">Area personale</string>
 </resources>
