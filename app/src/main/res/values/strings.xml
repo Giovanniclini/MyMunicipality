@@ -12,4 +12,6 @@
     <string name="Appuntamenti">Appuntamenti</string>
     <string name="Areapersonale">Area personale</string>
     <string name="facebook_app_id">281417126535483</string>
+    <string name="fb_login_protocol_scheme">fb281417126535483</string>
+
 </resources>
