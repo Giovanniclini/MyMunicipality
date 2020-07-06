@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigation.getMenu().clear(); //clear old inflated items.
         navigation.inflateMenu(R.menu.bott_nav_menu);
 
-     //Intent intent = new Intent(this, LoginActivity.class);
-     //startActivityForResult(intent, LOGIN_REQUEST);
+     Intent intent = new Intent(this, LoginActivity.class);
+     startActivityForResult(intent, LOGIN_REQUEST);
     }
 
     @Override

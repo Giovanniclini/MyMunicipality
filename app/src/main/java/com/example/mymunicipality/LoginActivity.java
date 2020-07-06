@@ -18,7 +18,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,7 +27,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -46,11 +44,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
                 findViewById(R.id.buttonLogin).setOnClickListener(this);
+                //textViewUser = findViewById(R.id.textView);
                 findViewById(R.id.buttonRegistration).setOnClickListener(this);
 
                 mFirebaseAuth = FirebaseAuth.getInstance();
                 FacebookSdk.sdkInitialize(getApplicationContext());
-                textViewUser = findViewById(R.id.textView);
                 loginButton = findViewById(R.id.login_button);
                 loginButton.setReadPermissions("email", "public profile");
                 mCallbackManager = CallbackManager.Factory.create();
@@ -158,3 +156,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 }
+
+
