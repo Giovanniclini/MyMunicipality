@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="4dp" />
 
@@ -39,12 +39,14 @@
     </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/BottNavigation"
+        xmlns:app="http://schema.android.com/apk/res/res-auto"
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_gravity="start"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/my_navigation_items">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/mynavigationitems" />
+
 </RelativeLayout>
 
 
