@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,8 +26,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.NavView);
+        navigation.getMenu().clear(); //clear old inflated items.
+        navigation.inflateMenu(R.menu.bott_nav_menu);
 
      //Intent intent = new Intent(this, LoginActivity.class);
      //startActivityForResult(intent, LOGIN_REQUEST);
