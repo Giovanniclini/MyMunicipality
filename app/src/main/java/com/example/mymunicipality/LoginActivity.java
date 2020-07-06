@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
         private CallbackManager mCallbackManager;
         private FirebaseAuth mFirebaseAuth;
@@ -43,117 +44,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
-                findViewById(R.id.buttonLogin).setOnClickListener(this);
-                //textViewUser = findViewById(R.id.textView);
-                findViewById(R.id.buttonRegistration).setOnClickListener(this);
-
-                mFirebaseAuth = FirebaseAuth.getInstance();
-                FacebookSdk.sdkInitialize(getApplicationContext());
-                loginButton = findViewById(R.id.login_button);
-                loginButton.setReadPermissions("email", "public profile");
-                mCallbackManager = CallbackManager.Factory.create();
-                loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                Button button = (Button)findViewById(R.id.buttonRegistration);
+                button.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onSuccess(LoginResult loginResult) {
-                                Log.d(TAG, "onSuccess" + loginResult);
-                                handleFacebookToken(loginResult.getAccessToken());
-                        }
-
-                        @Override
-                        public void onCancel() {
-                                Log.d(TAG, "onCancel");
-                        }
-
-                        @Override
-                        public void onError(FacebookException error) {
-                                Log.d(TAG, "onError" + error);
-
+                        public void onClick(View v) {
+                                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                LoginActivity.this.startActivity(myIntent);
+                                finish();
                         }
                 });
-
-                authStateListener = new FirebaseAuth.AuthStateListener() {
-                        @Override
-                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                if(user != null){
-                                        updateUI(user);
-                                }else{
-                                        updateUI(null);
-                                }
-                        }
-                };
-
-                accessTokenTracker = new AccessTokenTracker() {
-                        @Override
-                        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                                if(currentAccessToken == null){
-                                        mFirebaseAuth.signOut();
-                                }
-                        }
-                };
-
-        }
-
-        private void handleFacebookToken(AccessToken token) {
-                Log.d(TAG, "handleFacebookToken" + token);
-                AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-                mFirebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                        Log.d(TAG, "Sign in with credential: successful");
-                                        FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                                        updateUI(user);
-                                }else{
-                                        Log.d(TAG, "Sign in with credential: failure", task.getException());
-                                        Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                                        updateUI(null);
-                                }
-                        }
-                });
-
-
-        }
-
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-                mCallbackManager.onActivityResult(requestCode, resultCode, data);
-                super.onActivityResult(requestCode, resultCode, data);
-
-        }
-
-        private void updateUI(FirebaseUser user) {
-                if(user != null){
-                        textViewUser.setText(user.getDisplayName());
-                        if(user.getPhotoUrl() != null){
-                                String photoUrl = user.getPhotoUrl().toString();
-                                 photoUrl = photoUrl + "?type=large";
-                         //       Picasso.get().load(photoUrl).into();  per immagine del video su yt
-
-
-                        }
-                }else{
-                        textViewUser.setText("");
-                }
-        }
-
-        @Override
-        protected void onStart(){
-                super.onStart();
-                mFirebaseAuth.addAuthStateListener(authStateListener);
-        }
-
-        @Override
-        protected void onStop(){
-                super.onStop();
-                if(authStateListener != null){
-                        mFirebaseAuth.removeAuthStateListener(authStateListener);
-                }
-        }
-
-        @Override
-        public void onClick(View v) {
-
         }
 }
 

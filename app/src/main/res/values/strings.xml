@@ -13,5 +13,14 @@
     <string name="Areapersonale">Area personale</string>
     <string name="facebook_app_id">281417126535483</string>
     <string name="fb_login_protocol_scheme">fb281417126535483</string>
+    <string name="Registrazione">Registrati ora a MyMunicipality</string>
+    <string name="Registrati">Registrati</string>
+    <string name="PersonalData">Dati personali</string>
+    <string name="Carica">Carica immagine</string>
+    <string name="Successivo">Successivo</string>
+    <string name="Nome">Nome</string>
+    <string name="Cognome">Cognome</string>
+    <string name="Via">Via</string>
+    <string name="Datadinascita">Data di nascita</string>
 
 </resources>
