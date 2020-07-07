@@ -40,11 +40,13 @@ public class LoginActivity extends AppCompatActivity {
         private AccessTokenTracker accessTokenTracker;
         private static final String TAG = "FacebookAuthentication";
 
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
-                Button button = (Button)findViewById(R.id.buttonRegistration);
+                Button button = new Button(this);
+                button = (Button)findViewById(R.id.buttonRegistration);
                 button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -16,7 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Button btn= new Button(this);
-        btn = (Button)this.findViewById(R.id.buttonNext);
+        btn = (Button)findViewById(R.id.buttonNext);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

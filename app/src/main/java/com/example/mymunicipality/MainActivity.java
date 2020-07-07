@@ -12,7 +12,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  {
 
     public static final int LOGIN_REQUEST = 100;
 
@@ -34,14 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigation.getMenu().clear(); //clear old inflated items.
         navigation.inflateMenu(R.menu.bott_nav_menu);
 
-     Intent intent = new Intent(this, LoginActivity.class);
-     startActivityForResult(intent, LOGIN_REQUEST);
-    }
-
-    @Override
-    public void onClick(View v) {
-
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, LOGIN_REQUEST);
     }
 
 }
