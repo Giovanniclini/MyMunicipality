@@ -23,5 +23,7 @@
     <string name="Via">Via</string>
     <string name="Datadinascita">Data di nascita</string>
     <string name="ButtonGoogleLogout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
