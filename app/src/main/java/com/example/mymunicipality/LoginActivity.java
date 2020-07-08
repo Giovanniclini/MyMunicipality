@@ -29,15 +29,14 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.net.URI;
 
 public class LoginActivity extends AppCompatActivity {
+
+        //VARIABILI E COSTANTI
+
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
-
-        //VARIABILI
-
         GoogleSignInClient mGoogleSignInClient;
         Button verify;
         private FirebaseAuth mAuth;
-
 
         //METODI
 

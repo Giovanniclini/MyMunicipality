@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity  {
         navigation.getMenu().clear(); //clear old inflated items.
         navigation.inflateMenu(R.menu.bott_nav_menu);
 
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, LOGIN_REQUEST);
     }
