@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_report"
         android:title="@string/Segnalazioni"
         android:icon="@drawable/ic_report" />
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_appointments"
         android:title="@string/Appuntamenti"
         android:icon="@drawable/ic_appuntamenti" />
-    <item android:id="@+id/action_navigation"
+    <item android:id="@+id/action_personal"
         android:title="@string/Areapersonale"
         android:icon="@drawable/ic_person" />
 </menu>

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GoogleProfile"></activity>
+        <activity android:name=".GoogleProfile" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
