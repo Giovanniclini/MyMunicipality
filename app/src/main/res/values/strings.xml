@@ -22,5 +22,6 @@
     <string name="Cognome">Cognome</string>
     <string name="Via">Via</string>
     <string name="Datadinascita">Data di nascita</string>
+    <string name="ButtonGoogleLogout">Logout</string>
 
 </resources>
