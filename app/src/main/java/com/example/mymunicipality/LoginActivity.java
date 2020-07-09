@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.login.Login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,7 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
 
-        //VARIABILI E COSTANTI
+
 
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
@@ -50,6 +51,15 @@ public class LoginActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
+
+                Button bttn = findViewById(R.id.buttonRegistration);
+                bttn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                LoginActivity.this.startActivity(myIntent);
+                        }
+                });
 
                 mAuth = FirebaseAuth.getInstance();
 
