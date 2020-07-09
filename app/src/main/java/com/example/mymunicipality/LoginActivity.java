@@ -1,11 +1,9 @@
 package com.example.mymunicipality;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,17 +14,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import java.net.URI;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 if(user != null){
-                        Intent intent = new Intent(getApplicationContext(),GoogleProfile.class);
+                        Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                         startActivity(intent);
                 }
         }
@@ -113,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                                 // Sign in success, update UI with the signed-in user's information
                                                 FirebaseUser user = mAuth.getCurrentUser();
-                                                Intent intent = new Intent(getApplicationContext(),GoogleProfile.class);
+                                                Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                                                 startActivity(intent);
                                         } else {
                                                 // If sign in fails, display a message to the user.

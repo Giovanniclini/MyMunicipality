@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GoogleProfile" />
+        <activity android:name=".BottomNavigationHandler" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

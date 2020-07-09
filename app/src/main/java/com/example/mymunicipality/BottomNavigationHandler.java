@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class GoogleProfile extends AppCompatActivity implements View.OnClickListener {
+public class BottomNavigationHandler extends AppCompatActivity implements View.OnClickListener {
 
 
 
@@ -34,7 +34,7 @@ public class GoogleProfile extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_google_profile);
+        setContentView(R.layout.bottom_navigation_handler);
 
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment1, "1").hide(fragment1).commit();
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment2, "2").hide(fragment2).commit();
