@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">MyMunicipality</string>
-    <string name="app_access">Accedi a MyMunicipality</string>
+    <string name="app_access">MyMunicipality</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="reminder_registrazione">Crea un account</string>
+    <string name="reminder_registrazione">Sign up</string>
     <string name="Logout">Logout</string>
     <string name="Welcome">Benvenuto su MyMunicipality</string>
     <string name="Welcome2">Utilizza i riquadri qui sotto per prenotare un appuntamento, inoltrare una segnalazione o accedere all\'area personale</string>
@@ -26,5 +26,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="RipetiPassword">Ripeti password</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="Or">oppure</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
 
 </resources>

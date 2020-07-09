@@ -1,38 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".SplashViewActivity"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context=".SplashViewActivity">
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/app_access"
+        android:textSize="10pt"
         android:textStyle="bold|italic"
-        android:layout_marginTop="30dp"
-        android:textSize="10pt"/>
-
+        android:typeface="serif" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_gravity="center"
-        android:layout_width="127dp"
-        android:layout_height="145dp"
-        android:layout_marginTop="35dp"
-        android:src="@drawable/stemmafano"/>
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="130dp"
+        android:src="@drawable/stemmafano" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/sign_in_button"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_googlelogo"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:backgroundTint="@color/google_color"
+        android:text="@string/sign_in_with_google"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/customFBbutton"
+        android:textAllCaps="false"
+        android:drawableLeft="@drawable/ic_facebook_logo"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:backgroundTint="@color/fb_color"
+        android:text="@string/sign_in_with_facebook"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/Or"
+        android:textSize="10pt"
+        android:typeface="serif" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/user"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
         android:hint="@string/username"
-        android:layout_marginTop="30dp">
+        android:layout_marginRight="10dp">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -40,65 +79,40 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:hint="@string/password"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="10dp">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textAllCaps="false"
         android:id="@+id/buttonLogin"
         android:layout_gravity="center"
         android:text="@string/login"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="10dp">
     </com.google.android.material.button.MaterialButton>
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonRegistration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textAllCaps="false"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="0dp"
         android:text="@string/reminder_registrazione">
     </com.google.android.material.button.MaterialButton>
 
-
-   <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
-    <Button
-        android:id="@+id/sign_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginRight="162dp"
-        android:layout_marginBottom="218dp"
-        android:text="Sign Out"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
-
 </LinearLayout>
-
 </ScrollView>
