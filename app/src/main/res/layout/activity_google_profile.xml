@@ -22,12 +22,11 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fragmentcontainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/NavView"
-        android:layout_below="@+id/my_toolbar"
-        />
+        android:layout_below="@+id/my_toolbar" />
 
 </RelativeLayout>

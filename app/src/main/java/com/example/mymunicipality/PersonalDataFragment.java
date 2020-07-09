@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -31,7 +33,7 @@ public class PersonalDataFragment extends Fragment {
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
 
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getActivity());
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
             email.setText(signInAccount.getEmail());
