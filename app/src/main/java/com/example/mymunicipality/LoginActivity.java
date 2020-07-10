@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         private static final String AUTH_TYPE = "rerequest";
         GoogleSignInClient mGoogleSignInClient;
         Button verify;
-        private FirebaseAuth mAuth;
+        private static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
 
@@ -62,11 +63,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(user != null){
                         Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                         startActivity(intent);
-                }
-
-                if (AccessToken.getCurrentAccessToken() != null) {
-                        Intent loginIntent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
-                        startActivity(loginIntent);
                 }
 
                 if (AccessToken.getCurrentAccessToken() != null) {
@@ -96,9 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
-                                                Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
+                                                handleFacebookAccessToken(loginResult.getAccessToken());
+                                                //Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
                                                 setResult(RESULT_OK);
-                                                startActivity(i);
+                                                //startActivity(i);
                                                 finish();
                                         }
 
@@ -139,6 +136,41 @@ public class LoginActivity extends AppCompatActivity {
                         }
                 });
 
+        }
+
+        private void handleFacebookAccessToken(AccessToken token) {
+                Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+                AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+                mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                                // Sign in success, update UI with the signed-in user's information
+                                                Log.d(TAG, "signInWithCredential:success");
+                                                FirebaseUser user = mAuth.getCurrentUser();
+                                                updateUI(user);
+                                        } else {
+                                                // If sign in fails, display a message to the user.
+                                                Log.w(TAG, "signInWithCredential:failure", task.getException());
+                                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                                        Toast.LENGTH_SHORT).show();
+                                                updateUI(null);
+                                        }
+
+                                        // ...
+                                }
+                        });
+        }
+
+        private void updateUI(FirebaseUser user) {
+                if (user != null){
+                        Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
+                        i.putExtra("name", user.getDisplayName());
+                        i.putExtra("email", user.getEmail());
+                        startActivity(i);
+                }
         }
 
         private void createRequest() {
