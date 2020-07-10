@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -25,9 +26,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -49,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //METODI
 
+
         @Override
         protected void onStart(){
                 super.onStart();
@@ -58,12 +63,26 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                         startActivity(intent);
                 }
+
+                if (AccessToken.getCurrentAccessToken() != null) {
+                        Intent loginIntent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
+                        startActivity(loginIntent);
+                }
+
+                if (AccessToken.getCurrentAccessToken() != null) {
+                        Intent loginIntent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
+                        startActivity(loginIntent);
+                }
+
         }
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
+
+
 
                 //FACEBOOK CODE
                 callbackManager = CallbackManager.Factory.create();
@@ -77,9 +96,12 @@ public class LoginActivity extends AppCompatActivity {
                                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
+                                                Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
                                                 setResult(RESULT_OK);
+                                                startActivity(i);
                                                 finish();
                                         }
+
 
                                         @Override
                                         public void onCancel() {
