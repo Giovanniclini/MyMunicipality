@@ -10,7 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.facebook.login.Login;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -18,21 +25,27 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
 
-
+        //VARIABILI
 
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
+        private static final String AUTH_TYPE = "rerequest";
         GoogleSignInClient mGoogleSignInClient;
         Button verify;
         private FirebaseAuth mAuth;
+        private CallbackManager callbackManager;
+        private Button loginButton;
 
         //METODI
 
@@ -51,6 +64,38 @@ public class LoginActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
+
+                //FACEBOOK CODE
+                callbackManager = CallbackManager.Factory.create();
+
+                loginButton = findViewById(R.id.customFBbutton);
+                loginButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                LoginManager.getInstance()
+                                        .logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
+                                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                                        @Override
+                                        public void onSuccess(LoginResult loginResult) {
+                                                setResult(RESULT_OK);
+                                                finish();
+                                        }
+
+                                        @Override
+                                        public void onCancel() {
+                                                setResult(RESULT_CANCELED);
+                                                finish();
+                                        }
+
+                                        @Override
+                                        public void onError(FacebookException error) {
+
+                                        }
+                                });
+                        }
+                });
+
+                //..........
 
                 Button bttn = findViewById(R.id.buttonRegistration);
                 bttn.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +139,12 @@ public class LoginActivity extends AppCompatActivity {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
                 super.onActivityResult(requestCode, resultCode, data);
 
+                //FACEBOOK CODE
+
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+
+                //..............
+
                 // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
                 if (requestCode == RC_SIGN_IN) {
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -103,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                                 firebaseAuthWithGoogle(account.getIdToken());
                         } catch (ApiException e) {
-                                // Google Sign In failed, update UI appropriately
+                                // Google Sign In failed
                                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                 }
