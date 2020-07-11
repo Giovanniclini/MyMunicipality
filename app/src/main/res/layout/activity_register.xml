@@ -27,32 +27,32 @@
         android:src="@drawable/stemmafano"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/username"
         android:layout_marginTop="30dp">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/xuser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/xpassword1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/RipetiPassword">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/xpassword2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>

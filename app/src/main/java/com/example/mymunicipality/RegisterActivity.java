@@ -20,23 +20,28 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private static final String TAG = "RegisterActivity";
-    EditText username, password1, password2;
+    TextInputEditText username, password1, password2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+        mAuth = FirebaseAuth.getInstance();
+
         /*final EditText eText = findViewById(R.id.editText1);
         eText.setInputType(InputType.TYPE_NULL);
         eText.setOnClickListener(new View.OnClickListener() {
@@ -58,22 +63,26 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
          */
+        username = findViewById(R.id.xuser);
+        password1 = findViewById(R.id.xpassword1);
+        password2 = findViewById(R.id.xpassword2);
 
         findViewById(R.id.buttonRegistration).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                username.findViewById(R.id.username);
-                password1.findViewById(R.id.password1);
-                password2.findViewById(R.id.password2);
-
                 String user, pass1, pass2;
-                user = username.getText().toString();
-                pass1 = password1.getText().toString();
-                pass2 = password2.getText().toString();
-
-                if(pass1 == pass2){
-                    createAccount(user,pass1);
+                user = Objects.requireNonNull(username.getText()).toString();
+                pass1 = Objects.requireNonNull(password1.getText()).toString();
+                pass2 = Objects.requireNonNull(password2.getText()).toString();
+                if (pass1.length() < 6) {
+                    Toast.makeText(RegisterActivity.this, "Password must contains at least 6 character", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (pass1.equals(pass2)) {
+                        createAccount(user, pass1);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Passwords dont match", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -87,6 +96,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d(TAG, "Create user with email: success");
                     FirebaseUser user = mAuth.getCurrentUser();
+                    Intent i = new Intent(RegisterActivity.this, BottomNavigationHandler.class);
+                    startActivity(i);
                 }else{
                     Log.w(TAG, "Create user with email: failed", task.getException());
                     Toast.makeText(RegisterActivity.this, "Authentication failed",Toast.LENGTH_SHORT).show();

@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthCredential;
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         private static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
-        EditText email, password;
+
 
         //METODI
 
@@ -141,8 +142,9 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
 
-                                email.findViewById(R.id.user);
-                                password.findViewById(R.id.password);
+                                TextInputEditText email, password;
+                                email = findViewById(R.id.yuser);
+                                password = findViewById(R.id.ypassword);
                                 String email1, password1;
                                 email1 = email.getText().toString();
                                 password1 = password.getText().toString();
@@ -164,29 +166,17 @@ public class LoginActivity extends AppCompatActivity {
                                                 // Sign in success, update UI with the signed-in user's information
                                                 Log.d(TAG, "signInWithCredential:success");
                                                 FirebaseUser user = mAuth.getCurrentUser();
-                                                //updateUI(user);
                                         } else {
                                                 // If sign in fails, display a message to the user.
                                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
                                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                                         Toast.LENGTH_SHORT).show();
-                                                //updateUI(null);
                                         }
 
                                         // ...
                                 }
                         });
         }
-
-        /*private void updateUI(FirebaseUser user) {
-                if (user != null){
-                        Bundle newBundle = new Bundle();
-                        newBundle.putString("name", user.getDisplayName());
-                        newBundle.putString("email", user.getEmail());
-                        PersonalDataFragment objects = new PersonalDataFragment();
-                        objects.setArguments(newBundle);
-                }
-        }*/
 
         private void createRequest() {
                 // Configure Google Sign In
@@ -257,6 +247,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if(task.isSuccessful()){
                                         Log.d(TAG, "Sign in with email: success");
                                         FirebaseUser user = mAuth.getCurrentUser();
+                                        Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
+                                        startActivity(i);
                                 }else{
                                         Log.w(TAG, "Sign in with email: failed", task.getException());
                                         Toast.makeText(LoginActivity.this, "Authentication failed",Toast.LENGTH_SHORT).show();

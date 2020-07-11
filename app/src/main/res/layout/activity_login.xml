@@ -66,13 +66,13 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:id="@+id/user"
         android:layout_height="60dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:hint="@string/username"
         android:layout_marginRight="10dp">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/yuser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +85,7 @@
         android:hint="@string/password"
         android:layout_marginTop="10dp">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
+            android:id="@+id/ypassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
