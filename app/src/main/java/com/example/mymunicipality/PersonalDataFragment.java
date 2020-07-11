@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +29,7 @@ import static android.content.Intent.getIntent;
 
 public class PersonalDataFragment extends Fragment {
 
+    private static FirebaseAuth mAuth;
     static TextView name;
     static TextView email;
 
@@ -40,11 +42,9 @@ public class PersonalDataFragment extends Fragment {
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
 
-        Intent intent= getActivity().getIntent();
-        String name1 = intent.getStringExtra("name");
-        String email1 = intent.getStringExtra("email");
-        name.setText(name1);
-        email.setText(email1);
+        mAuth = FirebaseAuth.getInstance();
+        name.setText(mAuth.getCurrentUser().getDisplayName());
+        email.setText(mAuth.getCurrentUser().getEmail());
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){

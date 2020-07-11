@@ -93,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
-                                                //Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
+                                                Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
                                                 setResult(RESULT_OK);
-                                                //startActivity(i);
+                                                startActivity(i);
                                                 finish();
                                         }
 
@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         }
                                 });
+
                         }
                 });
 
@@ -150,13 +151,13 @@ public class LoginActivity extends AppCompatActivity {
                                                 // Sign in success, update UI with the signed-in user's information
                                                 Log.d(TAG, "signInWithCredential:success");
                                                 FirebaseUser user = mAuth.getCurrentUser();
-                                                updateUI(user);
+                                                //updateUI(user);
                                         } else {
                                                 // If sign in fails, display a message to the user.
                                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
                                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                                         Toast.LENGTH_SHORT).show();
-                                                updateUI(null);
+                                                //updateUI(null);
                                         }
 
                                         // ...
@@ -164,14 +165,15 @@ public class LoginActivity extends AppCompatActivity {
                         });
         }
 
-        private void updateUI(FirebaseUser user) {
+        /*private void updateUI(FirebaseUser user) {
                 if (user != null){
-                        Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
-                        i.putExtra("name", user.getDisplayName());
-                        i.putExtra("email", user.getEmail());
-                        startActivity(i);
+                        Bundle newBundle = new Bundle();
+                        newBundle.putString("name", user.getDisplayName());
+                        newBundle.putString("email", user.getEmail());
+                        PersonalDataFragment objects = new PersonalDataFragment();
+                        objects.setArguments(newBundle);
                 }
-        }
+        }*/
 
         private void createRequest() {
                 // Configure Google Sign In
