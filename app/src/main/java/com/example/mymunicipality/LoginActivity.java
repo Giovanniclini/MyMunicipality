@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,10 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         private static final String TAG = "LoginActivity" ;
         private static final String AUTH_TYPE = "rerequest";
         GoogleSignInClient mGoogleSignInClient;
-        Button verify;
+        Button login;
         private static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
+        EditText email, password;
 
         //METODI
 
@@ -77,8 +79,6 @@ public class LoginActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_login);
-
-
 
                 //FACEBOOK CODE
                 callbackManager = CallbackManager.Factory.create();
@@ -134,6 +134,19 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                                 signIn();
+                        }
+                });
+
+                findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                                email.findViewById(R.id.user);
+                                password.findViewById(R.id.password);
+                                String email1, password1;
+                                email1 = email.getText().toString();
+                                password1 = password.getText().toString();
+                                signInWithEmailAndPassword(email1, password1);
                         }
                 });
 
@@ -237,4 +250,18 @@ public class LoginActivity extends AppCompatActivity {
                         });
         }
 
+        private void signInWithEmailAndPassword(String username, String password){
+                mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                        Log.d(TAG, "Sign in with email: success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                }else{
+                                        Log.w(TAG, "Sign in with email: failed", task.getException());
+                                        Toast.makeText(LoginActivity.this, "Authentication failed",Toast.LENGTH_SHORT).show();
+                                }
+                        }
+                });
+        }
 }

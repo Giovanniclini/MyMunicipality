@@ -23,9 +23,6 @@ import java.util.Objects;
 
 import static android.content.Intent.getIntent;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 
 public class PersonalDataFragment extends Fragment {
 
