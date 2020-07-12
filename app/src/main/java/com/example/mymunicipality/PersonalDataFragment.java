@@ -1,32 +1,24 @@
 package com.example.mymunicipality;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.auth.FacebookAuthCredential;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-import static android.content.Intent.getIntent;
-
 
 public class PersonalDataFragment extends Fragment {
 
-    private static FirebaseAuth mAuth;
     static TextView name;
     static TextView email;
 
@@ -39,9 +31,15 @@ public class PersonalDataFragment extends Fragment {
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
 
-        mAuth = FirebaseAuth.getInstance();
-        name.setText(mAuth.getCurrentUser().getDisplayName());
-        email.setText(mAuth.getCurrentUser().getEmail());
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            name.setText(Objects.requireNonNull(user.getDisplayName()));
+            email.setText(user.getEmail());
+        }
+        else{
+            Toast.makeText(getContext(), "You're not logged in", Toast.LENGTH_SHORT).show();
+        }
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){

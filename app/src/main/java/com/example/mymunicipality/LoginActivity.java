@@ -40,6 +40,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         private static final String AUTH_TYPE = "rerequest";
         GoogleSignInClient mGoogleSignInClient;
         Button login;
-        private static FirebaseAuth mAuth;
+        static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
 
@@ -146,8 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                                 email = findViewById(R.id.yuser);
                                 password = findViewById(R.id.ypassword);
                                 String email1, password1;
-                                email1 = email.getText().toString();
-                                password1 = password.getText().toString();
+                                email1 = Objects.requireNonNull(email.getText()).toString();
+                                password1 = Objects.requireNonNull(password.getText()).toString();
                                 signInWithEmailAndPassword(email1, password1);
                         }
                 });
