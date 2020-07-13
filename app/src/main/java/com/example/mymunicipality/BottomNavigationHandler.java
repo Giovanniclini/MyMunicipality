@@ -2,6 +2,7 @@ package com.example.mymunicipality;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class BottomNavigationHandler extends AppCompatActivity implements View.OnClickListener {
 
 
-
+    private static final String TAG = "BottomActivity";
     final Fragment fragment1 = new Fragment();
     final Fragment fragment2 = new Fragment();
     final Fragment fragment3 = new PersonalDataFragment();
@@ -38,6 +39,7 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bottom_navigation_handler);
+
 
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment1, "1").hide(fragment1).commit();
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment2, "2").hide(fragment2).commit();
@@ -72,6 +74,22 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
             case R.id.action_appointments:
                 navigation.setSelectedItemId(R.id.action_appointments);
+                String value1 = null;
+                String value2 = null;
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    value1 = extras.getString("name");
+                    value2 = extras.getString("email");
+                    //The key argument here must match that used in the other activity
+                }
+                Log.d(TAG, value1 + value2);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", value1);
+                bundle.putString("email", value2);
+                PersonalDataFragment fragment = new PersonalDataFragment();
+                fragment.putArguments(bundle);
+
                 fragmentManager.beginTransaction().hide(active).show(fragment1).commit();
                 active = fragment1;
                 break;
@@ -89,5 +107,24 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
                 break;
 
         }
+    }
+
+    public void setArguments(){
+        String value1 = null;
+        String value2 = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            value1 = extras.getString("name");
+            value2 = extras.getString("email");
+            //The key argument here must match that used in the other activity
+        }
+        Log.d(TAG, value1 + value2);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", value1);
+        bundle.putString("email", value2);
+        PersonalDataFragment fragment = new PersonalDataFragment();
+        fragment.putArguments(bundle);
+
     }
 }

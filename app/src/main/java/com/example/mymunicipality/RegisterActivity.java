@@ -85,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Log.d(TAG, "Create user with email: success");
-                    FirebaseUser user = mAuth.getCurrentUser();
                     Intent i = new Intent(RegisterActivity.this, BottomNavigationHandler.class);
                     startActivity(i);
                 }else{

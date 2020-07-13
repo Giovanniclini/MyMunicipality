@@ -57,12 +57,13 @@ public class LoginActivity extends AppCompatActivity {
         private static final String TAG = "LoginActivity" ;
         private static final String AUTH_TYPE = "rerequest";
         private static final String JSON = "Json" ;
+        private static final String TAG1 = "LoginJson" ;
         GoogleSignInClient mGoogleSignInClient;
         Button login;
         static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
-        static String nameFB, emailFB;
+        private String nameFB, emailFB;
 
 
 
@@ -108,12 +109,27 @@ public class LoginActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
-                                                Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
+
+
                                                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                                                         new GraphRequest.GraphJSONObjectCallback() {
                                                                 @Override
                                                                 public void onCompleted(JSONObject user, GraphResponse response) {
-                                                                        Log.d(TAG, "Response: " + user);
+                                                                        Log.d(TAG1, "Response: " + user);
+                                                                        try {
+                                                                        String first_name = user.getString("first_name");
+                                                                        String last_name = user.getString("last_name");
+                                                                        nameFB = first_name  + " " + last_name;
+                                                                        emailFB = user.getString("email");
+                                                                        Log.d(TAG1, nameFB + emailFB);
+                                                                        Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
+                                                                        i.putExtra("name", nameFB);
+                                                                        i.putExtra("email", emailFB);
+                                                                        startActivity(i);
+
+                                                                        } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                        }
 
                                                                 }
                                                         });
@@ -121,16 +137,12 @@ public class LoginActivity extends AppCompatActivity {
                                                 parameters.putString("fields", "id,first_name,last_name,link,gender,birthday,email");
                                                 request.setParameters(parameters);
                                                 request.executeAsync();
-                                                String first_name = parameters.getString("first_name");
-                                                String last_name = parameters.getString("last_name");
-                                                nameFB = first_name  + last_name;
-                                                emailFB = parameters.getString("email");
-                                                Log.d(JSON, nameFB + emailFB );
+
+
                                                 setResult(RESULT_OK);
-                                                startActivity(i);
+
                                                 finish();
                                         }
-
 
                                         @Override
                                         public void onCancel() {
@@ -290,4 +302,5 @@ public class LoginActivity extends AppCompatActivity {
                         }
                 });
         }
+
 }

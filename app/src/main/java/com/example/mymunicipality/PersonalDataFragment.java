@@ -1,12 +1,14 @@
 package com.example.mymunicipality;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.Profile;
@@ -17,12 +19,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-import static com.example.mymunicipality.LoginActivity.emailFB;
-import static com.example.mymunicipality.LoginActivity.nameFB;
 
 
 public class PersonalDataFragment extends Fragment {
 
+    private static final String TAG = "PersonalDataFragment";
     static TextView name;
     static TextView email;
 
@@ -35,9 +36,6 @@ public class PersonalDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_personal_data, container, false);
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
-
-        name.setText(nameFB);
-        email.setText(emailFB);
 
         /*FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -57,6 +55,13 @@ public class PersonalDataFragment extends Fragment {
          */
 
         return  view;
+    }
+
+    public void putArguments(Bundle args){
+        String value1 = args.getString("name");
+        String value2 = args.getString("email");
+        name.setText(value1);
+        email.setText(value2);
     }
 
 }
