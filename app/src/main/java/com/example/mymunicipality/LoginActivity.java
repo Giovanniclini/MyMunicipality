@@ -16,6 +16,10 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.FacebookSdk;
@@ -39,6 +43,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -49,11 +56,14 @@ public class LoginActivity extends AppCompatActivity {
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
         private static final String AUTH_TYPE = "rerequest";
+        private static final String JSON = "Json" ;
         GoogleSignInClient mGoogleSignInClient;
         Button login;
         static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
+        static String nameFB, emailFB;
+
 
 
         //METODI
@@ -92,10 +102,30 @@ public class LoginActivity extends AppCompatActivity {
                                 LoginManager.getInstance()
                                         .logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
                                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+                                        private ProfileTracker mProfileTracker;
+
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
                                                 Intent i = new Intent(getBaseContext(), BottomNavigationHandler.class);
+                                                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                                                        new GraphRequest.GraphJSONObjectCallback() {
+                                                                @Override
+                                                                public void onCompleted(JSONObject user, GraphResponse response) {
+                                                                        Log.d(TAG, "Response: " + user);
+
+                                                                }
+                                                        });
+                                                Bundle parameters = new Bundle();
+                                                parameters.putString("fields", "id,first_name,last_name,link,gender,birthday,email");
+                                                request.setParameters(parameters);
+                                                request.executeAsync();
+                                                String first_name = parameters.getString("first_name");
+                                                String last_name = parameters.getString("last_name");
+                                                nameFB = first_name  + last_name;
+                                                emailFB = parameters.getString("email");
+                                                Log.d(JSON, nameFB + emailFB );
                                                 setResult(RESULT_OK);
                                                 startActivity(i);
                                                 finish();
@@ -105,17 +135,20 @@ public class LoginActivity extends AppCompatActivity {
                                         @Override
                                         public void onCancel() {
                                                 setResult(RESULT_CANCELED);
+                                                Log.v("facebook - onCancel", "cancelled");
                                                 finish();
                                         }
 
                                         @Override
                                         public void onError(FacebookException error) {
-
+                                                Log.v("facebook - onError", Objects.requireNonNull(error.getMessage()));
                                         }
                                 });
 
                         }
                 });
+
+
 
                 //..........
 
