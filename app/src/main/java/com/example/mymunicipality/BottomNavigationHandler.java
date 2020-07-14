@@ -2,6 +2,7 @@ package com.example.mymunicipality;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -40,10 +42,32 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bottom_navigation_handler);
 
+        String value1;
+        String value2;
+        Intent i = getIntent();
+
+            value1 = i.getStringExtra("name");
+            value2 = i.getStringExtra("email");
+            //The key argument here must match that used in the other activity
+
+        Log.d(TAG, value1 + value2);
+
+        Bundle bundle=new Bundle();
+        bundle.putString("name", value1);
+        bundle.putString("email", value2);
+        fragment3.setArguments(bundle);
+
+        //Bundle bundle = new Bundle();
+        //bundle.putString("name", value1);
+        //bundle.putString("email", value2);
+        //PersonalDataFragment fragment = new PersonalDataFragment();
+        //fragment.putArguments(bundle);
 
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment1, "1").hide(fragment1).commit();
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment2, "2").hide(fragment2).commit();
-        fragmentManager.beginTransaction().add(R.id.fragmentcontainer,fragment3, "3").commit();
+        fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment3, "3").addToBackStack(null).commit();
+
+        //fragmentManager.beginTransaction().add(R.id.fragmentcontainer,fragment3, "3").commit();
 
         BottomNavigationView navigation = findViewById(R.id.NavView);
         navigation.getMenu().clear(); //clear old inflated items.
@@ -109,22 +133,4 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         }
     }
 
-    public void setArguments(){
-        String value1 = null;
-        String value2 = null;
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            value1 = extras.getString("name");
-            value2 = extras.getString("email");
-            //The key argument here must match that used in the other activity
-        }
-        Log.d(TAG, value1 + value2);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("name", value1);
-        bundle.putString("email", value2);
-        PersonalDataFragment fragment = new PersonalDataFragment();
-        fragment.putArguments(bundle);
-
-    }
 }

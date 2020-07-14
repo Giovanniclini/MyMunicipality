@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.Profile;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
+import static android.content.Intent.getIntent;
 
 
 public class PersonalDataFragment extends Fragment {
@@ -36,6 +38,13 @@ public class PersonalDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_personal_data, container, false);
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
+
+        Bundle bundle = getArguments();
+        String name1 = bundle.getString("name");
+        String email1 = bundle.getString("email");
+        name.setText(name1);
+        email.setText(email1);
+
 
         /*FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -58,10 +67,19 @@ public class PersonalDataFragment extends Fragment {
     }
 
     public void putArguments(Bundle args){
-        String value1 = args.getString("name");
-        String value2 = args.getString("email");
-        name.setText(value1);
-        email.setText(value2);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    public void sendData(String data1, String data2) {
+        if(data1 != null && data2 != null)
+            name.setText(data1);
+            email.setText(data2);
     }
 
 }
