@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         private String nameFB, emailFB;
 
 
-
         //METODI
 
 
@@ -297,7 +296,7 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(i);
                                 }else{
                                         Log.w(TAG, "Sign in with email: failed", task.getException());
-                                        Toast.makeText(LoginActivity.this, "Authentication failed",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "This user doesn't exists!",Toast.LENGTH_SHORT).show();
                                 }
                         }
                 });
