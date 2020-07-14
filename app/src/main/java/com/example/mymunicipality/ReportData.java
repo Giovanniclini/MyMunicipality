@@ -1,6 +1,8 @@
 package com.example.mymunicipality;
 
-public class ReportData {
+import java.io.Serializable;
+
+public class ReportData implements Serializable {
     private String title;
     private String description;
     private int priority;

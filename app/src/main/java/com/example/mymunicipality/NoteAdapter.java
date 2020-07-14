@@ -16,16 +16,15 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.Note
 
     ReportData reportData = new ReportData();
 
-
     public NoteAdapter(@NonNull FirestoreRecyclerOptions<Note> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull NoteHolder holder, int position, @NonNull Note model) {
-        holder.textViewTitle.setText(reportData.getTitle());
-        holder.textViewDescription.setText(reportData.getDescription());
-        holder.textViewPriority.setText(reportData.getPriority());
+        holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
+        holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
+        holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
     }
 
     @NonNull
