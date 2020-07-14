@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ReportData implements Serializable {
     private String title;
     private String description;
-    private int priority;
+    private Integer priority;
 
     public ReportData(){
         //Serve un Costruttore vuoto
@@ -27,7 +27,7 @@ public class ReportData implements Serializable {
         return description;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 }
