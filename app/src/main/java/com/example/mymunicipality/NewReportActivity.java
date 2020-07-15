@@ -2,6 +2,7 @@ package com.example.mymunicipality;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +32,9 @@ public class NewReportActivity extends AppCompatActivity {
 
         numberPickerPriority.setMinValue(1);
         numberPickerPriority.setMaxValue(10);
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
     }
 
     @Override

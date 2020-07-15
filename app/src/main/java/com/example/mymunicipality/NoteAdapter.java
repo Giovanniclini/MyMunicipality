@@ -35,7 +35,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.Note
         return new NoteHolder(v);
     }
 
-    class NoteHolder extends RecyclerView.ViewHolder {
+    static class NoteHolder extends RecyclerView.ViewHolder {
 
         TextView textViewTitle;
         TextView textViewDescription;

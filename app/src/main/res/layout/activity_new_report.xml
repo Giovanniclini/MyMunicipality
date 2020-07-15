@@ -8,6 +8,13 @@
     android:padding="16dp"
     tools:context=".NewReportActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp" />
+
 
     <EditText
         android:id="@+id/edit_text_title"
