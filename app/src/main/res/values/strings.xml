@@ -30,5 +30,11 @@
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
     <string name="Or">oppure</string>
     <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="personalArea">Area Personale</string>
+    <string name="seiLoggatocome">Sei loggato come:</string>
+    <string name="Email">Email</string>
+    <string name="Cellulare">Cellulare</string>
+    <string name="Viadiresidenza">Via/Piazza</string>
+    <string name="Modifica">Modifica Informazioni</string>
 
 </resources>

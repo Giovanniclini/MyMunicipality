@@ -7,16 +7,78 @@
     android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:text="@string/personalArea"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:layout_height="130dp"
+        android:src="@drawable/ic_personalphoto" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_height="wrap_content"
         android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp" />
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/email"
+        android:paddingStart="10dp"
+        android:hint="@string/Email"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cellulare"
+        android:paddingStart="10dp"
+        android:hint="@string/Cellulare"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/birthdayDate"
+        android:paddingStart="10dp"
+        android:hint="@string/Datadinascita"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/StreetPlatz"
+        android:paddingStart="10dp"
+        android:hint="@string/Viadiresidenza"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textAllCaps="false"
+        android:id="@+id/buttonChange"
+        android:layout_gravity="center"
+        android:text="@string/Modifica"
+        android:layout_marginTop="10dp">
+    </com.google.android.material.button.MaterialButton>
 
 
 </LinearLayout>
