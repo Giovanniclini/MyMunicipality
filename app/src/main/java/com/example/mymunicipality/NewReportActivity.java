@@ -73,4 +73,5 @@ public class NewReportActivity extends AppCompatActivity {
         finish();
 
     }
+
 }
