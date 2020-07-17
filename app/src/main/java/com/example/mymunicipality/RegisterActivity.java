@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
         password2 = findViewById(R.id.xpassword2);
         nome = findViewById(R.id.Nome);
         cognome = findViewById(R.id.Cognome);
-        cellulare = findViewById(R.id.cellulare);
+        cellulare = findViewById(R.id.Cellulare);
         viapiazza = findViewById(R.id.ViaPiazza);
 
         findViewById(R.id.buttonRegistration).setOnClickListener(new View.OnClickListener() {

@@ -58,10 +58,6 @@ public class PersonalDataFragment extends Fragment {
         return  view;
     }
 
-    public void putArguments(Bundle args){
-
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
