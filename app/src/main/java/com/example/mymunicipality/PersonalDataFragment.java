@@ -111,4 +111,6 @@ public class PersonalDataFragment extends Fragment {
             //photo.setImageURI(mImageUri);  //i can use this code instead of Picasso
         }
     }
+
+
 }
