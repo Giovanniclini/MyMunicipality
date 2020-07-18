@@ -64,4 +64,6 @@ public class PersonalDataFragment extends Fragment {
 
     }
 
+    public void putArguments(Bundle bundle) {
+    }
 }

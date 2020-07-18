@@ -132,5 +132,4 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
         }
     }
-
 }
