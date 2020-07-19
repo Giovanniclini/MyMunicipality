@@ -152,10 +152,6 @@ public class PersonalDataFragment extends Fragment {
 
     }
 
-    public void putArguments(Bundle bundle) {
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -169,5 +165,4 @@ public class PersonalDataFragment extends Fragment {
         }
     }
 
-//Commit prova
 }
