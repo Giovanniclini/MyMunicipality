@@ -30,6 +30,10 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
+    public static final String TAG_ACTIVITY_FROM = "RegisterActivity";
+    public static final String TAG_ACTIVITY_FROM0 = "LoginActivity1";
+    public static final String TAG_ACTIVITY_FROM1 = "LoginActivity2";
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -42,12 +46,15 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bottom_navigation_handler);
 
-        String value1;
-        String value2;
-        Intent i = getIntent();
+        String value1 = null;
+        String value2 = null;
+        String value3 = null;
+        if (getIntent().getExtras() != null) {
+            value1 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM0);
+            value2 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM1);
+            value3 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM);
+        }
 
-            value1 = i.getStringExtra("name");
-            value2 = i.getStringExtra("email");
             //The key argument here must match that used in the other activity
 
         Log.d(TAG, value1 + value2);
@@ -55,6 +62,7 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         Bundle bundle=new Bundle();
         bundle.putString("name", value1);
         bundle.putString("email", value2);
+        bundle.putString("emailDB", value3);
         fragment3.setArguments(bundle);
 
         //Bundle bundle = new Bundle();

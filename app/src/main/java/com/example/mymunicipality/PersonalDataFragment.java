@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +15,17 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -35,10 +38,14 @@ public class PersonalDataFragment extends Fragment {
     private static final int RESULT_OK = 2;
     static TextView name;
     static TextView email;
+    static TextView cellulare;
+    static TextView viaoPiazza;
+    static TextView datadinascita;
     ShapeableImageView photo;
     FloatingActionButton button_add_image;
     private Uri mImageUri;
-    private StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
 
     @Override
@@ -49,6 +56,9 @@ public class PersonalDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_personal_data, container, false);
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
+        cellulare = view.findViewById(R.id.cellulare);
+        viaoPiazza = view.findViewById(R.id.StreetPlatz);
+        datadinascita = view.findViewById(R.id.birthdayDate);
         photo = view.findViewById(R.id.photo);
         button_add_image = view.findViewById(R.id.button_add_image);
 
@@ -63,8 +73,40 @@ public class PersonalDataFragment extends Fragment {
         Bundle bundle = getArguments();
         String name1 = bundle.getString("name");
         String email1 = bundle.getString("email");
+        String emailDB = bundle.getString("emailDB");
         name.setText(name1);
         email.setText(email1);
+
+        // Create a reference to the cities collection
+        CollectionReference usersRef = db.collection("users");
+
+        // Create a query against the collection.
+        Task<QuerySnapshot> query = usersRef.whereEqualTo("mail", emailDB)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String fname = document.getString("firstname");
+                                String lname = document.getString("lastname");
+                                String cell = document.getString("cell");
+                                String datanascita = document.getString("datanascita");
+                                String viapiazza = document.getString("viapiazza");
+                                name.setText(fname + " " + lname);
+                                cellulare.setText(cell);
+                                datadinascita.setText(datanascita);
+                                viaoPiazza.setText(viapiazza);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

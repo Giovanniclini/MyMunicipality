@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "RegisterActivity";
     TextInputEditText username, password1, password2, nome, cognome, cellulare, viapiazza;
+    String mail;
 
 
     @Override
@@ -79,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String mail, pass1, pass2, nome1, cognome1, datanascita1, viapiazza1, cellulare1;
+                String  pass1, pass2, nome1, cognome1, datanascita1, viapiazza1, cellulare1;
                 mail = Objects.requireNonNull(username.getText()).toString();
                 pass1 = Objects.requireNonNull(password1.getText()).toString();
                 pass2 = Objects.requireNonNull(password2.getText()).toString();
@@ -111,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d(TAG, "Create user with email: success");
                     Intent i = new Intent(RegisterActivity.this, BottomNavigationHandler.class);
+                    i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM, mail);
                     startActivity(i);
                 }else{
                     Log.w(TAG, "Create user with email: failed", task.getException());

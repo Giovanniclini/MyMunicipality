@@ -122,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
                                                                         emailFB = user.getString("email");
                                                                         Log.d(TAG1, nameFB + emailFB);
                                                                         Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
-                                                                        i.putExtra("name", nameFB);
-                                                                        i.putExtra("email", emailFB);
+                                                                        i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM0, nameFB);
+                                                                        i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM1, emailFB);
                                                                         startActivity(i);
 
                                                                         } catch (JSONException e) {
