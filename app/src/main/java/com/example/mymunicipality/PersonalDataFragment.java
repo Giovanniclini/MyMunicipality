@@ -71,9 +71,10 @@ public class PersonalDataFragment extends Fragment {
 
 
         Bundle bundle = getArguments();
+        //Informazioni da GraphRequest per Facebook
         String name1 = bundle.getString("name");
         String email1 = bundle.getString("email");
-
+        //Dal Login per query su Database
         String emailDB1 = bundle.getString("emailDB1");
         String emailDB0 = bundle.getString("emailDB");
         String emailDB2 = bundle.getString("emailDB2");
@@ -89,6 +90,7 @@ public class PersonalDataFragment extends Fragment {
             emailDB = emailDB1;
         }
 
+        //Set informazioni di Facebook
         name.setText(name1);
         email.setText(email1);
 
