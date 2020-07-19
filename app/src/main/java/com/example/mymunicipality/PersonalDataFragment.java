@@ -73,7 +73,18 @@ public class PersonalDataFragment extends Fragment {
         Bundle bundle = getArguments();
         String name1 = bundle.getString("name");
         String email1 = bundle.getString("email");
-        String emailDB = bundle.getString("emailDB");
+
+        String emailDB1 = bundle.getString("emailDB1");
+        String emailDB0 = bundle.getString("emailDB");
+        String emailDB = null;
+
+        if (emailDB1 == null){
+            emailDB = emailDB0;
+        }
+        else {
+            emailDB = emailDB1;
+        }
+
         name.setText(name1);
         email.setText(email1);
 

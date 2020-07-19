@@ -33,6 +33,7 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
     public static final String TAG_ACTIVITY_FROM = "RegisterActivity";
     public static final String TAG_ACTIVITY_FROM0 = "LoginActivity1";
     public static final String TAG_ACTIVITY_FROM1 = "LoginActivity2";
+    public static final String TAG_ACTIVITY_FROM2 = "LoginActivity3";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,20 +50,23 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         String value1 = null;
         String value2 = null;
         String value3 = null;
+        String value4 = null;
         if (getIntent().getExtras() != null) {
             value1 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM0);
             value2 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM1);
             value3 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM);
+            value4 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM2);
         }
 
             //The key argument here must match that used in the other activity
 
-        Log.d(TAG, value1 + value2);
+        Log.d(TAG, value1 + value2 + value3 + value4);
 
         Bundle bundle=new Bundle();
         bundle.putString("name", value1);
         bundle.putString("email", value2);
         bundle.putString("emailDB", value3);
+        bundle.putString("emailDB1", value4);
         fragment3.setArguments(bundle);
 
         //Bundle bundle = new Bundle();

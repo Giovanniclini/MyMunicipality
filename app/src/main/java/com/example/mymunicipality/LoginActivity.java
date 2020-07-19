@@ -285,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
                         });
         }
 
-        private void signInWithEmailAndPassword(String username, String password){
+        private void signInWithEmailAndPassword(final String username, String password){
                 mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -293,6 +293,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d(TAG, "Sign in with email: success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
+                                        i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM2, username);
                                         startActivity(i);
                                 }else{
                                         Log.w(TAG, "Sign in with email: failed", task.getException());
