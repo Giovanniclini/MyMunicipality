@@ -76,9 +76,13 @@ public class PersonalDataFragment extends Fragment {
 
         String emailDB1 = bundle.getString("emailDB1");
         String emailDB0 = bundle.getString("emailDB");
+        String emailDB2 = bundle.getString("emailDB2");
         String emailDB = null;
 
-        if (emailDB1 == null){
+        if (emailDB1 == null && emailDB0 == null){
+            emailDB = emailDB2;
+        }
+        else if (emailDB2 == null && emailDB1 == null){
             emailDB = emailDB0;
         }
         else {
