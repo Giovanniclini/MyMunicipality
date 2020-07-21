@@ -22,6 +22,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.io.Serializable;
+
 public class ReportsFragment extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
