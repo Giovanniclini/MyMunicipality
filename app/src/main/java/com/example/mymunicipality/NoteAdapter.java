@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.NoteHolder> {
+import java.io.Serializable;
+
+public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.NoteHolder> implements Serializable {
 
     ReportData reportData = new ReportData();
 

@@ -36,5 +36,6 @@
     <string name="Cellulare">Cellulare</string>
     <string name="Viadiresidenza">Via/Piazza</string>
     <string name="Modifica">Modifica Informazioni</string>
+    <string name="salva_modifiche">Salva Modifiche</string>
 
 </resources>

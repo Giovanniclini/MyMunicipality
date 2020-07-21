@@ -19,7 +19,8 @@ public class NewReportActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private NumberPicker numberPickerPriority;
+    private EditText editTextPriority;
+    //private NumberPicker numberPickerPriority;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +29,12 @@ public class NewReportActivity extends AppCompatActivity {
 
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
-        numberPickerPriority = findViewById(R.id.number_picker_priority);
+        editTextPriority =findViewById(R.id.priority_number);
 
-        numberPickerPriority.setMinValue(1);
-        numberPickerPriority.setMaxValue(10);
+        //numberPickerPriority = findViewById(R.id.number_picker_priority);
+
+        //numberPickerPriority.setMinValue(1);
+        //numberPickerPriority.setMaxValue(10);
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -60,7 +63,8 @@ public class NewReportActivity extends AppCompatActivity {
     private void saveNote() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        int priority = numberPickerPriority.getValue();
+        String priority = editTextPriority.getText().toString();
+        //int priority = numberPickerPriority.getValue();
 
         if(title.trim().isEmpty() || description.trim().isEmpty()){
             Toast.makeText(this, "please insert a title amd description", Toast.LENGTH_SHORT).show();

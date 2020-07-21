@@ -6,13 +6,14 @@ public class ReportData implements Serializable {
 
     private String title;
     private String description;
-    private Integer priority;
+    private String priority;
+    //private Integer priority;
 
     public ReportData(){
         //Serve un Costruttore vuoto
     }
 
-    public ReportData(String title, String description, int priority){
+    public ReportData(String title, String description, String priority){
         this.title = title;
         this.description = description;
         this.priority = priority;
@@ -28,7 +29,7 @@ public class ReportData implements Serializable {
         return description;
     }
 
-    public Integer getPriority() {
+    public String getPriority() {
         return priority;
     }
 }
