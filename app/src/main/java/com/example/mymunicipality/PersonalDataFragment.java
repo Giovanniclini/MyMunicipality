@@ -62,6 +62,8 @@ public class PersonalDataFragment extends Fragment {
         photo = view.findViewById(R.id.photo);
         button_add_image = view.findViewById(R.id.button_add_image);
 
+
+
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,15 +161,10 @@ public class PersonalDataFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
 
             mImageUri = data.getData();
             Picasso.get().load(mImageUri).into(photo);
 
-            //photo.setImageURI(mImageUri);  //i can use this code instead of Picasso
-        }
     }
 
 }

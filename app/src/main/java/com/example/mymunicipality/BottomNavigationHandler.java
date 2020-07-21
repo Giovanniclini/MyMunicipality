@@ -1,5 +1,6 @@
 package com.example.mymunicipality;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 public class BottomNavigationHandler extends AppCompatActivity implements View.OnClickListener {
 
@@ -157,4 +159,13 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Uri: ", "ciao ciao");
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }
+
+
