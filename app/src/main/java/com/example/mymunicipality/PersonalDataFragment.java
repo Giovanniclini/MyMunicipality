@@ -71,9 +71,15 @@ public class PersonalDataFragment extends Fragment {
 
 
         Bundle bundle = getArguments();
-        //Informazioni da GraphRequest per Facebook
-        String name1 = bundle.getString("name");
-        String email1 = bundle.getString("email");
+        if (bundle != null) {
+            //Informazioni da GraphRequest per Facebook
+            String name1 = bundle.getString("name");
+            String email1 = bundle.getString("email");
+            //Set informazioni di Facebook
+            name.setText(name1);
+            email.setText(email1);
+        }
+
         //Dal Login per query su Database
         String emailDB1 = bundle.getString("emailDB1");
         String emailDB0 = bundle.getString("emailDB");
@@ -89,10 +95,6 @@ public class PersonalDataFragment extends Fragment {
         else {
             emailDB = emailDB1;
         }
-
-        //Set informazioni di Facebook
-        name.setText(name1);
-        email.setText(email1);
 
         // Create a reference to the cities collection
         CollectionReference usersRef = db.collection("users");
@@ -132,6 +134,7 @@ public class PersonalDataFragment extends Fragment {
             email.setText(user.getEmail());
         }
 
+        //Piccolo errore dovuto a questa parte di codice
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
