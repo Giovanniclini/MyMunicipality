@@ -138,7 +138,7 @@ public class PersonalDataFragment extends Fragment {
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
-            email.setText(signInAccount.getEmail());
+            //email.setText(signInAccount.getEmail());
         }
 
         return  view;
