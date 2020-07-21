@@ -1,32 +1,22 @@
 package com.example.mymunicipality;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,30 +28,22 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.Objects;
-
-import static android.content.pm.PackageManager.*;
-import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 
 public class PersonalDataFragment extends Fragment {
 
     private static final String TAG = "PersonalDataFragment";
     private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int PERMISSION_CODE = 2;
-    private static final int RESULT_OK = 3  ;
-
+    private static final int RESULT_OK = 2;
     static TextView name;
     static TextView email;
     static TextView cellulare;
     static TextView viaoPiazza;
     static TextView datadinascita;
-
-    MaterialButton buttonChange;
-    Uri mImageUri;
     ShapeableImageView photo;
     FloatingActionButton button_add_image;
+    private Uri mImageUri;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -79,40 +61,26 @@ public class PersonalDataFragment extends Fragment {
         datadinascita = view.findViewById(R.id.birthdayDate);
         photo = view.findViewById(R.id.photo);
         button_add_image = view.findViewById(R.id.button_add_image);
-        buttonChange = view.findViewById(R.id.buttonChange);
 
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PERMISSION_DENIED){
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        requestPermissions(permissions, PERMISSION_CODE);
-                    }
-                    else{
-                        openFileChooser();
-                    }
-                }
-                else{
-                    openFileChooser();
-
-                }
-            }
-        });
-
-        buttonChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditPersonalDataActivity.class);
-                startActivity(intent);
+                openFileChooser();
             }
         });
 
 
         Bundle bundle = getArguments();
-        String name1 = bundle.getString("name");
-        String email1 = bundle.getString("email");
+        if (bundle != null) {
+            //Informazioni da GraphRequest per Facebook
+            String name1 = bundle.getString("name");
+            String email1 = bundle.getString("email");
+            //Set informazioni di Facebook
+            name.setText(name1);
+            email.setText(email1);
+        }
 
+        //Dal Login per query su Database
         String emailDB1 = bundle.getString("emailDB1");
         String emailDB0 = bundle.getString("emailDB");
         String emailDB2 = bundle.getString("emailDB2");
@@ -127,9 +95,6 @@ public class PersonalDataFragment extends Fragment {
         else {
             emailDB = emailDB1;
         }
-
-        name.setText(name1);
-        email.setText(email1);
 
         // Create a reference to the cities collection
         CollectionReference usersRef = db.collection("users");
@@ -169,6 +134,7 @@ public class PersonalDataFragment extends Fragment {
             email.setText(user.getEmail());
         }
 
+        //Piccolo errore dovuto a questa parte di codice
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
@@ -179,7 +145,7 @@ public class PersonalDataFragment extends Fragment {
     }
 
     private void openFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
@@ -191,36 +157,17 @@ public class PersonalDataFragment extends Fragment {
 
     }
 
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK){
-            //photo.setImageURI(data.getData());
-            mImageUri = Objects.requireNonNull(data).getData();
-            photo.setImageURI(mImageUri);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
 
+            mImageUri = data.getData();
+            Picasso.get().load(mImageUri).into(photo);
+
+            //photo.setImageURI(mImageUri);  //i can use this code instead of Picasso
         }
     }
 
-
-    public void putArguments(Bundle bundle) {
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case PERMISSION_CODE:
-                if(grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED){
-                    openFileChooser();
-                }
-                else{
-                    Toast.makeText(getActivity(), "Permissions denied!", Toast.LENGTH_SHORT).show();
-                }
-        }
-
-    }
 }
