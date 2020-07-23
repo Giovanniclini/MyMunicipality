@@ -37,6 +37,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 if(user != null){
+
                         Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                         String email = user.getEmail();
                         intent.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM3, email);

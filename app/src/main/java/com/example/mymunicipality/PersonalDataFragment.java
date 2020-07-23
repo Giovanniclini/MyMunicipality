@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -26,6 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -47,6 +52,8 @@ public class PersonalDataFragment extends Fragment {
     FloatingActionButton button_add_image;
     private Uri mImageUri;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StorageReference mStorageRef;
+    String emailDB = null;
 
 
 
@@ -64,7 +71,7 @@ public class PersonalDataFragment extends Fragment {
         photo = view.findViewById(R.id.photo);
         button_add_image = view.findViewById(R.id.button_add_image);
 
-
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +95,7 @@ public class PersonalDataFragment extends Fragment {
         String emailDB1 = bundle.getString("emailDB1");
         String emailDB0 = bundle.getString("emailDB");
         String emailDB2 = bundle.getString("emailDB2");
-        String emailDB = null;
+
 
         if (emailDB1 == null && emailDB0 == null){
             emailDB = emailDB2;
@@ -166,6 +173,25 @@ public class PersonalDataFragment extends Fragment {
 
             mImageUri = data.getData();
             Picasso.get().load(mImageUri).into(photo);
+            String profilepictures = "profilepictures/";
+            String path = profilepictures + emailDB;
+            StorageReference riversRef = mStorageRef.child(path);
+
+            riversRef.putFile(mImageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
 
     }
 
