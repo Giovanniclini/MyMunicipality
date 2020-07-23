@@ -30,6 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class PersonalDataFragment extends Fragment {
 
@@ -41,7 +43,7 @@ public class PersonalDataFragment extends Fragment {
     static TextView cellulare;
     static TextView viaoPiazza;
     static TextView datadinascita;
-    ShapeableImageView photo;
+    CircleImageView photo;
     FloatingActionButton button_add_image;
     private Uri mImageUri;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
