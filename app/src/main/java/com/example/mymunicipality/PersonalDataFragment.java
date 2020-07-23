@@ -28,11 +28,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -166,6 +169,31 @@ public class PersonalDataFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        String profilepictures = "profilepictures/";
+        String path = profilepictures + emailDB;
+        StorageReference riversRef = mStorageRef.child(path);
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("images", "jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final File finalLocalFile = localFile;
+        riversRef.getFile(localFile)
+                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Successfully downloaded data to local file
+                        Picasso.get().load(finalLocalFile).into(photo);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle failed download
+                // ...
+            }
+        });
+
     }
 
     @Override
@@ -182,14 +210,14 @@ public class PersonalDataFragment extends Fragment {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
-                        //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
-                        // ...
+
                     }
                 });
 
