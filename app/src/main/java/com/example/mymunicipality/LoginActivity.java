@@ -52,23 +52,14 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-        //VARIABILI
-
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
-        private static final String AUTH_TYPE = "rerequest";
-        private static final String JSON = "Json" ;
         private static final String TAG1 = "LoginJson" ;
         GoogleSignInClient mGoogleSignInClient;
-        Button login;
         static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
         private String nameFB, emailFB;
-
-
-        //METODI
-
 
         @Override
         protected void onStart(){
@@ -78,8 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(user != null){
 
                         Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
-                        String email = user.getEmail();
-                        intent.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM3, email);
                         startActivity(intent);
                 }
 
@@ -106,8 +95,6 @@ public class LoginActivity extends AppCompatActivity {
                                 LoginManager.getInstance()
                                         .logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
                                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
-                                        private ProfileTracker mProfileTracker;
 
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
@@ -295,9 +282,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
                                         Log.d(TAG, "Sign in with email: success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
                                         Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
-                                        i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM2, username);
                                         startActivity(i);
                                 }else{
                                         Log.w(TAG, "Sign in with email: failed", task.getException());

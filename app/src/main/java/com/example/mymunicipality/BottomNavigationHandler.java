@@ -52,40 +52,21 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
         String value1 = null;
         String value2 = null;
-        String value3 = null;
-        String value4 = null;
-        String value5 = null;
         if (getIntent().getExtras() != null) {
             value1 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM0);
             value2 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM1);
-            value3 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM);
-            value4 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM2);
-            value5 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM3);
         }
 
-            //The key argument here must match that used in the other activity
-
-        Log.d(TAG, value1 + value2 + value3 + value4);
+        Log.d(TAG, value1 + value2);
 
         Bundle bundle=new Bundle();
         bundle.putString("name", value1);
         bundle.putString("email", value2);
-        bundle.putString("emailDB", value3);
-        bundle.putString("emailDB1", value4);
-        bundle.putString("emailDB2", value5);
         fragment3.setArguments(bundle);
-
-        //Bundle bundle = new Bundle();
-        //bundle.putString("name", value1);
-        //bundle.putString("email", value2);
-        //PersonalDataFragment fragment = new PersonalDataFragment();
-        //fragment.putArguments(bundle);
 
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment1, "1").hide(fragment1).commit();
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment2, "2").hide(fragment2).commit();
         fragmentManager.beginTransaction().add(R.id.fragmentcontainer, fragment3, "3").addToBackStack(null).commit();
-
-        //fragmentManager.beginTransaction().add(R.id.fragmentcontainer,fragment3, "3").commit();
 
         BottomNavigationView navigation = findViewById(R.id.NavView);
         navigation.getMenu().clear(); //clear old inflated items.

@@ -112,7 +112,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d(TAG, "Create user with email: success");
                     Intent i = new Intent(RegisterActivity.this, BottomNavigationHandler.class);
-                    i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM, mail);
                     startActivity(i);
                 }else{
                     Log.w(TAG, "Create user with email: failed", task.getException());

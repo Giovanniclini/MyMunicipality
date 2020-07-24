@@ -76,6 +76,11 @@ public class PersonalDataFragment extends Fragment {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            emailDB = user.getEmail();
+        }
+
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,22 +97,6 @@ public class PersonalDataFragment extends Fragment {
             //Set informazioni di Facebook
             name.setText(name1);
             email.setText(email1);
-        }
-
-        //Dal Login per query su Database
-        String emailDB1 = bundle.getString("emailDB1");
-        String emailDB0 = bundle.getString("emailDB");
-        String emailDB2 = bundle.getString("emailDB2");
-
-
-        if (emailDB1 == null && emailDB0 == null){
-            emailDB = emailDB2;
-        }
-        else if (emailDB2 == null && emailDB1 == null){
-            emailDB = emailDB0;
-        }
-        else {
-            emailDB = emailDB1;
         }
 
         // Create a reference to the cities collection
@@ -139,16 +128,11 @@ public class PersonalDataFragment extends Fragment {
                 });
 
 
-
-
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             //name.setText(Objects.requireNonNull(user.getDisplayName()));
             email.setText(user.getEmail());
         }
 
-        //Piccolo errore dovuto a questa parte di codice
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
