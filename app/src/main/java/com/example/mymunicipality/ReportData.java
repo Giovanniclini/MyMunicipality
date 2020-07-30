@@ -1,5 +1,8 @@
 package com.example.mymunicipality;
 
+import android.util.Log;
+import android.view.View;
+
 import java.io.Serializable;
 
 public class ReportData implements Serializable {
@@ -32,4 +35,5 @@ public class ReportData implements Serializable {
     public String getPriority() {
         return priority;
     }
+
 }

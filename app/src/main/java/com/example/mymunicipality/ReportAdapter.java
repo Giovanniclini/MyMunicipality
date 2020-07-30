@@ -1,7 +1,7 @@
 package com.example.mymunicipality;
 
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Note;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,37 +14,46 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.io.Serializable;
 
-public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.NoteHolder> implements Serializable {
+public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAdapter.ReportHolder> implements Serializable {
 
-    ReportData reportData = new ReportData();
-
-    public NoteAdapter(@NonNull FirestoreRecyclerOptions<Note> options) {
+    public ReportAdapter(@NonNull FirestoreRecyclerOptions<ReportData> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull NoteHolder holder, int position, @NonNull Note model) {
+    protected void onBindViewHolder(@NonNull ReportHolder holder, int position, @NonNull final ReportData reportData) {
         holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
         holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
         holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
+
+        // Gestisco il click sull'intera view
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("XXXX", reportData.getTitle());
+            }
+        });
     }
 
     @NonNull
     @Override
-    public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReportHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.report_item, parent, false);
 
-        return new NoteHolder(v);
+        return new ReportHolder(v);
     }
 
-    static class NoteHolder extends RecyclerView.ViewHolder {
+    static class ReportHolder extends RecyclerView.ViewHolder {
 
+        View view;
         TextView textViewTitle;
         TextView textViewDescription;
         TextView textViewPriority;
 
-        public NoteHolder(View itemView){
+        public ReportHolder(View itemView){
             super(itemView);
+
+            view = itemView;
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
