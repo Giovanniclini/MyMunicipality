@@ -60,6 +60,7 @@ public class PersonalDataFragment extends Fragment {
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +81,22 @@ public class PersonalDataFragment extends Fragment {
         if (user != null){
             emailDB = user.getEmail();
         }
+        /*
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
+        if(signInAccount != null){
+            name.setText(signInAccount.getDisplayName());
+            //email.setText(signInAccount.getEmail());
+        }
+
+        Bundle bundle = getArguments();
+        if (bundle != null && emailDB.isEmpty()) {
+            //Informazioni da GraphRequest per Facebook
+            String email1 = bundle.getString("email");
+            //Set informazioni di Facebook
+            if(email1 != null && !email1.isEmpty()) {
+                emailDB = email1;
+            }
+        }*/
 
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +104,6 @@ public class PersonalDataFragment extends Fragment {
                 openFileChooser();
             }
         });
-
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            //Informazioni da GraphRequest per Facebook
-            String name1 = bundle.getString("name");
-            String email1 = bundle.getString("email");
-            //Set informazioni di Facebook
-            name.setText(name1);
-            email.setText(email1);
-        }
 
         // Create a reference to the cities collection
         CollectionReference usersRef = db.collection("users");
@@ -117,6 +123,7 @@ public class PersonalDataFragment extends Fragment {
                                 String viapiazza = document.getString("viapiazza");
                                 name.setText(fname + " " + lname);
                                 cellulare.setText(cell);
+                                email.setText(emailDB);
                                 datadinascita.setText(datanascita);
                                 viaoPiazza.setText(viapiazza);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
@@ -126,18 +133,6 @@ public class PersonalDataFragment extends Fragment {
                         }
                     }
                 });
-
-
-        if (user != null) {
-            //name.setText(Objects.requireNonNull(user.getDisplayName()));
-            email.setText(user.getEmail());
-        }
-
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
-        if(signInAccount != null){
-            name.setText(signInAccount.getDisplayName());
-            //email.setText(signInAccount.getEmail());
-        }
 
         return  view;
     }

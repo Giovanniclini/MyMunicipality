@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
-        private String nameFB, emailFB;
+        private String emailFB;
 
         @Override
         protected void onStart(){
@@ -107,13 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                                                                 public void onCompleted(JSONObject user, GraphResponse response) {
                                                                         Log.d(TAG1, "Response: " + user);
                                                                         try {
-                                                                        String first_name = user.getString("first_name");
-                                                                        String last_name = user.getString("last_name");
-                                                                        nameFB = first_name  + " " + last_name;
                                                                         emailFB = user.getString("email");
-                                                                        Log.d(TAG1, nameFB + emailFB);
+                                                                        Log.d(TAG1, emailFB);
                                                                         Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
-                                                                        i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM0, nameFB);
                                                                         i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM1, emailFB);
                                                                         startActivity(i);
 

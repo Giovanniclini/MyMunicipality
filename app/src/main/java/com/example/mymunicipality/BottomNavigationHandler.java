@@ -33,7 +33,6 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
     public static final String TAG_ACTIVITY_FROM = "RegisterActivity";
-    public static final String TAG_ACTIVITY_FROM0 = "LoginActivity1";
     public static final String TAG_ACTIVITY_FROM1 = "LoginActivity2";
     public static final String TAG_ACTIVITY_FROM2 = "LoginActivity3";
     public static final String TAG_ACTIVITY_FROM3 = "CheckOnLogin";
@@ -53,14 +52,12 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         String value1 = null;
         String value2 = null;
         if (getIntent().getExtras() != null) {
-            value1 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM0);
             value2 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM1);
         }
 
         Log.d(TAG, value1 + value2);
 
         Bundle bundle=new Bundle();
-        bundle.putString("name", value1);
         bundle.putString("email", value2);
         fragment3.setArguments(bundle);
 
@@ -103,7 +100,6 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
                 String value4 = null;
                 String value5 = null;
                 if (getIntent().getExtras() != null) {
-                    value1 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM0);
                     value2 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM1);
                     value3 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM);
                     value4 = (String) getIntent().getStringExtra(TAG_ACTIVITY_FROM2);
