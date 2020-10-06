@@ -81,13 +81,13 @@ public class PersonalDataFragment extends Fragment {
         if (user != null){
             emailDB = user.getEmail();
         }
-        /*
+
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if(signInAccount != null){
             name.setText(signInAccount.getDisplayName());
-            //email.setText(signInAccount.getEmail());
+            email.setText(signInAccount.getEmail());
         }
-
+        /*
         Bundle bundle = getArguments();
         if (bundle != null && emailDB.isEmpty()) {
             //Informazioni da GraphRequest per Facebook

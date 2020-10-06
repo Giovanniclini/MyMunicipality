@@ -1,6 +1,5 @@
 package com.example.mymunicipality;
 
-import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     protected void onBindViewHolder(@NonNull ReportHolder holder, int position, @NonNull final ReportData reportData) {
         holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
         holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
-        holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
+        holder.textViewVia.setText(String.valueOf(reportData.getVia()));
 
         // Gestisco il click sull'intera view
         holder.view.setOnClickListener(new View.OnClickListener() {
@@ -48,15 +47,15 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         View view;
         TextView textViewTitle;
         TextView textViewDescription;
-        TextView textViewPriority;
+        TextView textViewVia;
 
         public ReportHolder(View itemView){
             super(itemView);
 
             view = itemView;
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewDescription = itemView.findViewById(R.id.text_view_via);
-            textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            //textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewVia = itemView.findViewById(R.id.text_view_via);
 
         }
 

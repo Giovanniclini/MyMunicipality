@@ -1,25 +1,22 @@
 package com.example.mymunicipality;
 
-import android.util.Log;
-import android.view.View;
-
 import java.io.Serializable;
 
 public class ReportData implements Serializable {
 
     private String title;
     private String description;
-    private String priority;
+    private String via;
     //private Integer priority;
 
     public ReportData(){
         //Serve un Costruttore vuoto
     }
 
-    public ReportData(String title, String description, String priority){
+    public ReportData(String title, String description, String via){
         this.title = title;
         this.description = description;
-        this.priority = priority;
+        this.via = via;
     }
 
     //NON CAMBIARE NOME AI GETTER
@@ -32,8 +29,8 @@ public class ReportData implements Serializable {
         return description;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getVia() {
+        return via;
     }
 
 }
