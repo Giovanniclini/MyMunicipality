@@ -7,7 +7,6 @@ public class ReportData implements Serializable {
     private String title;
     private String description;
     private String via;
-    //private Integer priority;
 
     public ReportData(){
         //Serve un Costruttore vuoto

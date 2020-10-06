@@ -119,7 +119,7 @@ public class NewReportActivity extends AppCompatActivity {
         String via = editTextVia.getText().toString();
 
         if(title.trim().isEmpty() || description.trim().isEmpty()){
-            Toast.makeText(this, "please insert a title and description", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please insert a Title and Description", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -129,7 +129,5 @@ public class NewReportActivity extends AppCompatActivity {
         finish();
 
     }
-
-    //Commit prova
 
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 
@@ -30,8 +31,10 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             @Override
             public void onClick(View view) {
                 Log.i("XXXX", reportData.getTitle());
+                //Intent per activity di dettaglio report
             }
         });
+
     }
 
     @NonNull
@@ -62,5 +65,3 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     }
 
 }
-
-//skrt skrt1
