@@ -32,12 +32,12 @@ public class NewReportActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private EditText editTextPriority;
+    private EditText editTextVia;
     private ShapeableImageView photo_report;
     private MaterialButton add_photo_button;
     private Uri mImageUri;
     private StorageReference mStorageRef;
-    //private NumberPicker numberPickerPriority;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class NewReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_report);
 
         editTextTitle = findViewById(R.id.edit_text_title);
+        editTextVia = findViewById(R.id.edit_text_via);
         editTextDescription = findViewById(R.id.edit_text_description);
-        editTextPriority = findViewById(R.id.priority_number);
         add_photo_button = findViewById(R.id.add_photo);
         photo_report = findViewById(R.id.photo_report);
 
@@ -116,16 +116,15 @@ public class NewReportActivity extends AppCompatActivity {
     private void saveNote() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        String priority = editTextPriority.getText().toString();
-        //int priority = numberPickerPriority.getValue();
+        String via = editTextVia.getText().toString();
 
         if(title.trim().isEmpty() || description.trim().isEmpty()){
-            Toast.makeText(this, "please insert a title amd description", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "please insert a title and description", Toast.LENGTH_SHORT).show();
             return;
         }
 
         CollectionReference reportsRef = FirebaseFirestore.getInstance().collection("Reports");
-        reportsRef.add(new ReportData(title, description, priority));
+        reportsRef.add(new ReportData(title, description, via));
         Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
         finish();
 

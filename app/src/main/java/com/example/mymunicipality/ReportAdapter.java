@@ -55,7 +55,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
 
             view = itemView;
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewDescription = itemView.findViewById(R.id.text_view_via);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
 
         }
