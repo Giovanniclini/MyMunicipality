@@ -22,7 +22,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     @Override
     protected void onBindViewHolder(@NonNull ReportHolder holder, int position, @NonNull final ReportData reportData) {
         holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
-        holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
+        //holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
         holder.textViewVia.setText(String.valueOf(reportData.getVia()));
 
         // Gestisco il click sull'intera view
