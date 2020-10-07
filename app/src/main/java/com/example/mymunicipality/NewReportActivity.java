@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -37,7 +38,6 @@ public class NewReportActivity extends AppCompatActivity {
     private MaterialButton add_photo_button;
     private Uri mImageUri;
     private StorageReference mStorageRef;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,15 +117,27 @@ public class NewReportActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
         String via = editTextVia.getText().toString();
+        Integer priority = 0;
 
         if(title.trim().isEmpty() || description.trim().isEmpty()){
             Toast.makeText(this, "Please insert a Title and Description", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        CollectionReference reportsRef = FirebaseFirestore.getInstance().collection("Reports");
-        reportsRef.add(new ReportData(title, description, via));
+        /*CollectionReference reportsRef = FirebaseFirestore.getInstance().collection("Reports");
+        reportsRef.add(new ReportData(title, description, via, priority));
         Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
+        finish();
+        */
+       FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+       DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(title);
+        Reports reports = new Reports(title,description,via,priority);
+        mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Document written succesfully", Toast.LENGTH_SHORT).show();
+            }
+        });
         finish();
 
     }

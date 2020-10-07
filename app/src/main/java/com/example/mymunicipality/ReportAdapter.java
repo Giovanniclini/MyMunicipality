@@ -6,16 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 
 public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAdapter.ReportHolder> implements Serializable {
+
 
     public ReportAdapter(@NonNull FirestoreRecyclerOptions<ReportData> options) {
         super(options);
@@ -26,6 +31,31 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
         //holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
         holder.textViewVia.setText(String.valueOf(reportData.getVia()));
+        holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
+
+        //OnClick del UpVote
+        holder.button_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             /*   Integer priority = reportData.getPriority() + 1;
+                FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
+                mFirebaseFirestore
+                        .collection("Reports")
+                        .document(reportData.getTitle())
+                        .update
+                        */
+
+            }
+        });
+
+        //OnClick del DownVote
+        holder.button_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reportData.decreasePriority();
+
+            }
+        });
 
         // Gestisco il click sull'intera view
         holder.view.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +85,9 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         TextView textViewTitle;
         TextView textViewDescription;
         TextView textViewVia;
+        TextView textViewPriority;
+        FloatingActionButton button_up;
+        FloatingActionButton button_down;
 
         public ReportHolder(View itemView){
             super(itemView);
@@ -63,10 +96,12 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             //textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewVia = itemView.findViewById(R.id.text_view_via);
+            textViewPriority =itemView.findViewById(R.id.text_view_priority);
+            button_up = itemView.findViewById(R.id.button_up);
+            button_down = itemView.findViewById(R.id.button_down);
 
         }
 
     }
 
 }
-//commento per commit
