@@ -1,5 +1,6 @@
 package com.example.mymunicipality;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,9 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             @Override
             public void onClick(View view) {
                 Log.i("XXXX", reportData.getTitle());
+                Intent intent = new Intent(null , ReportDetails.class);
+                intent.putExtra("titolo", reportData.getTitle());
+                //startActivity(intent);
                 //Intent per activity di dettaglio report
             }
         });
