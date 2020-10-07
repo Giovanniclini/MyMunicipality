@@ -69,3 +69,4 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     }
 
 }
+//commento per commit
