@@ -61,14 +61,14 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             }
         });
 
-        // Gestisco il click sull'intera view
+        //Onclick sull'intera view
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("XXXX", reportData.getTitle());
-                Intent intent = new Intent(null , ReportDetails.class);
+                Intent intent = new Intent(view.getContext() , ReportDetails.class);
                 intent.putExtra("titolo", reportData.getTitle());
-                //startActivity(intent);
+                view.getContext().startActivity(intent);
                 //Intent per activity di dettaglio report
             }
         });

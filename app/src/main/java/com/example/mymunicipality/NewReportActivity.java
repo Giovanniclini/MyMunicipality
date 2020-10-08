@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -124,14 +126,15 @@ public class NewReportActivity extends AppCompatActivity {
             return;
         }
 
-        /*CollectionReference reportsRef = FirebaseFirestore.getInstance().collection("Reports");
-        reportsRef.add(new ReportData(title, description, via, priority));
-        Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
-        finish();
-        */
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String username = null;
+        if (user != null){
+            username = user.getDisplayName();
+        }
+
        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
        DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(title);
-        Reports reports = new Reports(title,description,via,priority);
+        Reports reports = new Reports(title,description,via,priority,username);
         mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
