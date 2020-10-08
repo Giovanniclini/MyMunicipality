@@ -37,13 +37,12 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         holder.button_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             /*   Integer priority = reportData.getPriority() + 1;
+                Integer priority = reportData.getPriority() + 1;
                 FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
                 mFirebaseFirestore
                         .collection("Reports")
                         .document(reportData.getTitle())
-                        .update
-                        */
+                        .update("priority", priority);
 
             }
         });
@@ -52,7 +51,12 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         holder.button_down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reportData.decreasePriority();
+                Integer priority = reportData.getPriority() - 1;
+                FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
+                mFirebaseFirestore
+                        .collection("Reports")
+                        .document(reportData.getTitle())
+                        .update("priority", priority);
 
             }
         });

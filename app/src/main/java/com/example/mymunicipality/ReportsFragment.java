@@ -63,7 +63,7 @@ public class ReportsFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        Query query = reportsRef.orderBy("title", Query.Direction.DESCENDING);
+        Query query = reportsRef.orderBy("priority", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<ReportData> options = new FirestoreRecyclerOptions
                 .Builder<ReportData>()
