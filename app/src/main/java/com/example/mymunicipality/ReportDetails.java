@@ -2,10 +2,13 @@ package com.example.mymunicipality;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,6 +38,13 @@ public class ReportDetails extends AppCompatActivity {
     private StorageReference mStorageRef;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.report_menu, menu);
+        return  true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_details);
@@ -47,6 +57,10 @@ public class ReportDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String title = intent.getStringExtra("titolo");
+
+        Toolbar toolbar = findViewById(R.id.report_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(title);
 
         if (title != null){
             FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();

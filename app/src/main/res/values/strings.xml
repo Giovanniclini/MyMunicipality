@@ -39,5 +39,6 @@
     <string name="salva_modifiche">Salva Modifiche</string>
     <string name="descrizione">Descrizione</string>
     <string name="title">Title</string>
+    <string name="delete">Delete</string>
 
 </resources>

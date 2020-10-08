@@ -59,8 +59,6 @@ public class PersonalDataFragment extends Fragment {
     String emailDB = null;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,16 +85,6 @@ public class PersonalDataFragment extends Fragment {
             name.setText(signInAccount.getDisplayName());
             email.setText(signInAccount.getEmail());
         }
-        /*
-        Bundle bundle = getArguments();
-        if (bundle != null && emailDB.isEmpty()) {
-            //Informazioni da GraphRequest per Facebook
-            String email1 = bundle.getString("email");
-            //Set informazioni di Facebook
-            if(email1 != null && !email1.isEmpty()) {
-                emailDB = email1;
-            }
-        }*/
 
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
