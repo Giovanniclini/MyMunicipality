@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -16,6 +20,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,6 +51,67 @@ public class ReportDetails extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_report:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String username1 = null;
+                if (user != null){
+                    username1 = user.getDisplayName();
+                }
+
+                Intent intent = getIntent();
+                final String title = intent.getStringExtra("titolo");
+                assert title != null;
+
+                final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+                DocumentReference mFirestoreDetails = mFirestore.collection("Reports").document(title);
+                final String finalUsername = username1;
+                mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            String username2 = document.getString("username");
+                            if(finalUsername.equals(username2)){
+                                mFirestore.collection("Reports").document(title).delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "Document snapshot successfully deleted");
+                                                Toast.makeText(getApplicationContext(), "Sussessfully deleted", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error deleting document");
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Impossibile eliminare segnalazioni di altri utenti", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+        }
+    return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_details);
@@ -61,6 +128,8 @@ public class ReportDetails extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.report_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (title != null){
             FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
