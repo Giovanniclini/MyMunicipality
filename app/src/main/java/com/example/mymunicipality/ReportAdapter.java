@@ -1,6 +1,7 @@
 package com.example.mymunicipality;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +28,13 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ReportHolder holder, int position, @NonNull final ReportData reportData) {
+    protected void onBindViewHolder(@NonNull final ReportHolder holder, int position, @NonNull final ReportData reportData) {
         holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
         //holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
         holder.textViewVia.setText(String.valueOf(reportData.getVia()));
         holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
+
+
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +46,8 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                         .collection("Reports")
                         .document(reportData.getTitle())
                         .update("priority", priority);
+
+                holder.button_up.setEnabled(false);
 
             }
         });
@@ -57,6 +62,8 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                         .collection("Reports")
                         .document(reportData.getTitle())
                         .update("priority", priority);
+
+                holder.button_down.setEnabled(false);
 
             }
         });
