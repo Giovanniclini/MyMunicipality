@@ -51,18 +51,6 @@ public class ReportDetails extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.delete_report:
@@ -107,6 +95,9 @@ public class ReportDetails extends AppCompatActivity {
                         }
                     }
                 });
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
     return true;
     }
