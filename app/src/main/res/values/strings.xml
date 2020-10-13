@@ -37,8 +37,11 @@
     <string name="Viadiresidenza">Via/Piazza</string>
     <string name="Modifica">Modifica Informazioni</string>
     <string name="salva_modifiche">Salva Modifiche</string>
-    <string name="descrizione">Descrizione</string>
     <string name="title">Title</string>
     <string name="delete">Delete</string>
+    <string name="via_piazza">Via/Piazza</string>
+    <string name="utente">Utente</string>
+    <string name="priorita">Priorità</string>
+    <string name="descrizione">Descrizione</string>
 
 </resources>

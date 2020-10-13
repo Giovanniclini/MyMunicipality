@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical">
 
@@ -13,7 +16,32 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_view_street"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="italic|bold"
+        android:layout_width="match_parent"
+        android:textColor="#7b1b02"
+        android:layout_height="wrap_content"
+        android:text="@string/via_piazza"
+        android:layout_marginTop="20dp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/view_street"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_view_user"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="italic|bold"
+        android:textColor="#7b1b02"
+        android:text="@string/utente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -21,7 +49,20 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/view_user"
+        android:gravity="center"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_view_priority"
+        android:layout_width="match_parent"
+        android:textStyle="italic|bold"
+        android:gravity="center"
+        android:textColor="#7b1b02"
+        android:textSize="18sp"
+        android:text="@string/priorita"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         />
@@ -29,6 +70,19 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/view_priority"
         android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_view_description"
+        android:layout_width="match_parent"
+        android:textStyle="italic|bold"
+        android:gravity="center"
+        android:textColor="#7b1b02"
+        android:textSize="18sp"
+        android:text="@string/descrizione"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         />
@@ -36,8 +90,11 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/view_description"
         android:layout_width="match_parent"
+        android:textSize="14sp"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:paddingHorizontal="10dp"
+
         />
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -49,3 +106,4 @@
         />
 
 </LinearLayout>
+</ScrollView>

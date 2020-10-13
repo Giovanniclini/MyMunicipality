@@ -35,7 +35,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
 
 
-
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
             @Override
