@@ -1,5 +1,6 @@
 package com.example.mymunicipality;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +48,7 @@ public class PersonalDataFragment extends Fragment {
     private static final String TAG = "PersonalDataFragment";
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int RESULT_OK = 2;
+    private static final int LAUNCH_ACTIVITY = 3;
     static TextView name;
     static TextView email;
     static TextView cellulare;
@@ -57,6 +60,7 @@ public class PersonalDataFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference mStorageRef;
     String emailDB = null;
+    MaterialButton changeButton;
 
 
     @Override
@@ -72,8 +76,17 @@ public class PersonalDataFragment extends Fragment {
         datadinascita = view.findViewById(R.id.birthdayDate);
         photo = view.findViewById(R.id.photo);
         button_add_image = view.findViewById(R.id.button_add_image);
+        changeButton = view.findViewById(R.id.buttonChange);
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        
+        changeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditPersonalDataActivity.class);
+                startActivityForResult(intent,LAUNCH_ACTIVITY);
+            }
+        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
@@ -165,6 +178,7 @@ public class PersonalDataFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
 
             mImageUri = data.getData();
             Picasso.get().load(mImageUri).into(photo);
@@ -188,6 +202,19 @@ public class PersonalDataFragment extends Fragment {
                     }
                 });
 
+            if(requestCode == LAUNCH_ACTIVITY){
+                if(requestCode == Activity.RESULT_OK){
+                    String new_email = data.getStringExtra("email");
+                    String new_cellulare = data.getStringExtra("cellulare");
+                    String new_datanascita = data.getStringExtra("datanascita");
+                    String new_via = data.getStringExtra("via");
+
+                    Log.d(TAG, new_email);
+
+                }
+            }
     }
+
+
 
 }

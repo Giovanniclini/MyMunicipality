@@ -7,29 +7,35 @@
     android:orientation="vertical"
     tools:context=".EditPersonalDataActivity">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/change_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/Email"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/change_cellulare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/Cellulare"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/change_datanascita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/Datadinascita"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/change_via"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/Via"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_info_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/salva_modifiche" />
+        android:text="@string/salva_modifiche"
+        />
 
 </LinearLayout>

@@ -37,6 +37,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 Integer priority = reportData.getPriority() + 1;
@@ -46,6 +47,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                         .document(reportData.getTitle())
                         .update("priority", priority);
 
+                holder.button_up.setEnabled(false);
 
             }
         });
@@ -61,6 +63,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                         .document(reportData.getTitle())
                         .update("priority", priority);
 
+                holder.button_down.setEnabled(false);
 
             }
         });
@@ -73,7 +76,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 Intent intent = new Intent(view.getContext() , ReportDetails.class);
                 intent.putExtra("titolo", reportData.getTitle());
                 view.getContext().startActivity(intent);
-                //Intent per activity di dettaglio report
             }
         });
 
