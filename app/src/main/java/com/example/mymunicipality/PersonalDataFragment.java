@@ -179,28 +179,31 @@ public class PersonalDataFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+            if(requestCode == PICK_IMAGE_REQUEST){
+                if(resultCode == RESULT_OK){
+                    mImageUri = data.getData();
+                    Picasso.get().load(mImageUri).into(photo);
+                    String profilepictures = "profilepictures/";
+                    String path = profilepictures + emailDB;
+                    StorageReference riversRef = mStorageRef.child(path);
 
-            mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(photo);
-            String profilepictures = "profilepictures/";
-            String path = profilepictures + emailDB;
-            StorageReference riversRef = mStorageRef.child(path);
+                    riversRef.putFile(mImageUri)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    // Get a URL to the uploaded content
 
-            riversRef.putFile(mImageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle unsuccessful uploads
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-
-                    }
-                });
+                                }
+                            });
+                }
+            }
 
             if(requestCode == LAUNCH_ACTIVITY){
                 if(requestCode == Activity.RESULT_OK){
