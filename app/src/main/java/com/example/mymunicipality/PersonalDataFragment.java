@@ -229,7 +229,7 @@ public class PersonalDataFragment extends Fragment {
                                     "mail", new_email
                             );
 
-                }
+                }//commento per commit
     }
 
 
