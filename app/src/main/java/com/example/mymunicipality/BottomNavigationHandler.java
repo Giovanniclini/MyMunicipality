@@ -17,9 +17,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.common.internal.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
+
 
 public class BottomNavigationHandler extends AppCompatActivity implements View.OnClickListener {
 
@@ -139,10 +141,11 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("Uri: ", "ciao ciao");
+        Log.d(TAG , "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
 }
 
 

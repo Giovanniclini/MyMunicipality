@@ -44,7 +44,7 @@ public class EditPersonalDataActivity extends AppCompatActivity {
                 return_intent.putExtra("cellulare", save_cellulare);
                 return_intent.putExtra("datanascita", save_datanascita);
                 return_intent.putExtra("via", save_via);
-                setResult(Activity.RESULT_OK, return_intent);
+                setResult(RESULT_OK, return_intent);
                 finish();
             }
         });

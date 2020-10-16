@@ -42,12 +42,13 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class PersonalDataFragment extends Fragment {
 
     private static final String TAG = "PersonalDataFragment";
     private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int RESULT_OK = 2;
     private static final int LAUNCH_ACTIVITY = 3;
     static TextView name;
     static TextView email;
@@ -180,7 +181,7 @@ public class PersonalDataFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
             if(requestCode == PICK_IMAGE_REQUEST){
-                if(resultCode == RESULT_OK){
+                //if (resultCode == RESULT_OK)
                     mImageUri = data.getData();
                     Picasso.get().load(mImageUri).into(photo);
                     String profilepictures = "profilepictures/";
@@ -202,19 +203,18 @@ public class PersonalDataFragment extends Fragment {
 
                                 }
                             });
-                }
+
             }
 
             if(requestCode == LAUNCH_ACTIVITY){
-                if(requestCode == Activity.RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     String new_email = data.getStringExtra("email");
                     String new_cellulare = data.getStringExtra("cellulare");
                     String new_datanascita = data.getStringExtra("datanascita");
                     String new_via = data.getStringExtra("via");
-
                     Log.d(TAG, new_email);
-
                 }
+
             }
     }
 
