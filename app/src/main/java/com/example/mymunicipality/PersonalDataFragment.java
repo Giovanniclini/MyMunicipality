@@ -80,22 +80,22 @@ public class PersonalDataFragment extends Fragment {
         changeButton = view.findViewById(R.id.buttonChange);
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        
+
         changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditPersonalDataActivity.class);
-                startActivityForResult(intent,LAUNCH_ACTIVITY);
+                startActivityForResult(intent, LAUNCH_ACTIVITY);
             }
         });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
+        if (user != null) {
             emailDB = user.getEmail();
         }
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
-        if(signInAccount != null){
+        if (signInAccount != null) {
             name.setText(signInAccount.getDisplayName());
             email.setText(signInAccount.getEmail());
         }
@@ -136,7 +136,7 @@ public class PersonalDataFragment extends Fragment {
                     }
                 });
 
-        return  view;
+        return view;
     }
 
     private void openFileChooser() {
@@ -179,59 +179,59 @@ public class PersonalDataFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-            if(requestCode == PICK_IMAGE_REQUEST){
-                //if (resultCode == RESULT_OK)
-                    mImageUri = data.getData();
-                    Picasso.get().load(mImageUri).into(photo);
-                    String profilepictures = "profilepictures/";
-                    String path = profilepictures + emailDB;
-                    StorageReference riversRef = mStorageRef.child(path);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST) {
+            //if (resultCode == RESULT_OK)
+            mImageUri = data.getData();
+            Picasso.get().load(mImageUri).into(photo);
+            String profilepictures = "profilepictures/";
+            String path = profilepictures + emailDB;
+            StorageReference riversRef = mStorageRef.child(path);
 
-                    riversRef.putFile(mImageUri)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    // Get a URL to the uploaded content
+            riversRef.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a URL to the uploaded content
 
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle unsuccessful uploads
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
 
-                                }
-                            });
+                        }
+                    });
 
-            }
+        }
 
-            if(requestCode == LAUNCH_ACTIVITY){
-                if (resultCode == RESULT_OK) {
-                    String new_email = data.getStringExtra("email");
-                    String new_cellulare = data.getStringExtra("cellulare");
-                    String new_datanascita = data.getStringExtra("datanascita");
-                    String new_via = data.getStringExtra("via");
+        if (requestCode == LAUNCH_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                String new_email = data.getStringExtra("email");
+                String new_cellulare = data.getStringExtra("cellulare");
+                String new_datanascita = data.getStringExtra("datanascita");
+                String new_via = data.getStringExtra("via");
 
-                    cellulare.setText(new_cellulare);
-                    email.setText(new_email);
-                    datadinascita.setText(new_datanascita);
-                    viaoPiazza.setText(new_via);
+                cellulare.setText(new_cellulare);
+                email.setText(new_email);
+                datadinascita.setText(new_datanascita);
+                viaoPiazza.setText(new_via);
 
-                    FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
-                    mFirebaseFirestore
-                            .collection("users")
-                            .document(new_email)
-                            .update(
-                                    "cell" , new_cellulare,
-                            "datanascita" , new_datanascita,
-                                    "viapiazza", new_via,
-                                    "mail", new_email
-                            );
+                FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
+                mFirebaseFirestore
+                        .collection("users")
+                        .document(new_email)
+                        .update(
+                                "cell", new_cellulare,
+                                "datanascita", new_datanascita,
+                                "viapiazza", new_via,
+                                "mail", new_email
+                        );
 
-                }//commento per commit
+            }//commento per commit
+        }
+
+
     }
-
-
-
 }

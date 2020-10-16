@@ -1,21 +1,29 @@
 package com.example.mymunicipality;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.Calendar;
+
 public class EditPersonalDataActivity extends AppCompatActivity {
 
     TextInputEditText email;
     TextInputEditText cellulare;
-    TextInputEditText datanascita;
+    EditText datanascita;
     TextInputEditText via;
     MaterialButton save_changes;
 
@@ -28,6 +36,27 @@ public class EditPersonalDataActivity extends AppCompatActivity {
         email = findViewById(R.id.change_email);
         cellulare = findViewById(R.id.change_cellulare);
         datanascita = findViewById(R.id.change_datanascita);
+
+        datanascita.setInputType(InputType.TYPE_NULL);
+        datanascita.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                DatePickerDialog picker = new DatePickerDialog(EditPersonalDataActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker View, int year, int monthOfYear, int dayOfMonth) {
+                                datanascita.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+
         via = findViewById(R.id.change_via);
         save_changes = findViewById(R.id.save_info_button);
 

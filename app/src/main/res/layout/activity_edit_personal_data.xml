@@ -7,35 +7,51 @@
     android:orientation="vertical"
     tools:context=".EditPersonalDataActivity">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/modifica_datipersonali"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        />
+
     <com.google.android.material.textfield.TextInputEditText
+        android:layout_marginTop="30dp"
         android:id="@+id/change_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/Email"/>
+        android:hint="@string/Email"
+        />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/change_cellulare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/Cellulare"/>
+        android:hint="@string/Cellulare"
+        />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/change_datanascita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/Datadinascita"/>
+        android:hint="@string/Datadinascita"
+        />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/change_via"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/Via"/>
+        android:hint="@string/Via"
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_info_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/salva_modifiche"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
         />
 
 </LinearLayout>

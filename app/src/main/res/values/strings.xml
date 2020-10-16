@@ -43,5 +43,6 @@
     <string name="utente">Utente</string>
     <string name="priorita">Priorità</string>
     <string name="descrizione">Descrizione</string>
+    <string name="modifica_datipersonali">Modifica Dati Personali</string>
 
 </resources>
