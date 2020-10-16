@@ -212,10 +212,24 @@ public class PersonalDataFragment extends Fragment {
                     String new_cellulare = data.getStringExtra("cellulare");
                     String new_datanascita = data.getStringExtra("datanascita");
                     String new_via = data.getStringExtra("via");
-                    Log.d(TAG, new_email);
-                }
 
-            }
+                    cellulare.setText(new_cellulare);
+                    email.setText(new_email);
+                    datadinascita.setText(new_datanascita);
+                    viaoPiazza.setText(new_via);
+
+                    FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
+                    mFirebaseFirestore
+                            .collection("users")
+                            .document(new_email)
+                            .update(
+                                    "cell" , new_cellulare,
+                            "datanascita" , new_datanascita,
+                                    "viapiazza", new_via,
+                                    "mail", new_email
+                            );
+
+                }
     }
 
 
