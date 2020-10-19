@@ -9,6 +9,10 @@ public class ReportData implements Serializable {
     private String via;
     private Integer priority;
 
+    public ReportData(){
+
+    }
+
     public ReportData(String title, String description, String via, Integer priority){
         this.title = title;
         this.description = description;

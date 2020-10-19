@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string-array android:name="planets_array" name="sector_spinner">
+        <item android:title="Lavori Pubblici">Lavori Pubblici</item>
+        <item android:title="Servizi Risorse Umane e Tecnologie">Servizi Risorse Umane e Tecnologie</item>
+        <item android:title="Servizi Interni e Demografici">Servizi Interni e Demografici</item>
+        <item android:title="Servizi Finanziari">Servizi Finanziari</item>
+        <item android:title="Urbanistica">Urbanistica</item>
+        <item android:title="Servizi Sociali">Servizi Sociali</item>
+        <item android:title="Servizi Educativi Cultura e Turismo">Servizi Educativi Cultura e Turismo</item>
+    </string-array>
+</resources>

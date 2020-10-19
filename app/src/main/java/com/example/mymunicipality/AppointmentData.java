@@ -8,6 +8,10 @@ public class AppointmentData {
     private String data;
     private String ora;
 
+    public AppointmentData(){
+        
+    }
+
     public AppointmentData(String sector, String notes, String via, String data, String ora){
         this.sector = sector;
         this.notes = notes;

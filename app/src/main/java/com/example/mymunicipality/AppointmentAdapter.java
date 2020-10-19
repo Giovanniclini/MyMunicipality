@@ -1,15 +1,24 @@
 package com.example.mymunicipality;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AppointmentAdapter {
+import java.io.Serializable;
+
+public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentData, AppointmentAdapter.AppointmentHolder> implements Serializable {
 
     public AppointmentAdapter(@NonNull FirestoreRecyclerOptions<AppointmentData> options) {
         super(options);
@@ -17,11 +26,16 @@ public class AppointmentAdapter {
 
 
     @Override
-    protected void onBindViewHolder(@NonNull final ReportAdapter.ReportHolder holder, int position, @NonNull final ReportData reportData) {
-        holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
-        //holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
-        holder.textViewVia.setText(String.valueOf(reportData.getVia()));
-        holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
+    protected void onBindViewHolder(@NonNull final AppointmentAdapter.AppointmentHolder holder, int position, @NonNull final AppointmentData appointmentData) {
+
+        holder.textViewSector.setText(String.valueOf(appointmentData.getSector()));
+        //holder.textViewNotes.setText(String.valueOf(reportData.getDescription()));
+
+        String data = appointmentData.getData();
+        String ora = appointmentData.getOra();
+        String dataora = data + " " + ora;
+
+        holder.textViewDataOra.setText(dataora);
 
 
 
@@ -29,12 +43,35 @@ public class AppointmentAdapter {
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("XXXX", reportData.getTitle());
-                Intent intent = new Intent(view.getContext() , ReportDetails.class);
-                intent.putExtra("titolo", reportData.getTitle());
-                view.getContext().startActivity(intent);
+                //Intent a AppointmentDetails
             }
         });
+
+    }
+
+    @NonNull
+    @Override
+    public AppointmentAdapter.AppointmentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_item, parent, false);
+
+        return new AppointmentAdapter.AppointmentHolder(v);
+    }
+
+
+    static class AppointmentHolder extends RecyclerView.ViewHolder {
+
+        View view;
+        TextView textViewSector;
+        TextView textViewNotes;
+        TextView textViewDataOra;
+
+        public AppointmentHolder(View itemView){
+            super(itemView);
+
+            view = itemView;
+            textViewSector = itemView.findViewById(R.id.text_view_sector);
+            textViewDataOra = itemView.findViewById(R.id.text_view_dataora);
+        }
 
     }
 }

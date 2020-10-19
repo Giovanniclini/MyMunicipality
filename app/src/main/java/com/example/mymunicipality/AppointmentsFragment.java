@@ -84,7 +84,7 @@ public class AppointmentsFragment extends Fragment {
         buttonAddAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, NewReportActivity.class));
+                startActivity(new Intent(context, NewAppointmentActivity.class));
             }
         });
 
