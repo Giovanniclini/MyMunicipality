@@ -47,8 +47,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                         .document(reportData.getTitle())
                         .update("priority", priority);
 
-                holder.button_up.setEnabled(false);
-
             }
         });
 
@@ -62,8 +60,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                         .collection("Reports")
                         .document(reportData.getTitle())
                         .update("priority", priority);
-
-                holder.button_down.setEnabled(false);
 
             }
         });
