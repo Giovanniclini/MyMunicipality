@@ -44,5 +44,8 @@
     <string name="priorita">Priorità</string>
     <string name="descrizione">Descrizione</string>
     <string name="modifica_datipersonali">Modifica Dati Personali</string>
+    <string name="settore">Settore</string>
+    <string name="data">Data</string>
+    <string name="data_e_ora">Data e Ora</string>
 
 </resources>

@@ -28,7 +28,7 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
     private static final String TAG = "BottomActivity";
     final ReportsFragment fragment2 = new ReportsFragment();
-    final Fragment fragment1 = new Fragment();
+    final Fragment fragment1 = new AppointmentsFragment();
     final Fragment fragment3 = new PersonalDataFragment();
     Fragment active = fragment3;
 

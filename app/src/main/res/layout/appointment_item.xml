@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="#FFFFE8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view_sector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settore"
+            android:layout_alignParentStart="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:ignore="HardcodedText"
+            />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view_dataora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_sector"
+            android:layout_alignParentStart="true"
+            android:text="@string/data_e_ora"
+            />
+
+
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

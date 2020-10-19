@@ -9,10 +9,6 @@ public class ReportData implements Serializable {
     private String via;
     private Integer priority;
 
-    public ReportData(){
-        //Serve un Costruttore vuoto
-    }
-
     public ReportData(String title, String description, String via, Integer priority){
         this.title = title;
         this.description = description;
@@ -35,15 +31,5 @@ public class ReportData implements Serializable {
     }
 
     public Integer getPriority(){ return priority; }
-
-    public void increasePriority(){
-        priority = priority + 1;
-    }
-
-    public void decreasePriority(){
-        priority = priority - 1;
-    }
-
-
 
 }
