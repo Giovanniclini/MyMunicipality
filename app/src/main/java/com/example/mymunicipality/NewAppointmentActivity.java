@@ -1,13 +1,47 @@
 package com.example.mymunicipality;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 
 public class NewAppointmentActivity extends AppCompatActivity {
+
+    final String TAG = "10";
+    Spinner spinner;
+    TextInputEditText object;
+    TextInputEditText calendar;
+    TimePicker picker;
+    MaterialButton tryConfirmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,17 +49,87 @@ public class NewAppointmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_appointment);
 
 
-        //Setup Spinner
-        Spinner spinner = (Spinner) findViewById(R.id.sector_spinner);
+        spinner = (Spinner) findViewById(R.id.sector_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sector_spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        //
 
-        TimePicker picker=(TimePicker)findViewById(R.id.appointment_clock);
+        object = findViewById(R.id.appointment_object);
 
 
+
+        calendar = findViewById(R.id.appointment_calendar);
+        calendar.setInputType(InputType.TYPE_NULL);
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                DatePickerDialog picker = new DatePickerDialog(NewAppointmentActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker View, int year, int monthOfYear, int dayOfMonth) {
+                                calendar.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+
+        picker = (TimePicker) findViewById(R.id.appointment_clock);
+
+        tryConfirmButton = findViewById(R.id.try_confirm_button);
+
+        tryConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveNote();
+                finish();
+            }
+        });
+
+
+
+    }
+
+
+    private void saveNote() {
+        Object sector = spinner.getSelectedItem();
+        String object_string = Objects.requireNonNull(object.getText()).toString();
+        Log.d(TAG, object_string);
+        String data = calendar.getText().toString();
+       int ora = picker.getHour();
+       int minuti = picker.getMinute();
+       String ora1 = Integer.toString(ora);
+       String minuti1 = Integer.toString(minuti);
+       String orario = ora1 + " " + minuti1;
+
+
+        if(data.trim().isEmpty() || object_string.isEmpty()){
+            Toast.makeText(this, "Inserire Data e Oggetto", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String username = null;
+        if (user != null){
+            username = user.getDisplayName();
+        }
+
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(username + " " + object_string);
+        AppointmentData appointmentData = new AppointmentData(sector,object_string,data,orario,username);
+        mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Document written successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+        finish();
 
     }
 }

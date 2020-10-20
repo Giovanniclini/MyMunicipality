@@ -50,5 +50,8 @@
     <string name="inserire_un_settore">Inserire un Settore</string>
     <string name="scegliere_la_data">Scegliere la Data</string>
     <string name="scegliere_l_ora">Scegliere l\'ora</string>
+    <string name="richiedi_prenotazione">Richiedi Prenotazione</string>
+    <string name="oggetto_del_colloquio">Oggetto del Colloquio</string>
+    <string name="oggetto">Oggetto</string>
 
 </resources>

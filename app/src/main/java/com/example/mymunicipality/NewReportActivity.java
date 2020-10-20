@@ -136,7 +136,7 @@ public class NewReportActivity extends AppCompatActivity {
         mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "Document written succesfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Document written successfully", Toast.LENGTH_SHORT).show();
             }
         });
         finish();

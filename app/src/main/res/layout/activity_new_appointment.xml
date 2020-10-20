@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp" />
+        android:elevation="4dp"
+
+        />
 
 
 <com.google.android.material.textview.MaterialTextView
@@ -33,6 +40,29 @@
         android:layout_height="wrap_content"
         android:entries="@array/sector_spinner"
         />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/oggetto_del_colloquio"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/appointment_object"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/oggetto"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
@@ -76,6 +106,17 @@
         android:timePickerMode="spinner"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/try_confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="@string/richiedi_prenotazione"
+        android:layout_marginTop="35dp"
+        >
+    </com.google.android.material.button.MaterialButton>
+
 
 
 </LinearLayout>
+</ScrollView>
