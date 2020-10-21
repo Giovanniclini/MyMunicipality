@@ -43,7 +43,10 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentData
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent a AppointmentDetails
+                Intent intent = new Intent(view.getContext(), AppointmentDetails.class);
+                intent.putExtra("username", appointmentData.getUsername());
+                intent.putExtra("object", appointmentData.getObject());
+                view.getContext().startActivity(intent);
             }
         });
 

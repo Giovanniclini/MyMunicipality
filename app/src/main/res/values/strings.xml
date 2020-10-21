@@ -53,5 +53,6 @@
     <string name="richiedi_prenotazione">Richiedi Prenotazione</string>
     <string name="oggetto_del_colloquio">Oggetto del Colloquio</string>
     <string name="oggetto">Oggetto</string>
+    <string name="ufficio">Ufficio</string>
 
 </resources>

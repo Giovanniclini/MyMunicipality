@@ -44,5 +44,6 @@ public class AppointmentData {
     public String getUsername() {
         return username;
     }
+
 }
 

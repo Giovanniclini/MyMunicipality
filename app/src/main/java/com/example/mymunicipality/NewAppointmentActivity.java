@@ -80,7 +80,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
             }
         });
 
-        picker = (TimePicker) findViewById(R.id.appointment_clock);
+        picker = findViewById(R.id.appointment_clock);
 
         tryConfirmButton = findViewById(R.id.try_confirm_button);
 
@@ -109,7 +109,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
        String orario = ora1 + " " + minuti1;
 
 
-        if(data.trim().isEmpty() || object_string.isEmpty()){
+        if(data.trim().isEmpty() || object_string.trim().isEmpty()){
             Toast.makeText(this, "Inserire Data e Oggetto", Toast.LENGTH_LONG).show();
             return;
         }

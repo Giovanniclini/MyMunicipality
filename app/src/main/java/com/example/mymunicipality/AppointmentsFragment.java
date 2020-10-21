@@ -25,7 +25,7 @@ public class AppointmentsFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference appointmentsRef = db.collection("Appointments");
 
-    private ReportAdapter adapter;
+    private AppointmentAdapter adapter;
     RecyclerView recyclerView;
     FloatingActionButton buttonAddAppointment;
     Context context;
@@ -63,13 +63,13 @@ public class AppointmentsFragment extends Fragment {
 
 
     private void setUpRecyclerView() {
-        Query query = appointmentsRef.orderBy("priority", Query.Direction.DESCENDING);
+        Query query = appointmentsRef.orderBy("sector", Query.Direction.DESCENDING);
 
-        FirestoreRecyclerOptions<ReportData> options = new FirestoreRecyclerOptions
-                .Builder<ReportData>()
-                .setQuery(query, ReportData.class).build();
+        FirestoreRecyclerOptions<AppointmentData> options = new FirestoreRecyclerOptions
+                .Builder<AppointmentData>()
+                .setQuery(query, AppointmentData.class).build();
 
-        adapter = new ReportAdapter(options);
+        adapter = new AppointmentAdapter(options);
 
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context)); //getActivity al posto di this del tutorial
