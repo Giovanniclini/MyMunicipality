@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -36,6 +37,7 @@ import java.util.Objects;
 
 public class NewAppointmentActivity extends AppCompatActivity {
 
+    private static final int TIME_PICKER_INTERVAL = 30;
     final String TAG = "10";
     Spinner spinner;
     TextInputEditText object;
@@ -81,6 +83,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
         });
 
         picker = findViewById(R.id.appointment_clock);
+        setTimePickerInterval(picker);
 
         tryConfirmButton = findViewById(R.id.try_confirm_button);
 
@@ -131,5 +134,22 @@ public class NewAppointmentActivity extends AppCompatActivity {
         });
         finish();
 
+    }
+
+    private void setTimePickerInterval(TimePicker timePicker) {
+        try {
+
+            NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
+                    "minute", "id", "android"));
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
+            List<String> displayedValues = new ArrayList<>();
+            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
+                displayedValues.add(String.format("%02d", i));
+            }
+            minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e);
+        }
     }
 }
