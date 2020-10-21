@@ -51,7 +51,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_appointment);
 
 
-        spinner = (Spinner) findViewById(R.id.sector_spinner);
+        spinner = findViewById(R.id.sector_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sector_spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -102,7 +102,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
     private void saveNote() {
         Object sector = spinner.getSelectedItem();
         String object_string = Objects.requireNonNull(object.getText()).toString();
-        Log.d(TAG, object_string);
         String data = calendar.getText().toString();
        int ora = picker.getHour();
        int minuti = picker.getMinute();
@@ -128,7 +127,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
         mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "Document written successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Document written successfully", Toast.LENGTH_SHORT).show();
             }
         });
         finish();
@@ -138,7 +137,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
     private void setTimePickerInterval(TimePicker timePicker) {
         try {
 
-            NumberPicker minutePicker = (NumberPicker) timePicker.findViewById(Resources.getSystem().getIdentifier(
+            NumberPicker minutePicker = timePicker.findViewById(Resources.getSystem().getIdentifier(
                     "minute", "id", "android"));
             minutePicker.setMinValue(0);
             minutePicker.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
