@@ -84,6 +84,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
         picker = findViewById(R.id.appointment_clock);
         setTimePickerInterval(picker);
+        picker.setIs24HourView(true);
 
         tryConfirmButton = findViewById(R.id.try_confirm_button);
 
@@ -94,8 +95,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
 
     }
 
