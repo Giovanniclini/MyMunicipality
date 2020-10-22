@@ -107,7 +107,13 @@ public class NewAppointmentActivity extends AppCompatActivity {
        int minuti = picker.getMinute();
        String ora1 = Integer.toString(ora);
        String minuti1 = Integer.toString(minuti);
-       String orario = ora1 + " " + minuti1;
+       if (minuti1.equals("1")){
+           minuti1 = "30";
+       }
+       else {
+           minuti1 = "00";
+       }
+       String orario = ora1 + ":" + minuti1;
 
 
         if(data.trim().isEmpty() || object_string.trim().isEmpty()){
