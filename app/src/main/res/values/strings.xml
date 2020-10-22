@@ -54,6 +54,6 @@
     <string name="oggetto_del_colloquio">Oggetto del Colloquio</string>
     <string name="oggetto">Oggetto</string>
     <string name="ufficio">Ufficio</string>
-    <string name="luogo">Luogo</string>
+    <string name="luogo">Luogo</string> />
 
 </resources>

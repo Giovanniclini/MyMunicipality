@@ -98,7 +98,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
     }
 
-
     private void saveNote() {
         Object sector = spinner.getSelectedItem();
         String object_string = Objects.requireNonNull(object.getText()).toString();
