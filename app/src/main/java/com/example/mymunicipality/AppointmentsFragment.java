@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -63,7 +65,10 @@ public class AppointmentsFragment extends Fragment {
 
 
     private void setUpRecyclerView() {
-        Query query = appointmentsRef.orderBy("sector", Query.Direction.DESCENDING);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String username = user.getDisplayName();
+        Query query = appointmentsRef.orderBy("sector", Query.Direction.DESCENDING).whereEqualTo("username", username);
+
 
         FirestoreRecyclerOptions<AppointmentData> options = new FirestoreRecyclerOptions
                 .Builder<AppointmentData>()
@@ -72,7 +77,7 @@ public class AppointmentsFragment extends Fragment {
         adapter = new AppointmentAdapter(options);
 
         recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context)); //getActivity al posto di this del tutorial
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
     }

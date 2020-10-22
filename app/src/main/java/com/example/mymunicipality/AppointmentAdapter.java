@@ -31,7 +31,6 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentData
     protected void onBindViewHolder(@NonNull final AppointmentAdapter.AppointmentHolder holder, int position, @NonNull final AppointmentData appointmentData) {
 
         holder.textViewSector.setText(String.valueOf(appointmentData.getSector()));
-        //holder.textViewNotes.setText(String.valueOf(reportData.getDescription()));
 
         String data = appointmentData.getData();
         String ora = appointmentData.getOra();
