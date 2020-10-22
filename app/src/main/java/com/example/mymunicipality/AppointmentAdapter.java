@@ -20,6 +20,8 @@ import java.io.Serializable;
 
 public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentData, AppointmentAdapter.AppointmentHolder> implements Serializable {
 
+    private static final String TAG = "AppointmentAdapter";
+
     public AppointmentAdapter(@NonNull FirestoreRecyclerOptions<AppointmentData> options) {
         super(options);
     }
@@ -46,6 +48,10 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentData
                 Intent intent = new Intent(view.getContext(), AppointmentDetails.class);
                 intent.putExtra("username", appointmentData.getUsername());
                 intent.putExtra("object", appointmentData.getObject());
+                intent.putExtra("sector", appointmentData.getSector());
+                Log.d(TAG, appointmentData.getUsername());
+                Log.d(TAG, appointmentData.getSector());
+                Log.d(TAG, appointmentData.getObject());
                 view.getContext().startActivity(intent);
             }
         });

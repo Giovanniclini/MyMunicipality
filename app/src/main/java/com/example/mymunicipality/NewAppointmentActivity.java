@@ -124,7 +124,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
         DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(username + " " + object_string);
-        AppointmentData appointmentData = new AppointmentData(sector,object_string,data,orario,username);
+        AppointmentData appointmentData = new AppointmentData((String) sector,object_string,data,orario,username);
         mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
