@@ -9,26 +9,74 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AppointmentDetails extends AppCompatActivity {
 
+    private static final String TAG = "Appointment Details";
     MaterialTextView sectorTextView;
     MaterialTextView objectTextView;
     MaterialTextView dataoraTextView;
     MaterialTextView viaTextView;
+
+    String username1;
+    String object1;
+    String sector1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.report_menu, menu);
         return  true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_report:
+
+                final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+                DocumentReference mFirestoreDetails = mFirestore.collection("Appointments").document(username1 + " " + object1);
+                mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+
+                            mFirestore.collection("Appointments").document(username1 + " " + object1).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "Document snapshot successfully deleted");
+                                            Toast.makeText(getApplicationContext(), "Sussessfully deleted", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error deleting document");
+                                            }
+                                        });
+                        }
+                    }
+                });
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -44,9 +92,9 @@ public class AppointmentDetails extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        final String username1 = intent.getStringExtra("username");
-        final String object1 = intent.getStringExtra("object");
-        final String sector1 = intent.getStringExtra("sector");
+        username1 = intent.getStringExtra("username");
+        object1 = intent.getStringExtra("object");
+        sector1 = intent.getStringExtra("sector");
 
         final String via;
 
