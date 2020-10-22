@@ -22,6 +22,7 @@ public class AppointmentDetails extends AppCompatActivity {
     MaterialTextView sectorTextView;
     MaterialTextView objectTextView;
     MaterialTextView dataoraTextView;
+    MaterialTextView viaTextView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,11 +39,37 @@ public class AppointmentDetails extends AppCompatActivity {
         sectorTextView = findViewById(R.id.sector_text_camp);
         objectTextView = findViewById(R.id.object_text_camp);
         dataoraTextView = findViewById(R.id.dataora_text_camp);
+        viaTextView = findViewById(R.id.via_text_camp);
+
+
 
         Intent intent = getIntent();
         final String username1 = intent.getStringExtra("username");
         final String object1 = intent.getStringExtra("object");
         final String sector1 = intent.getStringExtra("sector");
+
+        final String via;
+
+        switch (sector1){
+            case "Lavori Pubblici":
+            case "Servizi Risorse Umane e Tecnologiche":
+            case "Servizi Interni e Demografici":
+            case "Servizi Finanziari":
+                via = "Via San Francesco D'Assisi 76";
+                break;
+            case "Urbanistica":
+                via = "Via Marino Francini 2";
+                break;
+            case "Servizi Sociali":
+                via = "Via Sant'Eusebio 32";
+                break;
+            case "Servizi Educativi Cultura e Turismo":
+                via = "Via Vitruvio 7";
+                break;
+            default:
+                via = null;
+                break;
+        }
 
         //Toolbar da sistemare
         Toolbar toolbar = findViewById(R.id.appointment_toolbar);
@@ -71,6 +98,7 @@ public class AppointmentDetails extends AppCompatActivity {
                             sectorTextView.setText(sector1);
                             objectTextView.setText(object1);
                             dataoraTextView.setText(dataora1);
+                            viaTextView.setText(via);
 
                         }
                     }

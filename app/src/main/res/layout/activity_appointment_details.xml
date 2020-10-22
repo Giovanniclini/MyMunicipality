@@ -83,6 +83,28 @@
 
             />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/via_text"
+            android:layout_width="match_parent"
+            android:textStyle="italic|bold"
+            android:gravity="center"
+            android:textColor="#7b1b02"
+            android:textSize="18sp"
+            android:text="@string/luogo"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/via_text_camp"
+            android:layout_width="match_parent"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+
+            />
+
 
     </LinearLayout>
 </ScrollView>
