@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -51,6 +52,9 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
     String username1;
     String object1;
     String sector1;
+
+    private GoogleMap mMap;
+    private LatLng latlng;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,15 +138,19 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
             case "Servizi Interni e Demografici":
             case "Servizi Finanziari":
                 via = "Via San Francesco D'Assisi 76";
+                latlng = new LatLng(43.843817,13.019380);
                 break;
             case "Urbanistica":
                 via = "Via Marino Francini 2";
+                latlng = new LatLng(43.843791,13.018265);
                 break;
             case "Servizi Sociali":
                 via = "Via Sant'Eusebio 32";
+                latlng = new LatLng(43.826132,13.011398);
                 break;
             case "Servizi Educativi Cultura e Turismo":
                 via = "Via Vitruvio 7";
+                latlng = new LatLng(43.845744,13.016004);
                 break;
             default:
                 via = null;
@@ -190,10 +198,12 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        mMap.addMarker(new MarkerOptions().position(latlng).title("Meeting point"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
     }
 
   /*
