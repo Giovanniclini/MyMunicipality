@@ -34,9 +34,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -52,7 +55,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
     TextInputEditText object;
     TextInputEditText calendar;
     TimePicker picker;
-    MaterialButton tryConfirmButton;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,9 +126,9 @@ public class NewAppointmentActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        Object sector = spinner.getSelectedItem();
-        String object_string = Objects.requireNonNull(object.getText()).toString();
-        String data = calendar.getText().toString();
+        final Object sector = spinner.getSelectedItem();
+        final String object_string = Objects.requireNonNull(object.getText()).toString();
+        final String data = calendar.getText().toString();
        int ora = picker.getHour();
        int minuti = picker.getMinute();
        String ora1 = Integer.toString(ora);
@@ -137,7 +139,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
        else {
            minuti1 = "00";
        }
-       String orario = ora1 + ":" + minuti1;
+       final String orario = ora1 + ":" + minuti1;
 
 
         if(data.trim().isEmpty() || object_string.trim().isEmpty()){
@@ -151,7 +153,35 @@ public class NewAppointmentActivity extends AppCompatActivity {
             username = user.getDisplayName();
         }
 
-        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        CollectionReference reference = mFirestore.collection("Appointments").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("Appointments");
+        final String finalUsername = username;
+        reference.whereEqualTo("sector",sector).whereEqualTo("data", data).whereEqualTo("ora", orario).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.exists()) {
+                            Toast.makeText(NewAppointmentActivity.this, "Impossibile aggiungere appuntamento. Si prega di provare con un'altra data o con un nuovo orario.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } else{
+                    //This Toast will be displayed only when you'll have an error while getting documents.
+                    DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(finalUsername + " " + object_string);
+                    AppointmentData appointmentData = new AppointmentData((String) sector,object_string,data,orario, finalUsername);
+                    mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(),"Document written successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    finish();
+            }
+            }
+        });
+
+        /*FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
         DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(username + " " + object_string);
         AppointmentData appointmentData = new AppointmentData((String) sector,object_string,data,orario,username);
         mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -160,7 +190,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Document written successfully", Toast.LENGTH_SHORT).show();
             }
         });
-        finish();
+        finish();*/
 
     }
 
