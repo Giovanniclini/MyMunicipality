@@ -57,6 +57,7 @@
     <string name="luogo">Luogo</string>
     <string name="aggiungi_al_calendario">Aggiungi al calendario</string>
     <string name="title_activity_maps">Map</string>
+    <string name="save_date">Save date</string>
     />
 
 </resources>

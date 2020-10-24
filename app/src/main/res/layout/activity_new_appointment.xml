@@ -13,7 +13,7 @@
     tools:context=".NewReportActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/newappointment_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -26,9 +26,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/inserire_un_settore"
-    android:textStyle="bold"
-    android:textSize="20sp"
-    android:textColor="#000000"
+    android:textStyle="italic|bold"
+    android:textSize="18sp"
+    android:textColor="#800000"
     android:gravity="center"
     android:layout_marginTop="30dp"
     android:layout_marginBottom="15dp"
@@ -45,9 +45,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/oggetto_del_colloquio"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="#000000"
+        android:textStyle="italic|bold"
+        android:textColor="#7b1b02"
+        android:textSize="18sp"
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
@@ -68,9 +68,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scegliere_la_data"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="#000000"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#7b1b02"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
@@ -90,9 +90,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scegliere_l_ora"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="#000000"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#7b1b02"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
@@ -105,18 +105,6 @@
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
         />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/try_confirm_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint="@string/richiedi_prenotazione"
-        android:layout_marginTop="35dp"
-        >
-    </com.google.android.material.button.MaterialButton>
-
-
 
 </LinearLayout>
 </ScrollView>

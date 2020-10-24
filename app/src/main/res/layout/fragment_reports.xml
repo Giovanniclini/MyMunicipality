@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:backgroundTint="#7b1b02"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:src="@drawable/ic_add"
-        android:tint="#7b1b02" />
+        android:tint="@color/colorPrimaryDark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
