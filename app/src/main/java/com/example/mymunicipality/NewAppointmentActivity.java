@@ -38,6 +38,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -50,7 +51,7 @@ import java.util.Objects;
 public class NewAppointmentActivity extends AppCompatActivity {
 
     private static final int TIME_PICKER_INTERVAL = 30;
-    final String TAG = "10";
+    final String TAG = "NewAppointmentActivity";
     Spinner spinner;
     TextInputEditText object;
     TextInputEditText calendar;
@@ -68,7 +69,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.save_appointment:
                 saveNote();
-                finish();
                 break;
             case android.R.id.home:
                 onBackPressed();
@@ -154,22 +154,15 @@ public class NewAppointmentActivity extends AppCompatActivity {
         }
 
         final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-        CollectionReference reference = mFirestore.collection("Appointments").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .collection("Appointments");
-        final String finalUsername = username;
-        reference.whereEqualTo("sector",sector).whereEqualTo("data", data).whereEqualTo("ora", orario).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        CollectionReference collRef = mFirestore.collection("Appointments");
+        Query query = collRef.whereEqualTo("sector", sector).whereEqualTo("data", data).whereEqualTo("ora", orario);
+        final String finalUsername1 = username;
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (document.exists()) {
-                            Toast.makeText(NewAppointmentActivity.this, "Impossibile aggiungere appuntamento. Si prega di provare con un'altra data o con un nuovo orario.", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                } else{
-                    //This Toast will be displayed only when you'll have an error while getting documents.
-                    DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(finalUsername + " " + object_string);
-                    AppointmentData appointmentData = new AppointmentData((String) sector,object_string,data,orario, finalUsername);
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots.isEmpty()){
+                    DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(finalUsername1 + " " + object_string);
+                    AppointmentData appointmentData = new AppointmentData((String) sector,object_string,data,orario, finalUsername1);
                     mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -177,7 +170,11 @@ public class NewAppointmentActivity extends AppCompatActivity {
                         }
                     });
                     finish();
-            }
+                }
+                else{
+                    Toast.makeText(NewAppointmentActivity.this, "Data o orario non disponibili", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
