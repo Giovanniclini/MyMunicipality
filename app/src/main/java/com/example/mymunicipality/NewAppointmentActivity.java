@@ -116,12 +116,14 @@ public class NewAppointmentActivity extends AppCompatActivity {
                                 calendar.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 picker.show();
             }
         });
 
         picker = findViewById(R.id.appointment_clock);
         setTimePickerInterval(picker);
+
         picker.setIs24HourView(true);
     }
 
@@ -177,17 +179,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
             }
         });
-
-        /*FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-        DocumentReference mFirestoreAppointments = mFirestore.collection("Appointments").document(username + " " + object_string);
-        AppointmentData appointmentData = new AppointmentData((String) sector,object_string,data,orario,username);
-        mFirestoreAppointments.set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(),"Document written successfully", Toast.LENGTH_SHORT).show();
-            }
-        });
-        finish();*/
 
     }
 
