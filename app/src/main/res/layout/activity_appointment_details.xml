@@ -117,18 +117,5 @@
             tools:context="com.example.mapwithmarker.MapsMarkerActivity"
             />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/calendar_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/aggiungi_al_calendario"
-
-            >
-        </com.google.android.material.button.MaterialButton>
-
-
-
     </LinearLayout>
 </ScrollView>

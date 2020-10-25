@@ -37,8 +37,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.protobuf.StringValue;
 
 import java.util.Calendar;
+import java.util.Scanner;
 
 public class AppointmentDetails extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -47,11 +49,14 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
     MaterialTextView objectTextView;
     MaterialTextView dataoraTextView;
     MaterialTextView viaTextView;
-    MaterialButton calendarButton;
 
     String username1;
     String object1;
     String sector1;
+    String via;
+    String data1;
+    String ora1;
+    String dataora1;
 
     private GoogleMap mMap;
     private LatLng latlng;
@@ -59,7 +64,7 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.report_menu, menu);
+        inflater.inflate(R.menu.appointment_menu, menu);
         return  true;
     }
 
@@ -67,7 +72,7 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.delete_report:
+            case R.id.delete_appointment:
 
                 final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
                 DocumentReference mFirestoreDetails = mFirestore.collection("Appointments").document(username1 + " " + object1);
@@ -97,6 +102,39 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.calendar_appointment:
+                String[] dates = data1.split("/");
+                int day = Integer.parseInt(dates[0]);
+                int month = Integer.parseInt(dates[1]);
+                int year = Integer.parseInt(dates[2]);
+                String[] time = ora1.split(":");
+                int hour = Integer.parseInt(time[0]);
+                int minutes = Integer.parseInt(time[1]);
+                int endhour, endminutes;
+                if(minutes + 30 == 60){
+                    endhour = hour + 1;
+                    endminutes = 00;
+                }
+                else{
+                    endhour = hour;
+                    endminutes = 30;
+                }
+
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(year, month, day, hour, minutes);
+                Calendar endTime = Calendar.getInstance();
+                endTime.set(year, month, day, endhour, endminutes);
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                        .putExtra(CalendarContract.Events.TITLE, "Appuntamento con ufficio " + sector1)
+                        .putExtra(CalendarContract.Events.DESCRIPTION, object1)
+                        .putExtra(CalendarContract.Events.EVENT_LOCATION, via)
+                        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+                startActivity(intent);
+
+                break;
         }
         return true;
     }
@@ -115,22 +153,11 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
         objectTextView = findViewById(R.id.object_text_camp);
         dataoraTextView = findViewById(R.id.dataora_text_camp);
         viaTextView = findViewById(R.id.via_text_camp);
-        calendarButton = findViewById(R.id.calendar_button);
-
-        calendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //addOnCalendar();
-            }
-        });
-
 
         Intent intent = getIntent();
         username1 = intent.getStringExtra("username");
         object1 = intent.getStringExtra("object");
         sector1 = intent.getStringExtra("sector");
-
-        final String via;
 
         switch (sector1){
             case "Lavori Pubblici":
@@ -157,7 +184,6 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
                 break;
         }
 
-        //Toolbar da sistemare
         Toolbar toolbar = findViewById(R.id.appointment_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(sector1);
@@ -175,11 +201,9 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
 
-                            String sector1 = document.getString("sector");
-                            String object1 = document.getString("object");
-                            String data1 = String.valueOf(document.get("data"));
-                            String ora1 = String.valueOf(document.get("ora"));
-                            String dataora1 = data1 + " " + ora1;
+                            data1 = String.valueOf(document.get("data"));
+                            ora1 = String.valueOf(document.get("ora"));
+                            dataora1 = data1 + " " + ora1;
 
                             sectorTextView.setText(sector1);
                             objectTextView.setText(object1);
@@ -191,7 +215,6 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
                 }
             });
         }
-
 
 
     }
@@ -206,61 +229,6 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
     }
 
-  /*
-    String ora = splitHour(ora1);
-    String minuti = splitMinute(ora1);
 
-    String anno = splitYear(data1);
-    String mese = splitMonth(data1);
-    String giorno = splitDay(data1);
-
-    public static void addOnCalendar(){
-
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(anno, 10, 23, 7, 30);
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(2020, 10, 23, 8, 30);
-        Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-                .putExtra(CalendarContract.Events.TITLE, "Appuntamento Pubblica Amministrazione")
-                .putExtra(CalendarContract.Events.DESCRIPTION, object1)
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, sector1)
-                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
-        startActivity(intent);
-    }
-
-    public static String splitHour(String orario){
-        String[] parts = orario.split(" : ");
-        String ora = parts[0];
-        return ora;
-    }
-
-    public static String splitMinute(String orario){
-        String[] parts = orario.split(" : ");
-        String minuti = parts[1];
-        return minuti;
-    }
-
-    public static String splitYear(String data){
-        String[] parts = data.split("/");
-        String year = parts[2]; // 004
-       return year;
-    }
-
-    public static String splitMonth(String data){
-        String[] parts = data.split("/");
-        String month = parts[1];
-        return month;
-    }
-
-    public static String splitDay(String data){
-        String[] parts = data.split("/");
-        String day = parts[0];
-        return day;
-    }
-
-    */
 
 }
