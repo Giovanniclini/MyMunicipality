@@ -52,12 +52,16 @@
     <string name="scegliere_l_ora">Scegliere l\'ora</string>
     <string name="richiedi_prenotazione">Richiedi Prenotazione</string>
     <string name="oggetto_del_colloquio">Oggetto del Colloquio</string>
-    <string name="oggetto">Oggetto</string>
     <string name="ufficio">Ufficio</string>
     <string name="luogo">Luogo</string>
     <string name="aggiungi_al_calendario">Aggiungi al calendario</string>
     <string name="title_activity_maps">Map</string>
     <string name="save_date">Save date</string>
+    <string name="inserire_l_oggetto_della_segnalazione">Inserire l\'oggetto della segnalazione</string>
+    <string name="oggetto">Oggetto</string>
+    <string name="inserire_il_luogo">Inserire il luogo</string>
+    <string name="breve_descrizione">Breve descrizione</string>
+    <string name="aggiungi_foto">Aggiungi Foto</string>
     />
 
 </resources>

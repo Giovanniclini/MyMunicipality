@@ -3,6 +3,7 @@ package com.example.mymunicipality;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,9 +29,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class NewReportActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final String TAG ="NewReportActivity" ;
     private EditText editTextTitle;
     private EditText editTextDescription;
     private EditText editTextVia;
@@ -52,8 +56,11 @@ public class NewReportActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.new_report_toolbar);
         setSupportActionBar(myToolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         add_photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +69,8 @@ public class NewReportActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -73,10 +82,12 @@ public class NewReportActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
         mImageUri = data.getData();
         Picasso.get().load(mImageUri).into(photo_report);
         String reportPictures = "reportPictures/";
         String path = reportPictures + editTextTitle.getText();
+        Log.d(TAG, path);
         StorageReference reverseRef = mStorageRef.child(path);
         reverseRef.putFile(mImageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -107,10 +118,13 @@ public class NewReportActivity extends AppCompatActivity {
             case R.id.save_note:
                 saveNote();
                 return true;
-
+            case android.R.id.home:
+                onBackPressed();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     private void saveNote() {

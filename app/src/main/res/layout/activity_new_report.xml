@@ -8,32 +8,63 @@
     tools:context=".NewReportActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/new_report_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="4dp" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inserire_l_oggetto_della_segnalazione"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#800000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edit_text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Titolo"
+        android:hint="@string/oggetto"
         android:inputType="text"
-        android:paddingHorizontal="20dp"
-        android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="7dp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inserire_il_luogo"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#800000"
+        android:gravity="center"
+        android:layout_marginTop="7dp"
         />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edit_text_via"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/Via"
-        android:paddingHorizontal="20dp"
-        android:layout_marginTop="10dp"
+        android:hint="@string/via_piazza"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="7dp"
         />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/breve_descrizione"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#800000"
+        android:gravity="center"
+        android:layout_marginTop="7dp"
+        />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edit_text_description"
@@ -41,17 +72,17 @@
         android:layout_height="wrap_content"
         android:hint="@string/descrizione"
         android:inputType="textMultiLine"
-        android:paddingHorizontal="20dp"
-        android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="7dp"
         />
 
     <com.google.android.material.button.MaterialButton
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/add_photo"
-        android:text="Aggiungi Foto"
+        android:text="@string/aggiungi_foto"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         />
 
     <com.google.android.material.imageview.ShapeableImageView
