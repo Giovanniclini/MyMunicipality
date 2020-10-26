@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,6 +32,10 @@ public class EditPersonalDataActivity extends AppCompatActivity {
 
         cellulare = findViewById(R.id.change_cellulare);
         datanascita = findViewById(R.id.change_datanascita);
+
+        Toolbar myToolbar = findViewById(R.id.new_report_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Modifica Dati Personali");
 
         datanascita.setInputType(InputType.TYPE_NULL);
         datanascita.setOnClickListener(new View.OnClickListener() {

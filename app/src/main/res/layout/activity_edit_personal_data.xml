@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".EditPersonalDataActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/new_report_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp" />
+
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
