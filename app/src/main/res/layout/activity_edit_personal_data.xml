@@ -17,10 +17,12 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/modifica_datipersonali"
+        android:text="@string/inserire_nuovo_cellulare"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#800000"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:layout_marginTop="10dp"
         />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -30,11 +32,34 @@
         android:hint="@string/Cellulare"
         />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inserire_nuova_data_di_nascita"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#800000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        />
+
+
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/change_datanascita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/Datadinascita"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inserire_nuova_via"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
+        android:textColor="#800000"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         />
 
     <com.google.android.material.textfield.TextInputEditText
