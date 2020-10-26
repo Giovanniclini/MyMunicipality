@@ -66,6 +66,7 @@
     <string name="inserire_nuovo_cellulare">Inserire nuovo Cellulare</string>
     <string name="inserire_nuova_data_di_nascita">Inserire nuova Data di Nascita</string>
     <string name="inserire_nuova_via">Inserire nuova Via</string>
+    <string name="my_municipality">My Municipality</string>
     />
 
 </resources>
