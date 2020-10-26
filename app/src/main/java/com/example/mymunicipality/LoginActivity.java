@@ -54,12 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
-        private static final String TAG1 = "LoginJson" ;
         GoogleSignInClient mGoogleSignInClient;
         static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
-        private String emailFB;
 
         @Override
         protected void onStart(){
@@ -98,34 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
-
-
-                                                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                                                        new GraphRequest.GraphJSONObjectCallback() {
-                                                                @Override
-                                                                public void onCompleted(JSONObject user, GraphResponse response) {
-                                                                        Log.d(TAG1, "Response: " + user);
-                                                                        try {
-                                                                        emailFB = user.getString("email");
-                                                                        Log.d(TAG1, emailFB);
-                                                                        Intent i = new Intent(LoginActivity.this, BottomNavigationHandler.class);
-                                                                        i.putExtra(BottomNavigationHandler.TAG_ACTIVITY_FROM1, emailFB);
-                                                                        startActivity(i);
-
-                                                                        } catch (JSONException e) {
-                                                                                e.printStackTrace();
-                                                                        }
-
-                                                                }
-                                                        });
-                                                Bundle parameters = new Bundle();
-                                                parameters.putString("fields", "id,first_name,last_name,link,gender,birthday,email");
-                                                request.setParameters(parameters);
-                                                request.executeAsync();
-
-
-                                                setResult(RESULT_OK);
-
                                                 finish();
                                         }
 

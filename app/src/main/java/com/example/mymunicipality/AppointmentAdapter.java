@@ -70,7 +70,6 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentData
 
         View view;
         TextView textViewSector;
-        TextView textViewNotes;
         TextView textViewDataOra;
 
         public AppointmentHolder(View itemView){
