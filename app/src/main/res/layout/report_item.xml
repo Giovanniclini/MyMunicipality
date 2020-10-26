@@ -20,6 +20,8 @@
             android:text="@string/title"
             android:layout_alignParentStart="true"
             android:maxLines="1"
+            android:layout_toStartOf="@+id/button_up"
+            android:layout_marginEnd="20dp"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
 
@@ -41,6 +43,8 @@
             android:id="@+id/text_view_via"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/button_up"
+            android:layout_marginEnd="20dp"
             android:layout_below="@+id/text_view_title"
             android:layout_alignParentStart="true"
             android:text="@string/Via"
