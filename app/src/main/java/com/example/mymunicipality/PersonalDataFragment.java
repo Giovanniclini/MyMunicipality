@@ -205,25 +205,22 @@ public class PersonalDataFragment extends Fragment {
 
         if (requestCode == LAUNCH_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                String new_email = data.getStringExtra("email");
                 String new_cellulare = data.getStringExtra("cellulare");
                 String new_datanascita = data.getStringExtra("datanascita");
                 String new_via = data.getStringExtra("via");
 
                 cellulare.setText(new_cellulare);
-                email.setText(new_email);
                 datadinascita.setText(new_datanascita);
                 viaoPiazza.setText(new_via);
 
                 FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
                 mFirebaseFirestore
                         .collection("users")
-                        .document(new_email)
+                        .document(emailDB)
                         .update(
                                 "cell", new_cellulare,
                                 "datanascita", new_datanascita,
-                                "viapiazza", new_via,
-                                "mail", new_email
+                                "viapiazza", new_via
                         );
 
             }

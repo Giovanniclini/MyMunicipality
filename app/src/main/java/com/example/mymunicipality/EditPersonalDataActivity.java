@@ -19,7 +19,6 @@ import java.util.Calendar;
 
 public class EditPersonalDataActivity extends AppCompatActivity {
 
-    TextInputEditText email;
     TextInputEditText cellulare;
     EditText datanascita;
     TextInputEditText via;
@@ -30,8 +29,6 @@ public class EditPersonalDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_personal_data);
 
-
-        email = findViewById(R.id.change_email);
         cellulare = findViewById(R.id.change_cellulare);
         datanascita = findViewById(R.id.change_datanascita);
 
@@ -61,13 +58,11 @@ public class EditPersonalDataActivity extends AppCompatActivity {
         save_changes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String save_email = email.getText().toString();
                 String save_cellulare = cellulare.getText().toString();
                 String save_datanascita = datanascita.getText().toString();
                 String save_via = via.getText().toString();
 
                 Intent return_intent = new Intent();
-                return_intent.putExtra("email", save_email);
                 return_intent.putExtra("cellulare", save_cellulare);
                 return_intent.putExtra("datanascita", save_datanascita);
                 return_intent.putExtra("via", save_via);
