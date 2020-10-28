@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/save_appointment"
-        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:icon="@drawable/ic_baseline_check"
         android:title="@string/save_date"
         app:showAsAction="ifRoom" />
 
