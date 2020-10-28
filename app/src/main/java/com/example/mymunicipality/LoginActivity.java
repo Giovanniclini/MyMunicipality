@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                //..........
+                //
 
                 Button bttn = findViewById(R.id.buttonRegistration);
                 bttn.setOnClickListener(new View.OnClickListener() {

@@ -147,7 +147,7 @@ public class NewReportActivity extends AppCompatActivity {
 
        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
        DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(title);
-        Reports reports = new Reports(title,description,via,priority,username);
+        ReportData reports = new ReportData(title,description,via,priority,username);
         mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

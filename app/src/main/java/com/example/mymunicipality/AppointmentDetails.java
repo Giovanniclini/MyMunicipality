@@ -184,6 +184,8 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
                 break;
         }
 
+        Log.d(TAG, latlng.toString());
+
         Toolbar toolbar = findViewById(R.id.appointment_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(sector1);
