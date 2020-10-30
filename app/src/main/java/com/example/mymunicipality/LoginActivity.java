@@ -43,11 +43,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
+        String mail;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         @Override
         protected void onStart(){

@@ -16,6 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAdapter.ReportHolder> implements Serializable {
 
@@ -43,6 +45,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                             .document(reportData.getTitle())
                             .update("priority", priority);
 
+                    //addVote(reportData.getTitle(),reportData.getUsername(),true,false);
             }
         });
 
@@ -56,6 +59,8 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                             .collection("Reports")
                             .document(reportData.getTitle())
                             .update("priority", priority);
+
+                //addVote(reportData.getTitle(),reportData.getUsername(),false,true);
             }
         });
 
@@ -69,7 +74,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 view.getContext().startActivity(intent);
             }
         });
-
 
     }
 
@@ -107,18 +111,19 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     }
 
     /*
-    if (reportData.getUpvoted() && !reportData.getDownvoted()) {
-        //true false
-        holder.button_up.setEnabled(false);
+    public void addVote(String title, String user, Boolean upVote, Boolean downVote){
 
-    } else if (!reportData.getUpvoted() && reportData.getDownvoted()) {
-        //false true
-        holder.button_down.setEnabled(false);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    } else if (reportData.getUpvoted() && reportData.getDownvoted()) {
-        //true true
-        holder.button_up.setEnabled(true);
-        holder.button_down.setEnabled(true);
+        Map<String,Object> vote = new HashMap<>();
+        vote.put("title", title);
+        vote.put("user", user);
+        vote.put("upVote", upVote);
+        vote.put("downVote", downVote);
+
+        db.collection("Votes")
+                .document(title + " " + user)
+                .set(vote);
     }
 
      */
