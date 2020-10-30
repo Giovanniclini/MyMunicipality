@@ -10,6 +10,7 @@ public class ReportData implements Serializable {
     private String username;
     private Integer priority;
 
+
     public ReportData(){
 
     }

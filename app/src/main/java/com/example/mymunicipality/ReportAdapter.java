@@ -34,15 +34,14 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Integer priority = reportData.getPriority() + 1;
                 FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
-                mFirebaseFirestore
-                        .collection("Reports")
-                        .document(reportData.getTitle())
-                        .update("priority", priority);
+                    mFirebaseFirestore
+                            .collection("Reports")
+                            .document(reportData.getTitle())
+                            .update("priority", priority);
 
             }
         });
@@ -53,11 +52,10 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             public void onClick(View view) {
                 Integer priority = reportData.getPriority() - 1;
                 FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
-                mFirebaseFirestore
-                        .collection("Reports")
-                        .document(reportData.getTitle())
-                        .update("priority", priority);
-
+                    mFirebaseFirestore
+                            .collection("Reports")
+                            .document(reportData.getTitle())
+                            .update("priority", priority);
             }
         });
 
@@ -71,6 +69,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 view.getContext().startActivity(intent);
             }
         });
+
 
     }
 
@@ -106,5 +105,22 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         }
 
     }
+
+    /*
+    if (reportData.getUpvoted() && !reportData.getDownvoted()) {
+        //true false
+        holder.button_up.setEnabled(false);
+
+    } else if (!reportData.getUpvoted() && reportData.getDownvoted()) {
+        //false true
+        holder.button_down.setEnabled(false);
+
+    } else if (reportData.getUpvoted() && reportData.getDownvoted()) {
+        //true true
+        holder.button_up.setEnabled(true);
+        holder.button_down.setEnabled(true);
+    }
+
+     */
 
 }
