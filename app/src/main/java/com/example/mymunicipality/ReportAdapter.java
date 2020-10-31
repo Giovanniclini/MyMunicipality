@@ -36,7 +36,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         holder.textViewVia.setText(String.valueOf(reportData.getVia()));
         holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
 
-        final Range<Integer> votingRange = Range.create(-1,1);
         final String title = reportData.getTitle();
         final String username = reportData.getUsername();
         Integer votesCount = reportData.getPriority();
