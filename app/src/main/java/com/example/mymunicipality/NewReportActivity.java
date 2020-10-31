@@ -151,7 +151,18 @@ public class NewReportActivity extends AppCompatActivity {
         mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "Document written successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Report written successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference mFirestoreVotes = db.collection("Votes").document(title + " " + username);
+        Integer votesCount = 0;
+        VotesData votes = new VotesData(title,username,votesCount);
+        mFirestoreVotes.set(votes).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Votes written successfully", Toast.LENGTH_SHORT).show();
             }
         });
         finish();

@@ -52,11 +52,12 @@ public class ReportDetails extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.delete_report:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            {
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String username1 = null;
-                if (user != null){
+                if (user != null) {
                     username1 = user.getDisplayName();
                 }
 
@@ -70,10 +71,10 @@ public class ReportDetails extends AppCompatActivity {
                 mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             String username2 = document.getString("username");
-                            if(finalUsername.equals(username2)){
+                            if (finalUsername.equals(username2)) {
                                 mFirestore.collection("Reports").document(title).delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -95,6 +96,11 @@ public class ReportDetails extends AppCompatActivity {
                         }
                     }
                 });
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Votes").document(title + " " + finalUsername).delete();
+
+        }
             case android.R.id.home:
                 onBackPressed();
                 break;
