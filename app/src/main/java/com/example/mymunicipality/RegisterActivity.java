@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     if (pass1.equals(pass2)) {
                         createAccount(mail, pass1);
-                        addUser(mail, nome1, cognome1, cellulare1, viapiazza1, datanascita1);
+                        addUser(mail,pass1, nome1, cognome1, cellulare1, viapiazza1, datanascita1);
                     } else {
                         Toast.makeText(RegisterActivity.this, "Passwords dont match", Toast.LENGTH_SHORT).show();
                     }
@@ -122,10 +122,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void addUser(String mail, String nome, String cognome, String cellulare, String viapiazza,String datanascita){
+    public void addUser(String mail,String pass1, String nome, String cognome, String cellulare, String viapiazza,String datanascita){
 
         Map<String,Object> user = new HashMap<>();
         user.put("mail", mail);
+        user.put("password", pass1);
         user.put("firstname", nome);
         user.put("lastname", cognome);
         user.put("cell", cellulare);
