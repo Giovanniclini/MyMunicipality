@@ -42,6 +42,9 @@ public class ReportDetails extends AppCompatActivity {
     MaterialTextView textViewUser;
     ShapeableImageView imageViewReport;
     private StorageReference mStorageRef;
+    private String username;
+    private String title;
+    private String key;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,7 +69,7 @@ public class ReportDetails extends AppCompatActivity {
                 assert title != null;
 
                 final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-                DocumentReference mFirestoreDetails = mFirestore.collection("Reports").document(title);
+                DocumentReference mFirestoreDetails = mFirestore.collection("Reports").document(key);
                 final String finalUsername = username1;
                 mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -75,7 +78,7 @@ public class ReportDetails extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             String username2 = document.getString("username");
                             if (finalUsername.equals(username2)) {
-                                mFirestore.collection("Reports").document(title).delete()
+                                mFirestore.collection("Reports").document(key).delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
@@ -120,7 +123,9 @@ public class ReportDetails extends AppCompatActivity {
         imageViewReport = findViewById(R.id.photo_report);
 
         Intent intent = getIntent();
-        final String title = intent.getStringExtra("titolo");
+        username = intent.getStringExtra("utente");
+        title = intent.getStringExtra("titolo");
+        key = username + " " + title;
 
         Toolbar toolbar = findViewById(R.id.report_toolbar);
         setSupportActionBar(toolbar);
@@ -130,7 +135,7 @@ public class ReportDetails extends AppCompatActivity {
 
         if (title != null){
             FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-            DocumentReference mFirestoreDetails = mFirestore.collection("Reports").document(title);
+            DocumentReference mFirestoreDetails = mFirestore.collection("Reports").document(key);
             mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -142,11 +147,10 @@ public class ReportDetails extends AppCompatActivity {
                             String street = document.getString("via");
                             String description = document.getString("description");
                             String priority = String.valueOf(document.get("priority"));
-                            String user = document.getString("username");
                             textViewStreet.setText(street);
                             textViewPriority.setText(priority);
                             textViewDescription.setText(description);
-                            textViewUser.setText(user);
+                            textViewUser.setText(username);
 
                             mStorageRef = FirebaseStorage.getInstance().getReference();
                             String reportPictures = "reportPictures/";

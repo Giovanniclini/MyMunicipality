@@ -101,6 +101,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 Log.i("XXXX", reportData.getTitle());
                 Intent intent = new Intent(view.getContext() , ReportDetails.class);
                 intent.putExtra("titolo", reportData.getTitle());
+                intent.putExtra("utente", reportData.getUsername());
                 view.getContext().startActivity(intent);
             }
         });
