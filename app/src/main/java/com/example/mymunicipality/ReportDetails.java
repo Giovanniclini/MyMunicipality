@@ -101,7 +101,7 @@ public class ReportDetails extends AppCompatActivity {
                 });
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Votes").document(title + " " + finalUsername).delete();
+                db.collection("Votes").document(key).delete();
 
         }
             case android.R.id.home:

@@ -40,7 +40,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         final String username = reportData.getUsername();
         Integer votesCount = reportData.getPriority();
         final VotesData votesData = new VotesData(title,username, votesCount);
-
+        final String key = username + " " + title;
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db
                         .collection("Votes")
-                        .document(title + " " + username)
+                        .document(key)
                         .update("votesCount", votesCount);
 
                 if(votesCount >= -1 && votesCount <= 1){
@@ -61,7 +61,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                     FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
                     mFirebaseFirestore
                             .collection("Reports")
-                            .document(reportData.getTitle())
+                            .document(key)
                             .update("priority", priority);
 
                 }
@@ -78,7 +78,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db
                         .collection("Votes")
-                        .document(title + " " + username)
+                        .document(key)
                         .update("votesCount", votesCount);
 
                 if(votesCount >= -1 && votesCount <= 1){
@@ -87,7 +87,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                     FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
                     mFirebaseFirestore
                             .collection("Reports")
-                            .document(reportData.getTitle())
+                            .document(key)
                             .update("priority", priority);
 
                 }
