@@ -50,12 +50,15 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
         navigation.inflateMenu(R.menu.bott_nav_menu);
         navigation.setSelectedItemId(R.id.action_personal);
 
+
         findViewById(R.id.action_appointments).setOnClickListener(this);
         findViewById(R.id.action_report).setOnClickListener(this);
         findViewById(R.id.action_personal).setOnClickListener(this);
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        myToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        getSupportActionBar().setTitle("Area Personale");
 
     }
 
@@ -79,18 +82,21 @@ public class BottomNavigationHandler extends AppCompatActivity implements View.O
 
             case R.id.action_appointments:
                 navigation.setSelectedItemId(R.id.action_appointments);
+                getSupportActionBar().setTitle("Appuntamenti");
                 fragmentManager.beginTransaction().hide(active).show(fragment1).commit();
                 active = fragment1;
                 break;
 
             case R.id.action_report:
                 navigation.setSelectedItemId(R.id.action_report);
+                getSupportActionBar().setTitle("Segnalazioni");
                 fragmentManager.beginTransaction().hide(active).show(fragment2).commit();
                 active = fragment2;
                 break;
 
             case R.id.action_personal:
                 navigation.setSelectedItemId(R.id.action_personal);
+                getSupportActionBar().setTitle("Area Personale");
                 fragmentManager.beginTransaction().hide(active).show(fragment3).commit();
                 active = fragment3;
                 break;

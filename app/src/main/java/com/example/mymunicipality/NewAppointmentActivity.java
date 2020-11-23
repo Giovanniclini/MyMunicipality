@@ -87,6 +87,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.newappointment_toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         getSupportActionBar().setTitle("Nuovo Appuntamento");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

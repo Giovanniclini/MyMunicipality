@@ -55,7 +55,7 @@
             android:layout_gravity="bottom|end"
             android:backgroundTint="#800000"
             android:src="@drawable/ic_add"
-            android:tint="#800000" />
+            android:tint="#000000" />
     </RelativeLayout>
 
     <com.google.android.material.textview.MaterialTextView

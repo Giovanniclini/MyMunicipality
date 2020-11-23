@@ -58,6 +58,7 @@ public class NewReportActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.new_report_toolbar);
         setSupportActionBar(myToolbar);
+        myToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         getSupportActionBar().setTitle("Nuova Segnalazione");
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
