@@ -52,7 +52,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db
                         .collection("Votes")
-                        .document(title + " " + username)
+                        .document(username + " " + title)
                         .update("votesCount", votesCount);
 
                 if(votesCount >= -1 && votesCount <= 1){
@@ -78,7 +78,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db
                         .collection("Votes")
-                        .document(title + " " + username)
+                        .document(username + " " + title)
                         .update("votesCount", votesCount);
 
                 if(votesCount >= -1 && votesCount <= 1){

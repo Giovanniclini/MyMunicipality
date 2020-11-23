@@ -146,7 +146,7 @@ public class NewReportActivity extends AppCompatActivity {
         }
 
        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-       DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(title);
+       DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(username + " " + title);
         ReportData reports = new ReportData(title,description,via,priority,username);
         mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -156,7 +156,7 @@ public class NewReportActivity extends AppCompatActivity {
         });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference mFirestoreVotes = db.collection("Votes").document(title + " " + username);
+        DocumentReference mFirestoreVotes = db.collection("Votes").document(username + " " + title);
         Integer votesCount = 0;
         VotesData votes = new VotesData(title,username,votesCount);
         mFirestoreVotes.set(votes).addOnSuccessListener(new OnSuccessListener<Void>() {
