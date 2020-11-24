@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
 
 
     private static final String TAG = "ReportAdapter";
+    private long votesCount;
 
     public ReportAdapter(@NonNull FirestoreRecyclerOptions<ReportData> options) {
         super(options);
@@ -52,48 +54,54 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         holder.textViewVia.setText(String.valueOf(reportData.getVia()));
         holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
 
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         final String title = reportData.getTitle();
         final String username = reportData.getUsername();
-        Integer votesCount = reportData.getPriority();
+        //Integer votesCount = reportData.getPriority();
         final VotesData votesData = new VotesData(title,username, votesCount);
         final String loggedUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         final String key = loggedUserEmail + " " + title;
+
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                db.collection("Votes").document(username + " " + title)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DocumentSnapshot document = task.getResult();
+                                    Object numVote = document.get("votesCount");
+                                    votesCount = ((Long) numVote);
+                                    if (votesCount < 1){
+                                        votesCount = votesCount + 1;
+                                        VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
+                                        db
+                                                .collection("Votes")
+                                                .document(key)
+                                                .set(votes);
+                                    }
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                votesCount = 1;
+                                VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
+                                db
+                                        .collection("Votes")
+                                        .document(key)
+                                        .set(votes);
+                            }
+                        });
 
-                Integer votesCount = votesData.getVotesCount();
 
-
-                if(votesCount == 1){
-                    //DO NOTHING
-                }
-                else if(votesCount == 0){
-                    votesCount = 1;
-                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db
-                            .collection("Votes")
-                            .document(key)
-                            .set(votes);
-
-                }
-                else if(votesCount == -1){
-                    votesCount = 0;
-                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db
-                            .collection("Votes")
-                            .document(key)
-                            .set(votes);
-
-                }
-
-
-                final FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Votes").whereEqualTo("title",title)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -125,43 +133,56 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             @Override
             public void onClick(View view) {
 
-                Integer votesCount = votesData.getVotesCount();
+                db.collection("Votes").document(username + " " + title)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DocumentSnapshot document = task.getResult();
+                                    Object numVote = document.get("votesCount");
+                                    votesCount = ((Long) numVote);
+                                    if (votesCount > -1){
+                                        votesCount = votesCount - 1;
+                                        VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
+                                        db
+                                                .collection("Votes")
+                                                .document(key)
+                                                .set(votes);
+                                    }
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                votesCount = -1;
+                                VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
+                                db
+                                        .collection("Votes")
+                                        .document(key)
+                                        .set(votes);
+                            }
+                        });
 
-                if(votesCount == 1){
-                    votesCount = 0;
-                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db
-                            .collection("Votes")
-                            .document(key)
-                            .set(votes);
-                }
-                else if(votesCount == 0){
-                    votesCount = -1;
-                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db
-                            .collection("Votes")
-                            .document(key)
-                            .set(votes);
 
-                }
-                else if(votesCount == -1){
-                    //DO NOTHING
-                }
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Votes").whereEqualTo("title",title)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
+                                    long sum = 0;
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-
-                                        //Codice per sommare i votesCount dei singoli documents
+                                        Object vote = document.get("votesCount");
+                                        long xvote = ((Long) vote);
+                                        sum = sum + xvote;
+                                        Log.d(TAG, String.valueOf(sum));
                                     }
+                                    db.collection("Reports").document(username + " " + title)
+                                            .update("priority", sum);
+
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                 }

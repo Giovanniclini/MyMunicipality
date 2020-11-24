@@ -7,9 +7,9 @@ public class VotesData implements Serializable {
 
     private String title;
     private String username;
-    private  Integer votesCount;
+    private  long votesCount;
 
-    public VotesData(String title, String username, Integer votesCount){
+    public VotesData(String title, String username, long votesCount){
 
         this.title = title;
         this.username = username;
@@ -29,7 +29,7 @@ public class VotesData implements Serializable {
         return username;
     }
 
-    public Integer getVotesCount() {
+    public long getVotesCount() {
         return votesCount;
     }
 }
