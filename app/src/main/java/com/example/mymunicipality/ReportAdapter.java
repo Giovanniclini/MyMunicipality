@@ -88,7 +88,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 }
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Votes")
+                db.collection("Votes").whereEqualTo("title",title)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -139,7 +139,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                 }
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Votes")
+                db.collection("Votes").whereEqualTo("title",title)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
