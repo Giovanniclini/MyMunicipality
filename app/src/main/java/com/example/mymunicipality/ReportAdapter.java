@@ -58,8 +58,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
 
         final String title = reportData.getTitle();
         final String username = reportData.getUsername();
-        //Integer votesCount = reportData.getPriority();
-        final VotesData votesData = new VotesData(title,username, votesCount);
+
         final String loggedUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         final String key = loggedUserEmail + " " + title;
 
@@ -69,7 +68,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             @Override
             public void onClick(View view) {
 
-                db.collection("Votes").document(username + " " + title)
+                db.collection("Votes").document(key)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -78,6 +77,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                                     DocumentSnapshot document = task.getResult();
                                     Object numVote = document.get("votesCount");
                                     votesCount = ((Long) numVote);
+                                    Log.d(TAG, String.valueOf(votesCount));
                                     if (votesCount < 1){
                                         votesCount = votesCount + 1;
                                         VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
@@ -110,11 +110,9 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                                 if (task.isSuccessful()) {
                                     long sum = 0;
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
                                         Object vote = document.get("votesCount");
                                         long xvote = ((Long) vote);
                                         sum = sum + xvote;
-                                        Log.d(TAG, String.valueOf(sum));
                                     }
                                     db.collection("Reports").document(username + " " + title)
                                             .update("priority", sum);
@@ -133,7 +131,7 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             @Override
             public void onClick(View view) {
 
-                db.collection("Votes").document(username + " " + title)
+                db.collection("Votes").document(key)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -174,11 +172,9 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                                 if (task.isSuccessful()) {
                                     long sum = 0;
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
                                         Object vote = document.get("votesCount");
                                         long xvote = ((Long) vote);
                                         sum = sum + xvote;
-                                        Log.d(TAG, String.valueOf(sum));
                                     }
                                     db.collection("Reports").document(username + " " + title)
                                             .update("priority", sum);
