@@ -141,14 +141,14 @@ public class NewReportActivity extends AppCompatActivity {
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String username = null;
+        String email = null;
         if (user != null){
-            username = user.getDisplayName();
+            email = user.getEmail();
         }
 
        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-       DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(username + " " + title);
-        ReportData reports = new ReportData(title,description,via,priority,username);
+       DocumentReference mFirestoreReports = mFirestore.collection("Reports").document(email + " " + title);
+        ReportData reports = new ReportData(title,description,via,priority,email);
         mFirestoreReports.set(reports).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -157,9 +157,9 @@ public class NewReportActivity extends AppCompatActivity {
         });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference mFirestoreVotes = db.collection("Votes").document(username + " " + title);
+        DocumentReference mFirestoreVotes = db.collection("Votes").document(email + " " + title);
         Integer votesCount = 0;
-        VotesData votes = new VotesData(title,username,votesCount);
+        VotesData votes = new VotesData(title,email,votesCount);
         mFirestoreVotes.set(votes).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

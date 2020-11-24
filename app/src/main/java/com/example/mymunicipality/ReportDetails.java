@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +40,7 @@ public class ReportDetails extends AppCompatActivity {
     MaterialTextView textViewUser;
     ShapeableImageView imageViewReport;
     private StorageReference mStorageRef;
-    private String username;
+    private String email;
     private String title;
     private String key;
 
@@ -59,9 +57,9 @@ public class ReportDetails extends AppCompatActivity {
             case R.id.delete_report:
             {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String username1 = null;
+                String email1 = null;
                 if (user != null) {
-                    username1 = user.getDisplayName();
+                    email1 = user.getEmail();
                 }
 
                 Intent intent = getIntent();
@@ -70,7 +68,7 @@ public class ReportDetails extends AppCompatActivity {
 
                 final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
                 DocumentReference mFirestoreDetails = mFirestore.collection("Reports").document(key);
-                final String finalUsername = username1;
+                final String finalUsername = email1;
                 mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -123,9 +121,9 @@ public class ReportDetails extends AppCompatActivity {
         imageViewReport = findViewById(R.id.photo_report);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra("utente");
+        email = intent.getStringExtra("utente");
         title = intent.getStringExtra("titolo");
-        key = username + " " + title;
+        key = email + " " + title;
 
         Toolbar toolbar = findViewById(R.id.report_toolbar);
         setSupportActionBar(toolbar);
@@ -150,7 +148,7 @@ public class ReportDetails extends AppCompatActivity {
                             textViewStreet.setText(street);
                             textViewPriority.setText(priority);
                             textViewDescription.setText(description);
-                            textViewUser.setText(username);
+                            textViewUser.setText(email);
 
                             mStorageRef = FirebaseStorage.getInstance().getReference();
                             String reportPictures = "reportPictures/";

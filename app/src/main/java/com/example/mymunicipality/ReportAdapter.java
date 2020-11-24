@@ -17,9 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.protobuf.Enum;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAdapter.ReportHolder> implements Serializable {
@@ -40,7 +45,10 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         final String username = reportData.getUsername();
         Integer votesCount = reportData.getPriority();
         final VotesData votesData = new VotesData(title,username, votesCount);
-        final String key = username + " " + title;
+        final String loggedUserEmail =FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        final String key = loggedUserEmail + " " + title;
+
+        Log.d("Utente", loggedUserEmail);
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
@@ -48,12 +56,12 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             public void onClick(View view) {
 
                 Integer votesCount = votesData.getVotesCount() + 1;
-
+                VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db
                         .collection("Votes")
                         .document(key)
-                        .update("votesCount", votesCount);
+                        .set(votes);
 
                 if(votesCount >= -1 && votesCount <= 1){
 
@@ -74,12 +82,12 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
             public void onClick(View view) {
 
                 Integer votesCount = votesData.getVotesCount() - 1;
-
+                VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db
                         .collection("Votes")
                         .document(key)
-                        .update("votesCount", votesCount);
+                        .set(votes);
 
                 if(votesCount >= -1 && votesCount <= 1){
 
