@@ -29,7 +29,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Enum;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 
 
 public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAdapter.ReportHolder> implements Serializable {
@@ -52,16 +56,17 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         final String username = reportData.getUsername();
         Integer votesCount = reportData.getPriority();
         final VotesData votesData = new VotesData(title,username, votesCount);
-        final String loggedUserEmail =FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        final String loggedUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         final String key = loggedUserEmail + " " + title;
-
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
                 Integer votesCount = votesData.getVotesCount();
+
 
                 if(votesCount == 1){
                     //DO NOTHING
@@ -87,18 +92,25 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
 
                 }
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Votes").whereEqualTo("title",title)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
+                                    long sum = 0;
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-
-                                        //Codice per sommare i votesCount dei singoli documents
+                                        Object vote = document.get("votesCount");
+                                        long xvote = ((Long) vote);
+                                        sum = sum + xvote;
+                                        Log.d(TAG, String.valueOf(sum));
                                     }
+                                    db.collection("Reports").document(username + " " + title)
+                                            .update("priority", sum);
+
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                 }
