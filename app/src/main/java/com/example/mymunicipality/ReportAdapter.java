@@ -16,11 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Enum;
 
 import java.io.Serializable;
@@ -29,6 +34,8 @@ import java.util.Objects;
 
 public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAdapter.ReportHolder> implements Serializable {
 
+
+    private static final String TAG = "ReportAdapter";
 
     public ReportAdapter(@NonNull FirestoreRecyclerOptions<ReportData> options) {
         super(options);
@@ -48,57 +55,106 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
         final String loggedUserEmail =FirebaseAuth.getInstance().getCurrentUser().getEmail();
         final String key = loggedUserEmail + " " + title;
 
-        Log.d("Utente", loggedUserEmail);
 
         //OnClick del UpVote
         holder.button_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Integer votesCount = votesData.getVotesCount() + 1;
-                VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db
-                        .collection("Votes")
-                        .document(key)
-                        .set(votes);
+                Integer votesCount = votesData.getVotesCount();
 
-                if(votesCount >= -1 && votesCount <= 1){
-
-                    Integer priority = reportData.getPriority() + 1;
-                    FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
-                    mFirebaseFirestore
-                            .collection("Reports")
+                if(votesCount == 1){
+                    //DO NOTHING
+                }
+                else if(votesCount == 0){
+                    votesCount = 1;
+                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db
+                            .collection("Votes")
                             .document(key)
-                            .update("priority", priority);
+                            .set(votes);
 
                 }
+                else if(votesCount == -1){
+                    votesCount = 0;
+                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db
+                            .collection("Votes")
+                            .document(key)
+                            .set(votes);
+
+                }
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Votes")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+
+                                        //Codice per sommare i votesCount dei singoli documents
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
             }
         });
+
 
         //OnClick del DownVote
         holder.button_down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Integer votesCount = votesData.getVotesCount() - 1;
-                VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db
-                        .collection("Votes")
-                        .document(key)
-                        .set(votes);
+                Integer votesCount = votesData.getVotesCount();
 
-                if(votesCount >= -1 && votesCount <= 1){
-
-                    Integer priority = reportData.getPriority() - 1;
-                    FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
-                    mFirebaseFirestore
-                            .collection("Reports")
+                if(votesCount == 1){
+                    votesCount = 0;
+                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db
+                            .collection("Votes")
                             .document(key)
-                            .update("priority", priority);
+                            .set(votes);
+                }
+                else if(votesCount == 0){
+                    votesCount = -1;
+                    VotesData votes = new VotesData(title,loggedUserEmail,votesCount);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db
+                            .collection("Votes")
+                            .document(key)
+                            .set(votes);
 
                 }
+                else if(votesCount == -1){
+                    //DO NOTHING
+                }
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Votes")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+
+                                        //Codice per sommare i votesCount dei singoli documents
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
             }
         });
 
