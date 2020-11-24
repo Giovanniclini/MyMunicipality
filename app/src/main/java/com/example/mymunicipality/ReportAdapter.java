@@ -75,11 +75,21 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot document = task.getResult();
-                                    Object numVote = document.get("votesCount");
-                                    votesCount = ((Long) numVote);
-                                    Log.d(TAG, String.valueOf(votesCount));
-                                    if (votesCount < 1){
-                                        votesCount = votesCount + 1;
+                                    if(document.exists()) {
+                                        Object numVote = document.get("votesCount");
+                                        votesCount = ((Long) numVote);
+                                        Log.d(TAG, String.valueOf(votesCount));
+                                        if (votesCount < 1) {
+                                            votesCount = votesCount + 1;
+                                            VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
+                                            db
+                                                    .collection("Votes")
+                                                    .document(key)
+                                                    .set(votes);
+                                        }
+                                    }
+                                    else{
+                                        votesCount = 1;
                                         VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
                                         db
                                                 .collection("Votes")
@@ -87,17 +97,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                                                 .set(votes);
                                     }
                                 }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                votesCount = 1;
-                                VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
-                                db
-                                        .collection("Votes")
-                                        .document(key)
-                                        .set(votes);
                             }
                         });
 
@@ -138,10 +137,21 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot document = task.getResult();
-                                    Object numVote = document.get("votesCount");
-                                    votesCount = ((Long) numVote);
-                                    if (votesCount > -1){
-                                        votesCount = votesCount - 1;
+                                    if(document.exists()) {
+                                        Object numVote = document.get("votesCount");
+                                        votesCount = ((Long) numVote);
+                                        Log.d(TAG, String.valueOf(votesCount));
+                                        if (votesCount > -1) {
+                                            votesCount = votesCount - 1;
+                                            VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
+                                            db
+                                                    .collection("Votes")
+                                                    .document(key)
+                                                    .set(votes);
+                                        }
+                                    }
+                                    else{
+                                        votesCount = -1;
                                         VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
                                         db
                                                 .collection("Votes")
@@ -149,17 +159,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
                                                 .set(votes);
                                     }
                                 }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                votesCount = -1;
-                                VotesData votes = new VotesData(title, loggedUserEmail, votesCount);
-                                db
-                                        .collection("Votes")
-                                        .document(key)
-                                        .set(votes);
                             }
                         });
 
