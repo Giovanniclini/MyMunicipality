@@ -35,6 +35,8 @@ public class EditPersonalDataActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.new_report_toolbar);
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Modifica Dati Personali");
 
         datanascita.setInputType(InputType.TYPE_NULL);
@@ -75,7 +77,12 @@ public class EditPersonalDataActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 }

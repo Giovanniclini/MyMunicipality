@@ -199,23 +199,38 @@ public class PersonalDataFragment extends Fragment {
 
         if (requestCode == LAUNCH_ACTIVITY) {
             if (resultCode == RESULT_OK) {
+
                 String new_cellulare = data.getStringExtra("cellulare");
                 String new_datanascita = data.getStringExtra("datanascita");
                 String new_via = data.getStringExtra("via");
 
-                cellulare.setText(new_cellulare);
-                datadinascita.setText(new_datanascita);
-                viaoPiazza.setText(new_via);
-
-                FirebaseFirestore mFirebaseFirestore = FirebaseFirestore.getInstance();
-                mFirebaseFirestore
-                        .collection("users")
-                        .document(emailDB)
-                        .update(
-                                "cell", new_cellulare,
-                                "datanascita", new_datanascita,
-                                "viapiazza", new_via
-                        );
+                if (!new_cellulare.equals("")){
+                    cellulare.setText(new_cellulare);
+                    db
+                            .collection("users")
+                            .document(emailDB)
+                            .update(
+                                    "cell", new_cellulare
+                            );
+                }
+                if (!new_datanascita.equals((""))){
+                    db
+                            .collection("users")
+                            .document(emailDB)
+                            .update(
+                                    "datanascita", new_datanascita
+                            );
+                    datadinascita.setText(new_datanascita);
+                }
+                if (!new_via.equals("")){
+                    db
+                            .collection("users")
+                            .document(emailDB)
+                            .update(
+                                    "viapiazza", new_via
+                            );
+                    viaoPiazza.setText(new_via);
+                }
 
             }
         }
