@@ -171,6 +171,14 @@ public class LoginActivity extends AppCompatActivity {
                                                 // Sign in success, update UI with the signed-in user's information
                                                 Log.d(TAG, "signInWithCredential:success");
                                                 FirebaseUser user = mAuth.getCurrentUser();
+                                                String email = user.getEmail();
+                                                String firstlastname = user.getDisplayName();
+                                                String[] parts = firstlastname.split(" ");
+                                                String firstname = parts[0];
+                                                String lastname = parts[1];
+                                                Log.d(TAG, firstlastname + " " + email);
+                                                addUser(email, null, firstname, lastname, null, null, null);
+
                                         } else {
                                                 // If sign in fails, display a message to the user.
                                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
