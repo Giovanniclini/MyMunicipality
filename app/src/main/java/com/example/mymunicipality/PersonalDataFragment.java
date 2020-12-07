@@ -47,18 +47,18 @@ public class PersonalDataFragment extends Fragment {
     private static final String TAG = "PersonalDataFragment";
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int LAUNCH_ACTIVITY = 3;
-    static TextView name;
-    static TextView email;
-    static TextView cellulare;
-    static TextView viaoPiazza;
-    static TextView datadinascita;
-    CircleImageView photo;
-    FloatingActionButton button_add_image;
+    private static TextView name;
+    private static TextView email;
+    private static TextView cellulare;
+    private static TextView viaoPiazza;
+    private static TextView datadinascita;
+    private CircleImageView photo;
+    private FloatingActionButton button_add_image;
     private Uri mImageUri;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference mStorageRef;
-    String emailDB = null;
-    MaterialButton changeButton;
+    private String emailDB = null;
+    private MaterialButton changeButton;
 
 
     @Override
@@ -89,12 +89,6 @@ public class PersonalDataFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             emailDB = user.getEmail();
-        }
-
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
-        if (signInAccount != null) {
-            name.setText(signInAccount.getDisplayName());
-            email.setText(signInAccount.getEmail());
         }
 
         button_add_image.setOnClickListener(new View.OnClickListener() {
@@ -225,7 +219,6 @@ public class PersonalDataFragment extends Fragment {
 
             }
         }
-//commento per commit
 
     }
 }

@@ -57,12 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
         private static final int RC_SIGN_IN = 1;
         private static final String TAG = "LoginActivity" ;
-        GoogleSignInClient mGoogleSignInClient;
-        static FirebaseAuth mAuth;
+        private GoogleSignInClient mGoogleSignInClient;
+        private static FirebaseAuth mAuth;
         private CallbackManager callbackManager;
         private Button loginButton;
-        String mail;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         @Override
         protected void onStart(){
@@ -204,13 +203,10 @@ public class LoginActivity extends AppCompatActivity {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
                 super.onActivityResult(requestCode, resultCode, data);
 
-                //FACEBOOK CODE
 
                 callbackManager.onActivityResult(requestCode, resultCode, data);
 
-                //..............
 
-                // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
                 if (requestCode == RC_SIGN_IN) {
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                         try {
@@ -234,6 +230,12 @@ public class LoginActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                                 // Sign in success, update UI with the signed-in user's information
                                                 FirebaseUser user = mAuth.getCurrentUser();
+                                                String email = user.getEmail();
+                                                String firstlastname = user.getDisplayName();
+                                                String[] parts = firstlastname.split(" ");
+                                                String firstname = parts[0];
+                                                String lastname = parts[1];
+                                                addUser(email, null, firstname, lastname, null, null, null);
                                                 Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                                                 startActivity(intent);
                                         } else {
@@ -260,6 +262,22 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                         }
                 });
+        }
+
+        public void addUser(String mail,String pass1, String nome, String cognome, String cellulare, String viapiazza,String datanascita){
+
+                Map<String,Object> user = new HashMap<>();
+                user.put("mail", mail);
+                user.put("password", pass1);
+                user.put("firstname", nome);
+                user.put("lastname", cognome);
+                user.put("cell", cellulare);
+                user.put("viapiazza", viapiazza);
+                user.put("datanascita", datanascita);
+
+                db.collection("users")
+                        .document(mail)
+                        .set(user);
         }
 
 }

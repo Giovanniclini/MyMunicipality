@@ -50,7 +50,6 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<ReportData, ReportAd
     @Override
     protected void onBindViewHolder(@NonNull final ReportHolder holder, int position, @NonNull final ReportData reportData) {
         holder.textViewTitle.setText(String.valueOf(reportData.getTitle()));
-        //holder.textViewDescription.setText(String.valueOf(reportData.getDescription()));
         holder.textViewVia.setText(String.valueOf(reportData.getVia()));
         holder.textViewPriority.setText(String.valueOf(reportData.getPriority()));
 
