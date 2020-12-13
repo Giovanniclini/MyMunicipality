@@ -1,8 +1,15 @@
 package com.example.mymunicipality;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,8 +41,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,7 +58,7 @@ import static android.app.Activity.RESULT_OK;
 public class PersonalDataFragment extends Fragment {
 
     private static final String TAG = "PersonalDataFragment";
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int CAPTURE_IMAGE_REQUEST = 1;
     private static final int LAUNCH_ACTIVITY = 3;
     private static TextView name;
     private static TextView email;
@@ -54,7 +67,6 @@ public class PersonalDataFragment extends Fragment {
     private static TextView datadinascita;
     private CircleImageView photo;
     private FloatingActionButton button_add_image;
-    private Uri mImageUri;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference mStorageRef;
     private String emailDB = null;
@@ -94,7 +106,7 @@ public class PersonalDataFragment extends Fragment {
         button_add_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFileChooser();
+                openCamera();
             }
         });
 
@@ -130,11 +142,11 @@ public class PersonalDataFragment extends Fragment {
         return view;
     }
 
-    private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST);
+        }
     }
 
     @Override
@@ -171,29 +183,30 @@ public class PersonalDataFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST) {
-            //if (resultCode == RESULT_OK)
-            mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(photo);
+        if (requestCode == CAPTURE_IMAGE_REQUEST) {
+
+            Log.d(TAG, "OnActivityResult");
+            Bundle extras = data.getExtras();
+            Bitmap bitmap = (Bitmap) extras.get("data");
+            photo.setImageBitmap(bitmap);
             String profilepictures = "profilepictures/";
             String path = profilepictures + emailDB;
-            StorageReference riversRef = mStorageRef.child(path);
-
-            riversRef.putFile(mImageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Get a URL to the uploaded content
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
-
-                        }
-                    });
+            StorageReference profilesRef = mStorageRef.child(path);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+            byte[] dataFromBitmap = baos.toByteArray();
+            UploadTask uploadTask = profilesRef.putBytes(dataFromBitmap);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, "Image uploaded");
+                }
+            });
 
         }
 

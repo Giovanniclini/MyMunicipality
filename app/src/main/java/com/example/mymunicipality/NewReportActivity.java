@@ -1,8 +1,10 @@
 package com.example.mymunicipality;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,11 +31,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public class NewReportActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int CAPTURE_IMAGE_REQUEST = 1;
     private static final String TAG ="NewReportActivity" ;
     private EditText editTextTitle;
     private EditText editTextDescription;
@@ -67,43 +70,48 @@ public class NewReportActivity extends AppCompatActivity {
         add_photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFileChooser();
+                openCamera();
             }
         });
     }
 
 
 
-    private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
-        mImageUri = data.getData();
-        Picasso.get().load(mImageUri).into(photo_report);
-        String reportPictures = "reportPictures/";
-        String path = reportPictures + editTextTitle.getText();
-        Log.d(TAG, path);
-        StorageReference reverseRef = mStorageRef.child(path);
-        reverseRef.putFile(mImageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        if (requestCode == CAPTURE_IMAGE_REQUEST) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
+            Log.d(TAG, "OnActivityResult");
+            Bundle extras = data.getExtras();
+            Bitmap bitmap = (Bitmap) extras.get("data");
+            photo_report.setImageBitmap(bitmap);
+            String reportPictures = "reportPictures/";
+            String path = reportPictures + editTextTitle.getText();
+            StorageReference reportPicturesRef = mStorageRef.child(path);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+            byte[] dataFromBitmap = baos.toByteArray();
+            UploadTask uploadTask = reportPicturesRef.putBytes(dataFromBitmap);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, "Image uploaded");
+                }
+            });
+        }
     }
 
     @Override
