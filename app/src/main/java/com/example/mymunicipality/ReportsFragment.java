@@ -3,17 +3,15 @@ package com.example.mymunicipality;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.provider.ContactsContract.CommonDataKinds.Note;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,9 +25,9 @@ public class ReportsFragment extends Fragment {
     private CollectionReference reportsRef = db.collection("Reports");
 
     private ReportAdapter adapter;
-    RecyclerView recyclerView;
-    FloatingActionButton buttonAddNote;
-    Context context;
+    private RecyclerView recyclerView;
+    private FloatingActionButton buttonAddNote;
+    private Context context;
 
     @Override
     public void onAttach(@NonNull Context context) {

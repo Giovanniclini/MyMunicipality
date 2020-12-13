@@ -33,16 +33,19 @@ import java.io.IOException;
 
 public class ReportDetails extends AppCompatActivity {
 
-    private static final String TAG = "ActivityDetails: ";
-    MaterialTextView textViewStreet;
-    MaterialTextView textViewDescription;
-    MaterialTextView textViewPriority;
-    MaterialTextView textViewUser;
-    ShapeableImageView imageViewReport;
+    private final String TAG = "ActivityDetails: ";
+    private MaterialTextView textViewStreet;
+    private MaterialTextView textViewDescription;
+    private MaterialTextView textViewPriority;
+    private MaterialTextView textViewUser;
+    private ShapeableImageView imageViewReport;
     private StorageReference mStorageRef;
     private String email;
     private String title;
     private String key;
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,7 +59,6 @@ public class ReportDetails extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.delete_report:
             {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String email1 = null;
                 if (user != null) {
                     email1 = user.getEmail();
@@ -81,7 +83,7 @@ public class ReportDetails extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Log.d(TAG, "Document snapshot successfully deleted");
-                                                Toast.makeText(getApplicationContext(), "Sussessfully deleted", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Eliminato con successo", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
                                         })
@@ -97,9 +99,6 @@ public class ReportDetails extends AppCompatActivity {
                         }
                     }
                 });
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Votes").document(key).delete();
 
         }
             case android.R.id.home:

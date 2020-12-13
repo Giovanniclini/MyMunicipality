@@ -1,24 +1,17 @@
 package com.example.mymunicipality;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,36 +23,33 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.protobuf.StringValue;
 
 import java.util.Calendar;
-import java.util.Scanner;
 
 public class AppointmentDetails extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "Appointment Details";
-    MaterialTextView sectorTextView;
-    MaterialTextView objectTextView;
-    MaterialTextView dataoraTextView;
-    MaterialTextView viaTextView;
+    private final String TAG = "AppointmentDetails";
+    private MaterialTextView sectorTextView;
+    private MaterialTextView objectTextView;
+    private MaterialTextView dataoraTextView;
+    private MaterialTextView viaTextView;
 
-    String username1;
-    String object1;
-    String sector1;
-    String via;
-    String data1;
-    String ora1;
-    String dataora1;
+    private String username1;
+    private String object1;
+    private String sector1;
+    private String via;
+    private String data1;
+    private String ora1;
+    private String dataora1;
 
     private GoogleMap mMap;
     private LatLng latlng;
+
+    private FirebaseFirestore mFirestore;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,7 +64,7 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
         switch (item.getItemId()){
             case R.id.delete_appointment:
 
-                final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+                mFirestore = FirebaseFirestore.getInstance();
                 DocumentReference mFirestoreDetails = mFirestore.collection("Appointments").document(username1 + " " + object1);
                 mFirestoreDetails.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -224,8 +214,6 @@ public class AppointmentDetails extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
         mMap.addMarker(new MarkerOptions().position(latlng).title("Meeting point"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));

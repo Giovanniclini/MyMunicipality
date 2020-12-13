@@ -16,14 +16,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -33,11 +29,12 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    static FirebaseAuth mAuth;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static final String TAG = "RegisterActivity";
-    TextInputEditText username, password1, password2, nome, cognome, cellulare, viapiazza;
-    String mail;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final String TAG = "RegisterActivity";
+    private TextInputEditText username, password1, password2, nome, cognome, cellulare, viapiazza;
+    private EditText eText;
+    private String mail;
 
 
     @Override
@@ -46,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        final EditText eText = findViewById(R.id.editText1);
+        eText = findViewById(R.id.editText1);
 
         eText.setInputType(InputType.TYPE_NULL);
         eText.setOnClickListener(new View.OnClickListener() {

@@ -20,10 +20,10 @@ import java.util.Calendar;
 
 public class EditPersonalDataActivity extends AppCompatActivity {
 
-    TextInputEditText cellulare;
-    EditText datanascita;
-    TextInputEditText via;
-    MaterialButton save_changes;
+    private TextInputEditText cellulare;
+    private EditText datanascita;
+    private TextInputEditText via;
+    private MaterialButton save_changes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

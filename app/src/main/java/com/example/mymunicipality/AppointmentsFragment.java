@@ -28,9 +28,11 @@ public class AppointmentsFragment extends Fragment {
     private CollectionReference appointmentsRef = db.collection("Appointments");
 
     private AppointmentAdapter adapter;
-    RecyclerView recyclerView;
-    FloatingActionButton buttonAddAppointment;
-    Context context;
+    private RecyclerView recyclerView;
+    private FloatingActionButton buttonAddAppointment;
+    private Context context;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -65,8 +67,8 @@ public class AppointmentsFragment extends Fragment {
 
 
     private void setUpRecyclerView() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String username = user.getDisplayName();
+
+        String username = user.getEmail();
         Query query = appointmentsRef.orderBy("sector", Query.Direction.DESCENDING).whereEqualTo("username", username);
 
 

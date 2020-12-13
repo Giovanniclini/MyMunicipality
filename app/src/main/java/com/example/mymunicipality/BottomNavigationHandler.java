@@ -21,11 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class BottomNavigationHandler extends AppCompatActivity implements View.OnClickListener {
 
 
-    private static final String TAG = "BottomActivity";
-    final ReportsFragment fragment2 = new ReportsFragment();
-    final Fragment fragment1 = new AppointmentsFragment();
-    final Fragment fragment3 = new PersonalDataFragment();
-    Fragment active = fragment3;
+    private final String TAG = "BottomActivity";
+    private final ReportsFragment fragment2 = new ReportsFragment();
+    private final Fragment fragment1 = new AppointmentsFragment();
+    private final Fragment fragment3 = new PersonalDataFragment();
+    private Fragment active = fragment3;
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
 

@@ -43,7 +43,6 @@ public class NewReportActivity extends AppCompatActivity {
     private EditText editTextVia;
     private ShapeableImageView photo_report;
     private MaterialButton add_photo_button;
-    private Uri mImageUri;
     private StorageReference mStorageRef;
 
     @Override
@@ -143,8 +142,8 @@ public class NewReportActivity extends AppCompatActivity {
         String via = editTextVia.getText().toString();
         Integer priority = 0;
 
-        if(title.trim().isEmpty() || description.trim().isEmpty()){
-            Toast.makeText(this, "Please insert a Title and Description", Toast.LENGTH_SHORT).show();
+        if(title.trim().isEmpty() || description.trim().isEmpty() || via.trim().isEmpty() ){
+            Toast.makeText(this, "Perfavore, inserire i campi mancanti", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -171,7 +170,7 @@ public class NewReportActivity extends AppCompatActivity {
         mFirestoreVotes.set(votes).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "Votes written successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Segnalazione inserita correttamente", Toast.LENGTH_SHORT).show();
             }
         });
         finish();

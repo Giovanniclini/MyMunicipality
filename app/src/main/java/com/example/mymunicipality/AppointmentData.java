@@ -4,7 +4,6 @@ public class AppointmentData {
 
     private String sector;
     private String object;
-    private String via;
     private String data;
     private String ora;
     private String username;
@@ -27,10 +26,6 @@ public class AppointmentData {
 
     public String getObject() {
         return object;
-    }
-
-    public String getVia() {
-        return via;
     }
 
     public String getData() {

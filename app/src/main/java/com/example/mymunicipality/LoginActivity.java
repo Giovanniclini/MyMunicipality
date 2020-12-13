@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                 }
 
+
         }
 
         @Override
@@ -88,12 +89,12 @@ public class LoginActivity extends AppCompatActivity {
                                 if (user != null) {
                                         // User is signed in
                                         Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                                        Toast.makeText(LoginActivity.this, "Authentication successful 2.",
+                                        Toast.makeText(LoginActivity.this, "Autenticazione riuscita",
                                                 Toast.LENGTH_SHORT).show();
                                 } else {
                                         // User is signed out
                                         Log.d(TAG, "onAuthStateChanged:signed_out");
-                                        Toast.makeText(LoginActivity.this, "Authentication signed out.",
+                                        Toast.makeText(LoginActivity.this, "Uscita avvenuta con successo o nessun utente ancora registrato",
                                                 Toast.LENGTH_SHORT).show();
                                 }
                                 // ...
@@ -197,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                                         } else {
                                                 // If sign in fails, display a message to the user.
                                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
-                                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                                Toast.makeText(LoginActivity.this, "Autenticazione fallita",
                                                         Toast.LENGTH_SHORT).show();
                                         }
 
@@ -260,7 +261,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
                                                 startActivity(intent);
                                         } else {
-                                                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "Autenticazione fallita", Toast.LENGTH_SHORT).show();
                                         }
 
                                 }
@@ -277,7 +278,7 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(i);
                                 }else{
                                         Log.w(TAG, "Sign in with email: failed", task.getException());
-                                        Toast.makeText(LoginActivity.this, "This user doesn't exists!",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "L'utente non esiste.",Toast.LENGTH_SHORT).show();
                                 }
                         }
                 });

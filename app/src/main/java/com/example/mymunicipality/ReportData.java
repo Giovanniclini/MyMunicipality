@@ -23,14 +23,9 @@ public class ReportData implements Serializable {
         this.priority = priority;
     }
 
-    //NON CAMBIARE NOME AI GETTER
 
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getVia() {

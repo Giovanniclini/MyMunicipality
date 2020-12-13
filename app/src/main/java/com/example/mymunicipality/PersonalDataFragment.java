@@ -1,14 +1,8 @@
 package com.example.mymunicipality;
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,11 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,12 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -60,11 +46,11 @@ public class PersonalDataFragment extends Fragment {
     private static final String TAG = "PersonalDataFragment";
     private static final int CAPTURE_IMAGE_REQUEST = 1;
     private static final int LAUNCH_ACTIVITY = 3;
-    private static TextView name;
-    private static TextView email;
-    private static TextView cellulare;
-    private static TextView viaoPiazza;
-    private static TextView datadinascita;
+    private TextView name;
+    private TextView email;
+    private TextView cellulare;
+    private TextView viaoPiazza;
+    private TextView datadinascita;
     private CircleImageView photo;
     private FloatingActionButton button_add_image;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
