@@ -60,11 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                 }
 
-                if (AccessToken.getCurrentAccessToken() != null) {
-                        Intent loginIntent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
-                        startActivity(loginIntent);
-                }
-
         }
 
         @Override
@@ -120,14 +115,14 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onSuccess(LoginResult loginResult) {
                                                 Log.v("facebook - onSuccess", "Succed");
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
-                                                finish();
+                                                Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
+                                                startActivity(intent);
                                         }
 
                                         @Override
                                         public void onCancel() {
                                                 setResult(RESULT_CANCELED);
                                                 Log.v("facebook - onCancel", "cancelled");
-                                                finish();
                                         }
 
                                         @Override
