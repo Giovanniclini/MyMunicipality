@@ -119,8 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onSuccess(LoginResult loginResult) {
                                                 Log.v("facebook - onSuccess", "Succed");
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
-                                                Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
-                                                startActivity(intent);
+
                                         }
 
                                         @Override
@@ -186,15 +185,21 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
                                                 // Sign in success, update UI with the signed-in user's information
-                                                Log.d(TAG, "signInWithCredential:success");
-                                                FirebaseUser user = mAuth.getCurrentUser();
-                                                String email = user.getEmail();
-                                                String firstlastname = user.getDisplayName();
-                                                String[] parts = firstlastname.split(" ");
-                                                String firstname = parts[0];
-                                                String lastname = parts[1];
-                                                Log.d(TAG, firstlastname + " " + email);
-                                                addUser(email, null, firstname, lastname, null, null, null);
+                                                boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+                                                if(isNew) {
+                                                        Log.d(TAG, "signInWithCredential:success");
+                                                        FirebaseUser user = mAuth.getCurrentUser();
+                                                        String email = user.getEmail();
+                                                        String firstlastname = user.getDisplayName();
+                                                        String[] parts = firstlastname.split(" ");
+                                                        String firstname = parts[0];
+                                                        String lastname = parts[1];
+                                                        Log.d(TAG, firstlastname + " " + email);
+                                                        addUser(email, null, firstname, lastname, null, null, null);
+
+                                                }
+                                                Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
+                                                startActivity(intent);
 
                                         } else {
                                                 // If sign in fails, display a message to the user.
