@@ -36,4 +36,8 @@ public class ReportData implements Serializable {
 
     public Integer getPriority(){ return priority; }
 
+    public String getDescription() {
+        return description;
+    }
+
 }

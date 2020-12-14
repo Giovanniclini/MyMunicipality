@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onStop() {
                 super.onStop();
-                // [START on_stop_remove_listener]
+
                 if (mAuthListener != null) {
                         mAuth.removeAuthStateListener(mAuthListener);
                 }
@@ -151,8 +151,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                 });
 
-                mAuth = FirebaseAuth.getInstance();
-
                 createRequest();
 
                 findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
@@ -200,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         } else {
                                                 // If sign in fails, display a message to the user.
-                                                Log.w(TAG, "signInWithCredential:failure", task.getException());
+                                                Log.d(TAG, "signInWithCredential:failure", task.getException());
                                                 Toast.makeText(LoginActivity.this, "Autenticazione fallita",
                                                         Toast.LENGTH_SHORT).show();
                                         }
