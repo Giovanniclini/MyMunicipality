@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.Query;
 
 public class AppointmentsFragment extends Fragment {
 
+    private static final String TAG = "AppointmentsFragment" ;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference appointmentsRef = db.collection("Appointments");
 
@@ -32,7 +34,8 @@ public class AppointmentsFragment extends Fragment {
     private FloatingActionButton buttonAddAppointment;
     private Context context;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String facebookUsername;
+    private String facebookEmail;
+    private String username;
 
 
     @Override
@@ -63,22 +66,13 @@ public class AppointmentsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_appointments, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
         buttonAddAppointment = view.findViewById(R.id.button_add);
-        if(getActivity() != null && user == null){
-            facebookUsername = getActivity().getIntent().getExtras().getString("firstlastname");
-    }
         return view;
     }
 
 
     private void setUpRecyclerView() {
 
-        String username;
-        if (user == null){
-            username = facebookUsername;
-        }
-        else{
-            username = user.getEmail();
-        }
+        username = user.getEmail();
         Query query = appointmentsRef.orderBy("sector", Query.Direction.DESCENDING).whereEqualTo("username", username);
 
 

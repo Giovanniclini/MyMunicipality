@@ -88,13 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
                 datanascita1 = Objects.requireNonNull(eText.getText().toString());
 
                 if (pass1.length() < 6) {
-                    Toast.makeText(RegisterActivity.this, "Password must contains at least 6 character", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "La password deve contenere almeno sei caratteri", Toast.LENGTH_SHORT).show();
                 } else {
                     if (pass1.equals(pass2)) {
                         createAccount(mail, pass1);
                         addUser(mail,pass1, nome1, cognome1, cellulare1, viapiazza1, datanascita1);
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Passwords dont match", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Le password non corrispondono", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

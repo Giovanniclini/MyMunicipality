@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         private Button loginButton;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private FirebaseAuth.AuthStateListener mAuthListener;
-        private String firstlastname = null;
 
         @Override
         protected void onStart(){
@@ -121,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                                                 Log.v("facebook - onSuccess", "Succed");
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
                                                 Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
-                                                intent.putExtra("firstlastname", firstlastname);
                                                 startActivity(intent);
                                         }
 
@@ -193,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Log.d(TAG, "signInWithCredential:success");
                                                 FirebaseUser user = mAuth.getCurrentUser();
                                                 String email = user.getEmail();
-                                                firstlastname = user.getDisplayName();
+                                                String firstlastname = user.getDisplayName();
                                                 String[] parts = firstlastname.split(" ");
                                                 String firstname = parts[0];
                                                 String lastname = parts[1];
