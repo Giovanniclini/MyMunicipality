@@ -32,6 +32,7 @@ public class AppointmentsFragment extends Fragment {
     private FloatingActionButton buttonAddAppointment;
     private Context context;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String facebookUsername;
 
 
     @Override
@@ -62,13 +63,22 @@ public class AppointmentsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_appointments, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
         buttonAddAppointment = view.findViewById(R.id.button_add);
+        if(getActivity() != null && user == null){
+            facebookUsername = getActivity().getIntent().getExtras().getString("firstlastname");
+    }
         return view;
     }
 
 
     private void setUpRecyclerView() {
 
-        String username = user.getEmail();
+        String username;
+        if (user == null){
+            username = facebookUsername;
+        }
+        else{
+            username = user.getEmail();
+        }
         Query query = appointmentsRef.orderBy("sector", Query.Direction.DESCENDING).whereEqualTo("username", username);
 
 

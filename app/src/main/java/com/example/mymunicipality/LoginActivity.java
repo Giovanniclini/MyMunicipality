@@ -14,6 +14,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         private Button loginButton;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private FirebaseAuth.AuthStateListener mAuthListener;
+        private String firstlastname = null;
 
         @Override
         protected void onStart(){
@@ -112,11 +114,14 @@ public class LoginActivity extends AppCompatActivity {
                                         .logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
                                 LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
+                                        private ProfileTracker mProfileTracker;
+
                                         @Override
                                         public void onSuccess(LoginResult loginResult) {
                                                 Log.v("facebook - onSuccess", "Succed");
                                                 handleFacebookAccessToken(loginResult.getAccessToken());
                                                 Intent intent = new Intent(getApplicationContext(), BottomNavigationHandler.class);
+                                                intent.putExtra("firstlastname", firstlastname);
                                                 startActivity(intent);
                                         }
 
@@ -188,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Log.d(TAG, "signInWithCredential:success");
                                                 FirebaseUser user = mAuth.getCurrentUser();
                                                 String email = user.getEmail();
-                                                String firstlastname = user.getDisplayName();
+                                                firstlastname = user.getDisplayName();
                                                 String[] parts = firstlastname.split(" ");
                                                 String firstname = parts[0];
                                                 String lastname = parts[1];

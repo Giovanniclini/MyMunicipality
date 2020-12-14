@@ -143,7 +143,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String username = null;
         if (user != null){
-            username = user.getDisplayName();
+            username = user.getEmail();
         }
 
         final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
